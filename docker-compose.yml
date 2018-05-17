@@ -1,0 +1,70 @@
+version: "3"
+services:
+  app-client:
+    container_name: app-client
+    build: ./app-client
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./app-client:/usr/src/app
+      - /usr/src/app/node_modules # This will mount the node_modules directory to the host machine using the buildtime directory.
+    ports:
+      - "4200:4200"
+    networks:
+      - app-network
+
+  app-server:
+    container_name: app-server
+    build: ./app-server
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./app-server:/usr/src/app
+      - /usr/src/app/node_modules # This will mount the node_modules directory to the host machine using the buildtime directory.
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+    networks:
+      - app-network
+      - api-network
+
+  mongodb:
+    container_name: app-mongodb
+    image: mongo
+    volumes:
+      - ./mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - app-network
+
+  nginx:
+    container_name: career-dev-proxy
+    build: ./nginx
+    volumes:
+      - ./nginx/ssl:/etc/ssl
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - career-dev-client 
+      - career-dev-server 
+    networks:
+      - app-network
+
+  redis:
+    container_name: service-rsa-redis
+    image: redis
+    ports:
+      - 6379:6379
+    volumes:
+      - ./service-rsa-redis/data:/data
+    networks:
+      - api-network
+
+networks:
+  app-network:
+    driver: bridge
+  api-network:
+    driver: bridge

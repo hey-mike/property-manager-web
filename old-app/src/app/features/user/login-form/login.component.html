@@ -1,0 +1,95 @@
+<!-- <form class="form-signin" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="form-label-group" [ngClass]="{ 'has-error has-feedback' : hasError('email') }">
+    <input type="email" class="form-control" placeholder="Email address" formControlName="email" required autofocus>
+    <label for="inputEmail">Email address</label>
+    <span *ngIf="hasError('email')" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+    <div *ngIf="hasError('email')" class="invalid-feedback">
+      Please insert a valid username or e-mail address.
+    </div>
+  </div>
+
+  <div class="form-label-group" [ngClass]="{ 'has-error has-feedback' : hasError('password') }">
+    <input type="password" class="form-control" placeholder="Password" formControlName="password" required>
+    <label for="inputPassword">Password</label>
+    <span *ngIf="hasError('password')" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+    <div *ngIf="hasError('password')" class="invalid-feedback">
+      Please insert a password.
+    </div>
+  </div>
+  <div class="d-flex justify-content-between mb-3">
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" value="remember-me"> Remember me
+      </label>
+    </div>
+    <div class="login-link">
+      <a [routerLink]="['/user/forgot']">
+        Forgot?
+      </a>
+    </div>
+  </div>
+
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2018</p>
+</form> -->
+<form class="form-signin" [formGroup]="form" (ngSubmit)="onSubmit()" [ngClass]="{ 'loading disabled' : isLoading() }">
+  <fieldset>
+    <div class="form-group">
+      <input type="email" class="form-control" [ngClass]="{ 'is-invalid' : hasError('email') }" aria-describedby="emailHelp" placeholder="Enter email"
+        formControlName="email">
+      <div *ngIf="hasError('email')" class="invalid-feedback">
+        Please insert a valid e-mail address.
+      </div>
+    </div>
+    <div class="form-group">
+      <input type="password" class="form-control" [ngClass]="{ 'is-invalid' : hasError('password') }" placeholder="Password" formControlName="password">
+      <span *ngIf="hasError('password')" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+      <div *ngIf="hasError('password')" class="invalid-feedback">
+        Please insert a password.
+      </div>
+    </div>
+    <div class="d-flex justify-content-between">
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" formControlName="remember">
+        <label class="form-check-label">Remember me</label>
+      </div>
+      <div class="login-link">
+        <a [routerLink]="['/user/forgot']">
+          forget?
+        </a>
+      </div>
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">
+      <i class="fa fa-spinner fa-spin"></i> Sign in</button>
+    <div class="text-center">
+      <hr class="hr-text" data-content="OR">
+      <div>
+        <ul class="social-network social-circle">
+          <li>
+            <a href="#" class="icoFacebook" title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="icoTwitter" title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="icoGoogle" title="Google +">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="icoLinkedin" title="Linkedin">
+              <i class="fa fa-linkedin"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <a [routerLink]="['/user/register']">
+        Sign up?
+      </a>
+    </div>
+  </fieldset>
+</form>
