@@ -1,12 +1,12 @@
 version: "3"
 services:
   app-client:
-    container_name: app-property-manager-client
-    build: ./app-property-manager-client
+    container_name: property-manager-client
+    build: ./app-client
     environment:
       - NODE_ENV=development
     volumes:
-      - ./app-manager-client:/usr/src/app
+      - ./app-client:/usr/src/app
       - /usr/src/app/node_modules # This will mount the node_modules directory to the host machine using the buildtime directory.
     ports:
       - "4200:4200"
@@ -14,12 +14,12 @@ services:
       - app-network
 
   app-server:
-    container_name: app-property-manager-server
-    build: ./app-property-manager-server
+    container_name: property-manager-server
+    build: ./app-server
     environment:
       - NODE_ENV=development
     volumes:
-      - ./app-manager-server:/usr/src/app
+      - ./app-server:/usr/src/app
       - /usr/src/app/node_modules # This will mount the node_modules directory to the host machine using the buildtime directory.
     ports:
       - "8080:8080"
@@ -30,7 +30,7 @@ services:
       - api-network
 
   mongodb:
-    container_name: app-property-manager-mongodb
+    container_name: property-manager-mongodb
     image: mongo
     volumes:
       - ./mongo-data:/data/db
@@ -40,7 +40,7 @@ services:
       - app-network
 
   nginx:
-    container_name: app-property-manager-proxy
+    container_name: property-manager-proxy
     build: ./nginx
     volumes:
       - ./nginx/ssl:/etc/ssl
@@ -49,7 +49,7 @@ services:
       - 443:443
     depends_on:
       - app-client 
-      - career-dev-server 
+      - app-server 
     networks:
       - app-network
 
