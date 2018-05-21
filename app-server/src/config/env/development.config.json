@@ -3,7 +3,7 @@
     "port": 8080
   },
   "db": {
-    "uri": "mongodb://mongodb:27017/Career",
+    "uri": "mongodb://mongodb:27017/Property-manager",
     "options": {
       "autoIndex": false, 
       "reconnectTries": "Number.MAX_VALUE", 

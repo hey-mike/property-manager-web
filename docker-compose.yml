@@ -9,7 +9,7 @@ services:
       - ./app-client:/usr/src/app
       - /usr/src/app/node_modules # This will mount the node_modules directory to the host machine using the buildtime directory.
     ports:
-      - "4200:4200"
+      - "3000:3000"
     networks:
       - app-network
 
@@ -45,8 +45,7 @@ services:
     volumes:
       - ./nginx/ssl:/etc/ssl
     ports:
-      - 80:80
-      - 443:443
+      - 8000:8000
     depends_on:
       - app-client 
       - app-server 

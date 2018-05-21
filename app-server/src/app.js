@@ -6,7 +6,7 @@ const cors = require('cors');
 const compression = require('compression');
 const expressValidator = require("express-validator");
 // const passport = require('passport');
-const passportConfig = require('./config/passport');
+const initPassport = require('./config/passport');
 const logger = require('./utils/logger');
 const authCheckMiddleware = require('./middlewares/requiredAuth');
 
@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(expressValidator());
 // app.use(passport.initialize());
-passportConfig(app);
+initPassport(app);
 // pass the authorization checker middleware
 // app.use('/api', authCheckMiddleware);
 
