@@ -28,7 +28,7 @@ class TokenManager {
     // The first signing converted all needed options into claims, they are already in the payload
     return jwt.sign(payload, this.secretOrPrivateKey, jwtSignOptions);
   }
-  verify() {
+  verifyToken() {
     return jwt.verify(token, cert, { algorithm: 'RS256'}, (err, decoded));
   }
 }
