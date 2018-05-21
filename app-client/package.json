@@ -7,6 +7,8 @@
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4"
   },
   "scripts": {
@@ -16,7 +18,14 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "babel-plugin-import": "^1.7.0",
+    "eslint": "^4.19.1",
+    "eslint-config-react-app": "^2.1.0",
+    "eslint-plugin-flowtype": "^2.46.3",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.8.2",
     "react-app-rewired": "^1.5.2"
   }
 }
