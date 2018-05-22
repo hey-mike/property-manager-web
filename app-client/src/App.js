@@ -1,7 +1,6 @@
-import React, { Component } from "react";
-import { Layout } from "antd";
-import "./App.css";
-
+import React, { Component } from 'react';
+import { Layout } from 'antd';
+import './App.css';
 const { Header, Footer, Content } = Layout;
 
 class App extends Component {

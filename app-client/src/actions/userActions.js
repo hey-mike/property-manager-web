@@ -1,9 +1,8 @@
-import * as types from "./actionTypes";
-import userApi from "../services/api/userApi";
-import queryString from "query-string";
-import reduxStore from "../store/reduxStore";
+import * as types from './actionTypes';
+import userApi from '../services/api/userApi';
+import queryString from 'query-string';
 
-import { notification, message } from "antd";
+import { notification, message } from 'antd';
 
 export const requestUsersError = error => ({
   type: types.REQUEST_SERVER_ERROR,
@@ -60,14 +59,13 @@ export const fetchUsers = (location, page_size) => dispatch => {
 
   const search = Object.keys(query)
     .map(k => `${k}=${query[k]}`)
-    .join("&");
+    .join('&');
 
   dispatch(sendRequest());
   return userApi
     .getAllUsers(search)
     .then(response => {
-      if (!response.ok)
-        return response.json().then(error => Promise.reject(error));
+      if (!response.ok) return response.json().then(error => Promise.reject(error));
       response.json().then(data => {
         const users = data.records;
         users.forEach(user => {
@@ -85,12 +83,12 @@ export const fetchUsers = (location, page_size) => dispatch => {
             totalCount: data.metadata.totalCount
           })
         );
-        message.success("Load users successfull");
+        message.success('Load users successfull');
       });
     })
     .catch(err => {
       const errorMsg = `Error in fetching data from server: ${err.message}`;
-      console.log("errorMsg", errorMsg);
+      console.log('errorMsg', errorMsg);
       dispatch(requestUsersError(errorMsg));
       notification.error({
         message: errorMsg
@@ -108,10 +106,7 @@ const shouldFetchUsers = (location, state) => {
   return false;
 };
 
-export const fetchUsersIfNeeded = (location, page_size) => (
-  dispatch,
-  getState
-) => {
+export const fetchUsersIfNeeded = (location, page_size) => (dispatch, getState) => {
   if (shouldFetchUsers(location, getState())) {
     return dispatch(fetchUsers(location, page_size));
   }
@@ -136,7 +131,7 @@ export const createUser = (user, history) => {
           updatedUser = convertedUser(updatedUser);
           dispatch(createUserSuccess(updatedUser, history));
           notification.success({
-            message: "Create user successfully"
+            message: 'Create user successfully'
           });
         });
       })
