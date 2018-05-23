@@ -7,7 +7,6 @@ services:
       - NODE_ENV=development
     volumes:
       - ./app-client:/usr/src/app
-      - /usr/src/app/node_modules # This will mount the node_modules directory to the host machine using the buildtime directory.
     ports:
       - "3000:3000"
     networks:
