@@ -1,9 +1,8 @@
 import * as types from './actionTypes';
-import auth from '../services/auth';
-import queryString from 'query-string';
-import AuthStore from '../store/auth';
+import AuthService from '../../../core/services/auth.service';
+import LocalStoreService from '../../../core/services/local-store.service';
 
-import { notification, message } from 'antd';
+import { notification } from 'antd';
 
 export const authRequest = () => ({
   type: types.AUTH_REQUEST,
@@ -16,7 +15,7 @@ export const authRequestError = error => ({
 
 export const signinSuccess = (data, history) => {
   // save the token
-  AuthStore.authenticateUser(data.token);
+  LocalStoreService.authenticateUser(data.token);
   history.replace({
     pathname: `/`,
   });
@@ -41,8 +40,7 @@ export const signoutSuccess = () => ({
 export const signIn = (user, history) => {
   return dispatch => {
     dispatch(authRequest());
-    auth
-      .signIn(user)
+    AuthService.signIn(user)
       .then(response => {
         if (!response.ok) {
           return response.json().then(error => {
@@ -71,8 +69,7 @@ export const signup = (user, history) => {
   return dispatch => {
     dispatch(authRequest());
 
-    auth
-      .signup(user)
+    AuthService.signup(user)
       .then(response => {
         if (!response.ok) {
           return response.json().then(error => {

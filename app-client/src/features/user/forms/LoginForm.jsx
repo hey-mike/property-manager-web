@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Icon, Input, Button, Checkbox, Card } from 'antd';
-import { connect } from 'react-redux';
+
 import { Link } from 'react-router-dom';
-import { signin } from '../actions/authActions';
+// import { signIn } from '../actions/authActions';
 
 const FormItem = Form.Item;
 
@@ -12,7 +12,8 @@ class LoginForm extends React.Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.dispatch(signin(values, this.props.history));
+        // this.props.dispatch(signIn(values, this.props.history));
+        this.props.onSubmit(values);
       }
     });
   }
@@ -78,4 +79,4 @@ LoginForm.prototypes = {
   form: PropTypes.any.isRequired,
 };
 
-export default connect()(Form.create()(LoginForm));
+export default Form.create()(LoginForm);

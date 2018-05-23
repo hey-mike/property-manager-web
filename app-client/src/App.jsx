@@ -1,13 +1,11 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import { withRouter, Link } from 'react-router-dom';
-import reduxStore from './store/reduxStore';
+import { withRouter } from 'react-router-dom';
 import AuthService from './core/services/auth.service';
-import { Layout } from 'antd';
 import './App.css';
 
-import LoginPage from './features/user/loginPage';
+import LoginPage from './features/user/LoginPage';
 
 const PageFade = props => {
   return (
@@ -41,7 +39,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 class App extends React.Component {
   render() {
-    const { match, history, location } = this.props;
+    const { location } = this.props;
 
     return (
       <div>

@@ -1,5 +1,7 @@
 import auth from './auth';
 
-const allReducers = Object.assign({}, auth);
+console.log('auth', auth);
+let allReducers = Object.assign({}, auth);
+console.log('allReducers', allReducers);
 
 export default allReducers;
