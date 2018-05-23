@@ -1,29 +1,32 @@
 import React from 'react';
 import { Redirect, Link, Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
-import { CSSTransition, TransitionGroup } from 'react-transition-group'
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Particles from 'react-particles-js';
-import { config } from "./ParticleConfig";
-import App from '../containers/App.jsx'
-import LoginPage from "../containers/LoginPage.jsx";
-import SignUpPage from "../containers/SignUpPage.jsx";
+import { config } from './ParticleConfig';
+import App from '../containers/App.jsx';
+import LoginPage from '../containers/LoginPage.jsx';
+import SignUpPage from '../containers/SignUpPage.jsx';
 import Auth from '../store/auth';
 
-
-
 const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route {...rest} render={props => (
-    Auth.isUserAuthenticated() ? (
-      <Component {...props} />
-    ) : (
-        <Redirect to={{
-          pathname: '/login',
-          state: { from: props.location }
-        }} />
+  <Route
+    {...rest}
+    render={props =>
+      Auth.isUserAuthenticated() ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: '/login',
+            state: { from: props.location },
+          }}
+        />
       )
-  )} />
+    }
+  />
 );
-const PageFade = (props) => {
+const PageFade = props => {
   return (
     <CSSTransition
       {...props}
@@ -32,13 +35,14 @@ const PageFade = (props) => {
       mountOnEnter={true}
       unmountOnExit={true}
     />
-  )
+  );
 };
 const IndexRoutes = ({ match, history, location }) => (
   <div>
-    {Auth.isUserAuthenticated()
-      ? <PrivateRoute path="/" component={App} />
-      : <div>
+    {Auth.isUserAuthenticated() ? (
+      <PrivateRoute path="/" component={App} />
+    ) : (
+      <div>
         <Particles params={config} />
         <TransitionGroup>
           <PageFade key={location.pathname}>
@@ -50,7 +54,7 @@ const IndexRoutes = ({ match, history, location }) => (
           </PageFade>
         </TransitionGroup>
       </div>
-    }
+    )}
   </div>
-)
+);
 export default withRouter(IndexRoutes);

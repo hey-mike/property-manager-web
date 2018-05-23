@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Icon, Input, Button, Checkbox, Card } from 'antd';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { signin } from '../../../actions/authActions';
+import { signin } from '../actions/authActions';
 
 const FormItem = Form.Item;
 

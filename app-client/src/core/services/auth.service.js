@@ -1,10 +1,13 @@
-export default class auth {
+// import axios from 'axios';
+import LocalStorageService from './local-store.service';
+
+export default class AuthService {
   static requestHeaders() {
     // return {'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`}
     return {};
   }
   static getEndPoint() {
-    return process.env.NODE_ENV == 'development' ? 'http://localhost:8080' : '';
+    return '';
   }
   static signin(user) {
     const headers = Object.assign(
@@ -58,5 +61,9 @@ export default class auth {
     });
 
     return fetch(request);
+  }
+
+  static isUserAuthenticated() {
+    return LocalStorageService.getAuth() != null;
   }
 }
