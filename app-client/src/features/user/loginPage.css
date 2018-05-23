@@ -1,0 +1,51 @@
+.wrapper {
+  margin: 0 auto;
+  height: 100vh;
+  width: 100vw;
+  overflow-y: auto;
+  padding: 0 16px;
+}
+
+.login-form-wrapper {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+.login-form-wrapper .ant-card-head-title {
+  font-size: 20px;
+}
+.login-form {
+  max-width: 350px;
+  width: 100%;
+  background: white;
+}
+
+.registration-form {
+  width: 100%;
+  padding: 15px;
+  background: white;
+}
+
+.login-form .login-form-header,
+.registration-form .registration-form-header {
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.login-form .login-form-header img,
+.registration-form .registration-form-header img {
+  max-width: 70px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+
+.login-form-button {
+  width: 100%;
+}
