@@ -63,8 +63,12 @@ class LoginForm extends React.Component {
   }
 }
 LoginForm.prototypes = {
+<<<<<<< HEAD:app-client/src/features/user/forms/LoginForm.jsx
   history: PropTypes.object.isRequired,
   form: PropTypes.any.isRequired
+=======
+  history: PropTypes.object.isRequired
+>>>>>>> ca6ca23cba533200e517bef74b47b850e8abc416:app-client/src/features/user/forms/LoginForm.jsx
 };
 
 export default connect()(Form.create()(LoginForm));
