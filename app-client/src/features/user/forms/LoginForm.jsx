@@ -27,14 +27,21 @@ class LoginForm extends React.Component {
           <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
             <FormItem>
               {getFieldDecorator('email', {
-                rules: [{ required: true, message: 'Please input your email!' }]
+                rules: [
+                  { required: true, message: 'Please input your email!' },
+                ],
               })(
-                <Input prefix={<Icon type="mail" style={{ fontSize: 13 }} />} placeholder="Email" />
+                <Input
+                  prefix={<Icon type="mail" style={{ fontSize: 13 }} />}
+                  placeholder="Email"
+                />
               )}
             </FormItem>
             <FormItem>
               {getFieldDecorator('password', {
-                rules: [{ required: true, message: 'Please input your Password!' }]
+                rules: [
+                  { required: true, message: 'Please input your Password!' },
+                ],
               })(
                 <Input
                   prefix={<Icon type="lock" style={{ fontSize: 13 }} />}
@@ -46,12 +53,16 @@ class LoginForm extends React.Component {
             <FormItem>
               {getFieldDecorator('remember', {
                 valuePropName: 'checked',
-                initialValue: true
+                initialValue: true,
               })(<Checkbox>Remember me</Checkbox>)}
               <Link className="login-form-forgot" to="/forget">
                 Forgot password
               </Link>
-              <Button type="primary" htmlType="submit" className="login-form-button">
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
+              >
                 Log in
               </Button>
               Or <Link to="/signup">register now!</Link>
@@ -64,7 +75,7 @@ class LoginForm extends React.Component {
 }
 LoginForm.prototypes = {
   history: PropTypes.object.isRequired,
-  form: PropTypes.any.isRequired
+  form: PropTypes.any.isRequired,
 };
 
 export default connect()(Form.create()(LoginForm));
