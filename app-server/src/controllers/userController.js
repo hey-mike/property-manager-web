@@ -76,8 +76,8 @@ const generateToken = (payload) => {
     algorithm: 'RS256'
   });
 }
-exports.signin = function (req, res, next) {
-  passport.authenticate('local', function (err, user, info) {
+exports.signIn = function (req, res, next) {
+  passport.authenticate('jwt', function (err, user, info) {
     if (err) {
       return next(err);
     }
@@ -91,7 +91,6 @@ exports.signin = function (req, res, next) {
 
     const token = generateToken(payload);
     try {
-
       const data = {
         name: user.name
       };
