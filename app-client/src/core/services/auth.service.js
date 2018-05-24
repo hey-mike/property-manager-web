@@ -9,7 +9,7 @@ export default class AuthService {
   static getEndPoint() {
     return '';
   }
-  static signin(user) {
+  static signIn(user) {
     const headers = Object.assign(
       {
         'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export default class AuthService {
     return fetch(request);
   }
 
-  static signup(newUser) {
+  static signUp(newUser) {
     const headers = Object.assign(
       {
         'Content-Type': 'application/json',

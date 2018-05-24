@@ -30,4 +30,4 @@ LoginPage.prototypes = {
   history: PropTypes.object.isRequired,
 };
 
-export default connect(LoginPage);
+export default connect()(LoginPage);
