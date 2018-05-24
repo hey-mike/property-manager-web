@@ -1,5 +1,6 @@
+// import user from '../features/user/reducers';
 import { combineReducers } from 'redux';
-import user from '../features/user/reducers';
+
 
 console.log(user);
 
