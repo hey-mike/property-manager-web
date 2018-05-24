@@ -1,7 +1,6 @@
 import auth from './auth';
+import { combineReducers } from 'redux';
 
-console.log('auth', auth);
-let allReducers = Object.assign({}, auth);
-console.log('allReducers', allReducers);
-
-export default allReducers;
+export default combineReducers({
+  auth,
+});
