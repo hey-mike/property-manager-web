@@ -3,8 +3,7 @@
     "port": 8080
   },
   "db": {
-    "test": "mongodb://mongodb:27017/Property-manager",
-    "uri:": "mongodb://admin:password@ds161162.mlab.com:61162/property_manager",
+    "uri": "mongodb://localhost:27017/Property-manager",
     "options": {
       "autoIndex": false, 
       "reconnectTries": "Number.MAX_VALUE", 
