@@ -3,10 +3,10 @@
  */
 
 import app from "./app";
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
+import errorHandler from "errorhandler";
 
 require("./config/mongoose");
-const errorHandler = require("errorhandler");
 const config = require("./config/config.js");
 
 const port = process.env.PORT || config.get("server:port");
@@ -17,7 +17,7 @@ app.set("port", port);
  */
 app.use(errorHandler());
 
-app.use((err: any, req: Request, res: Response, next: any) => {
+app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err.message); // Log error message in our server's console
   if (!err.statusCode) err.statusCode = 500; // If err has no specified error code, set error code to 'Internal Server Error (500)'
   res.status(err.statusCode).send(err.message); // All HTTP requests must have a response, so let's send back an error with its status code and message
