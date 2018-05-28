@@ -35,7 +35,7 @@ initPassport(app);
 // add routes
 app.use('/', index);
 app.use('/auth', auth);
-app.use('/api', authCheckMiddleware);
+// app.use('/api', authCheckMiddleware);
 app.use('/api/user', user);
 app.use('/api/transaction', transaction);
 app.use('/mock', mock);
@@ -44,12 +44,12 @@ app.get('*', (req, res) => {
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   console.log(err);
   // set locals, only providing error in development
   res.locals.message = err.message;
