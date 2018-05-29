@@ -7,6 +7,10 @@ const passport = require('passport');
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
+const {
+  check,
+  validationResult
+} = require('express-validator/check');
 
 // Create a new error handling controller method
 const getErrorMessage = function (err) {
@@ -110,7 +114,7 @@ exports.signIn = function (req, res, next) {
 }
 // Create a new controller method that creates new 'regular' users
 exports.create = function (req, res, next) {
-  passport.authenticate('local', function (err, user) {
+  passport.authenticate('jwt', function (err, user) {
     if (err) {
       return next(err);
     }
@@ -118,7 +122,7 @@ exports.create = function (req, res, next) {
     const newUser = new User(req.body);
 
     // Set the user provider property
-    newUser.provider = 'local';
+    newUser.provider = 'jwt';
 
     // Try saving the new user document
     newUser.save(function (err) {
