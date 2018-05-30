@@ -3,7 +3,7 @@
     "port": 8080
   },
   "db": {
-    "uri": "mongodb://property-manager-mongodb:27017/Property-manager",
+    "uri": "mongodb://localhost:27017/Property-manager",
     "options": {
       "autoIndex": false, 
       "reconnectTries": "Number.MAX_VALUE", 

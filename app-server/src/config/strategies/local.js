@@ -10,16 +10,14 @@ const User = require('../../models/user');
 // module.exports = function () {
 // Use the Passport's Local strategy
 passport.use(
-  new LocalStrategy(
-    {
+  new LocalStrategy({
       usernameField: 'email',
       passwordField: 'password',
       session: false,
     },
-    function(email, password, done) {
+    function (email, password, done) {
       // Use the 'User' model 'findOne' method to find a user with the current username
-      User.findOne(
-        {
+      User.findOne({
           email: email,
         },
         (err, user) => {

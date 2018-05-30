@@ -4,13 +4,13 @@
 // Load the module dependencies
 const User = require('../models/user');
 const passport = require('passport');
-// const jwt = require('jsonwebtoken');
-// const fs = require('fs');
-// const path = require('path');
+const {
+  validationResult
+} = require('express-validator/check');
 const tokenManager = require('../utils/tokenManager');
 
 // Create a new error handling controller method
-const getErrorMessage = function(err) {
+const getErrorMessage = function (err) {
   // Define the error message variable
   let message = '';
 
@@ -22,7 +22,7 @@ const getErrorMessage = function(err) {
       case 11001:
         message = 'Username already exists';
         break;
-      // If a general error occurs set the message error
+        // If a general error occurs set the message error
       default:
         message = 'Something went wrong';
     }
@@ -77,8 +77,9 @@ const getErrorMessage = function(err) {
 //     algorithm: 'RS256'
 //   });
 // }
-exports.signIn = function(req, res, next) {
-  passport.authenticate('local', function(err, user, info) {
+exports.signIn = function (req, res, next) {
+
+  passport.authenticate('local', function (err, user, info) {
     if (err) {
       return next(err);
     }
@@ -112,8 +113,15 @@ exports.signIn = function(req, res, next) {
   })(req, res, next);
 };
 // Create a new controller method that creates new 'regular' users
-exports.create = function(req, res, next) {
-  passport.authenticate('local', function(err, user) {
+exports.create = function (req, res, next) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      errors: errors.array()
+    });
+  }
+
+  passport.authenticate('local', function (err, user) {
     if (err) {
       return next(err);
     }
@@ -124,7 +132,7 @@ exports.create = function(req, res, next) {
     newUser.provider = 'local';
 
     // Try saving the new user document
-    newUser.save(function(err) {
+    newUser.save(function (err) {
       // If an error occurs, use flash messages to report the error
       if (err) {
         // Use the error handling method to get the error message
@@ -148,14 +156,13 @@ exports.create = function(req, res, next) {
 };
 
 // Create a new controller method that creates new 'OAuth' users
-exports.saveOAuthUserProfile = function(req, profile, done) {
+exports.saveOAuthUserProfile = function (req, profile, done) {
   // Try finding a user document that was registered using the current OAuth provider
-  User.findOne(
-    {
+  User.findOne({
       provider: profile.provider,
       providerId: profile.providerId,
     },
-    function(err, user) {
+    function (err, user) {
       // If an error occurs continue to the next middleware
       if (err) {
         return done(err);
@@ -168,7 +175,7 @@ exports.saveOAuthUserProfile = function(req, profile, done) {
             (profile.email ? profile.email.split('@')[0] : '');
 
           // Find a unique available username
-          User.findUniqueUsername(possibleUsername, null, function(
+          User.findUniqueUsername(possibleUsername, null, function (
             availableUsername,
           ) {
             // Set the available user name
@@ -178,7 +185,7 @@ exports.saveOAuthUserProfile = function(req, profile, done) {
             user = new User(profile);
 
             // Try saving the new user document
-            user.save(function(err) {
+            user.save(function (err) {
               // Continue to the next middleware
               return done(err, user);
             });
