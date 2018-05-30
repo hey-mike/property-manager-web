@@ -30,9 +30,6 @@ class TokenManager {
   //   // The first signing converted all needed options into claims, they are already in the payload
   //   return jwt.sign(payload, this.secretOrPrivateKey, jwtSignOptions);
   // }
-  async verifyToken(token, callback) {
-    return jwt.verify(token, this.publicKey, this.options, callback);
-  }
 }
 
 module.exports = new TokenManager;

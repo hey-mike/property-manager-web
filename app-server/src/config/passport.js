@@ -6,7 +6,7 @@ const passport = require('passport');
 const User = require("../models/user");
 
 require('./strategies/local.js');
-// require('./strategies/jwt.js');
+require('./strategies/jwt.js');
 // Use Passport's 'serializeUser' method to serialize the user id
 passport.serializeUser(function (user, done) {
 	done(null, user.id);

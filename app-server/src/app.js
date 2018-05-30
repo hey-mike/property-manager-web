@@ -8,9 +8,9 @@ const cors = require('cors');
 const passport = require('passport');
 const compression = require('compression');
 const expressValidator = require("express-validator");
-const initPassport = require('./config/passport');
+
+require('./config/passport');
 const logger = require('./utils/logger');
-const authCheckMiddleware = require('./middlewares/requiredAuth');
 
 const auth = require('./routes/auth');
 const index = require('./routes/index');
@@ -30,19 +30,13 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(expressValidator());
 app.use(passport.initialize());
-// pass the authorization checker middleware
-
 
 // add routes
 app.use('/', index);
 app.use('/auth', auth);
-// app.use('/api', authCheckMiddleware);
-app.use('/api/user', user);
-app.use('/api/transaction', transaction);
+app.use('/api/user', passport.authenticate('jwt'), user);
+app.use('/api/transaction', passport.authenticate('jwt'), transaction);
 app.use('/mock', mock);
-// app.get('*', (req, res) => {
-//   res.sendFile(path.resolve('index.html'));
-// });
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -57,6 +51,7 @@ app.use(function (err, req, res) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
+  console.error(err);
   // render the error page
   res.status(err.status || 500);
   // res.render('error');

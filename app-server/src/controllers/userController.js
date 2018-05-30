@@ -78,11 +78,12 @@ const getErrorMessage = function (err) {
 //   });
 // }
 exports.signIn = function (req, res, next) {
-  passport.authenticate('jwt', function (err, user, info) {
+  passport.authenticate('local', function (err, user, info) {
     if (err) {
       return next(err);
     }
     if (!user) {
+      console.error(info);
       return res.status(400).json(info);
     }
 
@@ -112,7 +113,7 @@ exports.signIn = function (req, res, next) {
 }
 // Create a new controller method that creates new 'regular' users
 exports.create = function (req, res, next) {
-  passport.authenticate('jwt', function (err, user) {
+  passport.authenticate('local', function (err, user) {
     if (err) {
       return next(err);
     }
@@ -120,11 +121,10 @@ exports.create = function (req, res, next) {
     const newUser = new User(req.body);
 
     // Set the user provider property
-    newUser.provider = 'jwt';
+    newUser.provider = 'local';
 
     // Try saving the new user document
     newUser.save(function (err) {
-      console.error(err);
       // If an error occurs, use flash messages to report the error
       if (err) {
         // Use the error handling method to get the error message

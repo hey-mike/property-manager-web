@@ -9,7 +9,8 @@ const User = require("../../models/user");
 
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = tokenManager.keys.public_key;
+opts.secretOrKey = tokenManager.publicKey;
+opts.algorithm = 'RS256';
 passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
   User.findOne({
     id: jwt_payload.sub

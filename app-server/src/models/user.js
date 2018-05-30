@@ -63,7 +63,7 @@ userSchema.pre("save", function (next) {
 });
 
 userSchema.methods.authenticate = async (password, cb) => {
-  return await bcrypt.compare(password, user.passwordHash);
+  return await bcrypt.compare(password, password);
 };
 
 userSchema.methods.name = () => {
