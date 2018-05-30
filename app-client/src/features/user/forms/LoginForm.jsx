@@ -66,7 +66,7 @@ class LoginForm extends React.Component {
               >
                 Log in
               </Button>
-              Or <Link to="/signup">register now!</Link>
+              Or <Link to="/user/register">register now!</Link>
             </FormItem>
           </Form>
         </div>

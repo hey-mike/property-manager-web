@@ -5,20 +5,21 @@ import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signIn } from './actions/authActions';
 import LoginForm from './forms/LoginForm.jsx';
+import RegisterForm from './forms/RegisterForm';
 
 import './UserPage.css';
 
 class UserPage extends React.Component {
   constructor(props) {
     super(props);
-    this.signIn = this.signIn.bind(this);
+    this.login = this.login.bind(this);
   }
-  signIn(values) {
-    console.log('signin');
+  login(values) {
+    console.log('login');
     this.props.dispatch(signIn(values, this.props.history));
   }
-  signUp() {
-    console.log('signin');
+  register() {
+    console.log('register');
   }
   render() {
     return (
@@ -26,15 +27,22 @@ class UserPage extends React.Component {
         <div className="login-form-wrapper">
           <Switch>
             <Route
+              exact
               path="/user/login"
               component={() => (
-                <LoginForm
+                <LoginForm history={this.props.history} onSubmit={this.login} />
+              )}
+            />
+            <Route
+              exact
+              path="/user/register"
+              component={() => (
+                <RegisterForm
                   history={this.props.history}
-                  onSubmit={this.signIn}
+                  onSubmit={this.register}
                 />
               )}
             />
-            <Route path="/user/signup" component={UserPage} />
           </Switch>
         </div>
       </div>

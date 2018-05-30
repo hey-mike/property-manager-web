@@ -29,6 +29,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         <Component {...props} />
       ) : (
         <Redirect
+          exact
           to={{
             pathname: '/user/login',
             state: { from: props.location },
@@ -56,7 +57,7 @@ class App extends React.Component {
             <Switch location={location}>
               <PrivateRoute path="/dashboard" component={DashboardPage} />
               <Route path="/user" component={UserPage} />
-              <Redirect from="/" to="/dashboard" />
+              <Redirect exact from="/" to="/dashboard" />
             </Switch>
           </PageFade>
         </TransitionGroup>
