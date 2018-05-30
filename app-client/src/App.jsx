@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -7,7 +6,8 @@ import { withRouter } from 'react-router-dom';
 import AuthService from './core/services/auth.service';
 import './App.css';
 
-import LoginPage from './features/user/LoginPage';
+import UserPage from './features/user/UserPage';
+import DashboardPage from './features/dashboard/DashboardPage';
 
 const PageFade = props => {
   return (
@@ -30,7 +30,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       ) : (
         <Redirect
           to={{
-            pathname: '/login',
+            pathname: '/user/login',
             state: { from: props.location },
           }}
         />
@@ -51,28 +51,18 @@ class App extends React.Component {
 
     return (
       <div className="main">
-        <Switch>
-          <Route exact path="/" component={LoginPage} />
-          {/* <Route path="/about" component={About} />
-          <Route path="/:user" component={User} />
-          <Route component={NoMatch} /> */}
-        </Switch>
-        {/* <TransitionGroup>
+        <TransitionGroup>
           <PageFade key={location.pathname}>
             <Switch location={location}>
-              <Route path="/login" component={LoginPage} />
+              <PrivateRoute path="/dashboard" component={DashboardPage} />
+              <Route path="/user" component={UserPage} />
+              <Redirect from="/" to="/dashboard" />
             </Switch>
           </PageFade>
-        </TransitionGroup> */}
+        </TransitionGroup>
       </div>
     );
   }
 }
-const mapStateToProps = (state, ownProps) => ({
-  // getVisibleTodos() always returns a new array, and so the
-  // 'visibleToDos' prop will always reference a different array,
-  // causing the wrapped component to re-render, even if the array's
-  // values haven't changed
-  visibleToDos: state.todos,
-});
-export default withRouter(connect(mapStateToProps)(App));
+
+export default withRouter(App);
