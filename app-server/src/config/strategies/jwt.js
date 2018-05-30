@@ -1,23 +1,28 @@
 // Invoke 'strict' JavaScript mode
-"use strict";
+'use strict';
 
-const passport = require("passport");
-const JwtStrategy = require("passport-jwt").Strategy;
-const ExtractJwt = require("passport-jwt").ExtractJwt;
+const passport = require('passport');
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 const tokenManager = require('../../utils/tokenManager');
-const User = require("../../models/user");
+const User = require('../../models/user');
 
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = tokenManager.publicKey;
 opts.algorithm = 'RS256';
-passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
-  User.findOne({
-    id: jwt_payload.sub
-  }, (err, user) => {
-    if (err) {
-      return done(err, false);
-    }
-    return user ? done(null, user) : done(null, false);
-  });
-}));
+passport.use(
+  new JwtStrategy(opts, (jwt_payload, done) => {
+    User.findOne(
+      {
+        id: jwt_payload.sub,
+      },
+      (err, user) => {
+        if (err) {
+          return done(err, false);
+        }
+        return user ? done(null, user) : done(null, false);
+      },
+    );
+  }),
+);
