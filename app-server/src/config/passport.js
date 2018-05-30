@@ -3,7 +3,7 @@
 
 // Load the module dependencies
 const passport = require('passport');
-const User = require("../models/user");
+const User = require("../models/User");
 
 require('./strategies/local.js');
 require('./strategies/jwt.js');
