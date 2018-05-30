@@ -5,6 +5,9 @@
   "scripts": {
     "start": "nodemon --legacy-watch ./src/server.js"
   },
+  "engines": {
+    "node": ">=9.7.1"
+  },
   "dependencies": {
     "bcrypt": "^2.0.1",
     "body-parser": "^1.18.2",

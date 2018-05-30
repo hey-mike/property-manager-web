@@ -4,13 +4,10 @@
 // Load the module dependencies
 const User = require("../models/user");
 const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
-const {
-  check,
-  validationResult
-} = require('express-validator/check');
+// const jwt = require('jsonwebtoken');
+// const fs = require('fs');
+// const path = require('path');
+const tokenManager = require('../utils/tokenManager');
 
 // Create a new error handling controller method
 const getErrorMessage = function (err) {
@@ -71,15 +68,15 @@ const getErrorMessage = function (err) {
 //         errors
 //     };
 // }
-const generateToken = (payload) => {
-  // sign with RSA SHA256
-  const cert = fs.readFileSync(path.join(__dirname, '/../../keys/jwtRS256.key')); // get private key
+// const generateToken = (payload) => {
+//   // sign with RSA SHA256
+//   const cert = fs.readFileSync(path.join(__dirname, '/../../keys/jwtRS256.key')); // get private key
 
-  // create a token string
-  return jwt.sign(payload, cert, {
-    algorithm: 'RS256'
-  });
-}
+//   // create a token string
+//   return jwt.sign(payload, cert, {
+//     algorithm: 'RS256'
+//   });
+// }
 exports.signIn = function (req, res, next) {
   passport.authenticate('jwt', function (err, user, info) {
     if (err) {
@@ -93,7 +90,8 @@ exports.signIn = function (req, res, next) {
       sub: user._id
     };
 
-    const token = generateToken(payload);
+    // const token = generateToken(payload);
+    const token = tokenManager.generateToken(payload);
     try {
       const data = {
         name: user.name
@@ -139,7 +137,7 @@ exports.create = function (req, res, next) {
       const payload = {
         sub: user._id
       };
-      const token = generateToken(payload);
+      const token = tokenManager.generateToken(payload);
 
       return res.status(200).json({
         message: "User was created successfully",

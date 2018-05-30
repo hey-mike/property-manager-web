@@ -6,56 +6,33 @@ class TokenManager {
 
   constructor() {
     this.keys = {};
-    this.keys['private_key'] = fs.readFileSync(path.join(__dirname, '/../../keys/private_key.pem')); // get private key;
-    this.keys['public_key'] = fs.readFileSync(path.join(__dirname, '/../../keys/public_key.pem')); // get private key;
+    this.privateKey = fs.readFileSync(path.join(__dirname, '/../../keys/private_key.pem')); // get private key;
+    this.publicKey = fs.readFileSync(path.join(__dirname, '/../../keys/public_key.pem')); // get private key;
+    this.options = {
+      algorithm: 'RS256'
+    };
   }
   setOptions(options) {
     this.options = options;
   }
-  sign() {
-    const jwtSignOptions = Object.assign({}, signOptions, this.options);
-    return jwt.sign(payload, this.secretOrPrivateKey, jwtSignOptions);
+  generateToken(payload) {
+    return jwt.sign(payload, this.privateKey, this.options);
   }
-  refresh() {
-    const payload = jwt.verify(token, this.secretOrPublicKey, refreshOptions.verify);
-    delete payload.iat;
-    delete payload.exp;
-    delete payload.nbf;
-    delete payload.jti; //We are generating a new token, if you are using jwtid during signing, pass it in refreshOptions
-    const jwtSignOptions = Object.assign({}, this.options, {
-      jwtid: refreshOptions.jwtid
-    });
-    // The first signing converted all needed options into claims, they are already in the payload
-    return jwt.sign(payload, this.secretOrPrivateKey, jwtSignOptions);
-  }
-  verifyToken() {
-    return jwt.verify(token, cert, { algorithm: 'RS256'}, (err, decoded));
+  // refresh() {
+  //   const payload = jwt.verify(token, this.secretOrPublicKey, refreshOptions.verify);
+  //   delete payload.iat;
+  //   delete payload.exp;
+  //   delete payload.nbf;
+  //   delete payload.jti; //We are generating a new token, if you are using jwtid during signing, pass it in refreshOptions
+  //   const jwtSignOptions = Object.assign({}, this.options, {
+  //     jwtid: refreshOptions.jwtid
+  //   });
+  //   // The first signing converted all needed options into claims, they are already in the payload
+  //   return jwt.sign(payload, this.secretOrPrivateKey, jwtSignOptions);
+  // }
+  async verifyToken(token, callback) {
+    return jwt.verify(token, this.publicKey, this.options, callback);
   }
 }
-// function TokenGenerator(secretOrPrivateKey, secretOrPublicKey, options) {
-//   this.secretOrPrivateKey = secretOrPrivateKey;
-//   this.secretOrPublicKey = secretOrPublicKey;
-//   this.options = options; //algorithm + keyid + noTimestamp + expiresIn + notBefore
-// }
-
-// TokenGenerator.prototype.sign = function (payload, signOptions) {
-//   const jwtSignOptions = Object.assign({}, signOptions, this.options);
-//   return jwt.sign(payload, this.secretOrPrivateKey, jwtSignOptions);
-// }
-
-// // refreshOptions.verify = options you would use with verify function
-// // refreshOptions.jwtid = contains the id for the new token
-// TokenGenerator.prototype.refresh = function (token, refreshOptions) {
-//   const payload = jwt.verify(token, this.secretOrPublicKey, refreshOptions.verify);
-//   delete payload.iat;
-//   delete payload.exp;
-//   delete payload.nbf;
-//   delete payload.jti; //We are generating a new token, if you are using jwtid during signing, pass it in refreshOptions
-//   const jwtSignOptions = Object.assign({}, this.options, {
-//     jwtid: refreshOptions.jwtid
-//   });
-//   // The first signing converted all needed options into claims, they are already in the payload
-//   return jwt.sign(payload, this.secretOrPrivateKey, jwtSignOptions);
-// }
 
 module.exports = new TokenManager;
