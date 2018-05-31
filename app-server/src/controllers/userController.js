@@ -78,7 +78,12 @@ const getErrorMessage = function (err) {
 //   });
 // }
 exports.signIn = function (req, res, next) {
-  console.log(req.body)
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).json({
+      errors: errors.mapped()
+    });
+  }
   passport.authenticate('local', function (err, user, info) {
     if (err) {
       return next(err);
