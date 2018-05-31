@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { signIn } from './actions/authActions';
+import { login, register } from './actions/authActions';
 import LoginForm from './forms/LoginForm.jsx';
 import RegisterForm from './forms/RegisterForm';
 
@@ -13,13 +13,15 @@ class UserPage extends React.Component {
   constructor(props) {
     super(props);
     this.login = this.login.bind(this);
+    this.register = this.register.bind(this);
   }
   login(values) {
     console.log('login');
-    this.props.dispatch(signIn(values, this.props.history));
+    this.props.dispatch(login(values, this.props.history));
   }
-  register() {
+  register(values) {
     console.log('register');
+    this.props.dispatch(register(values, this.props.history));
   }
   render() {
     return (

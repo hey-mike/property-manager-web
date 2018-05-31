@@ -1,4 +1,4 @@
-// import axios from 'axios';
+import axios from 'axios';
 import LocalStorageService from './local-store.service';
 
 export default class AuthService {
@@ -7,9 +7,9 @@ export default class AuthService {
     return {};
   }
   static getEndPoint() {
-    return 'api';
+    return `https://${window.location.hostname}/api`;
   }
-  static signIn(user) {
+  static login(user) {
     const headers = Object.assign(
       {
         'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ export default class AuthService {
     const url = this.getEndPoint();
     const request = new Request(`${url}/auth/login`, {
       method: 'POST',
-      mode: 'cors',
+      mode: 'same-origin',
       headers: headers,
       body: JSON.stringify(user),
     });
@@ -27,7 +27,7 @@ export default class AuthService {
     return fetch(request);
   }
 
-  static signUp(newUser) {
+  static register(newUser) {
     const headers = Object.assign(
       {
         'Content-Type': 'application/json',

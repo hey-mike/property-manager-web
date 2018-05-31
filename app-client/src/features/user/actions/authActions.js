@@ -37,10 +37,10 @@ export const signoutSuccess = () => ({
   type: types.SIGN_OUT_SUCCESS,
 });
 
-export const signIn = (user, history) => {
+export const login = (user, history) => {
   return dispatch => {
     dispatch(authRequest());
-    AuthService.signIn(user)
+    AuthService.login(user)
       .then(response => {
         if (!response.ok) {
           return response.json().then(error => {
@@ -65,11 +65,11 @@ export const signIn = (user, history) => {
   };
 };
 
-export const signup = (user, history) => {
+export const register = (user, history) => {
   return dispatch => {
     dispatch(authRequest());
 
-    AuthService.signup(user)
+    AuthService.register(user)
       .then(response => {
         if (!response.ok) {
           return response.json().then(error => {
@@ -86,7 +86,7 @@ export const signup = (user, history) => {
         });
       })
       .catch(error => {
-        const errorMsg = `Error in sending data to server: ${error.message}`;
+        const errorMsg = `Error in sending data to server: ${error.errors}`;
         // dispatch(authRequestError(errorMsg))
         notification.error({
           message: errorMsg,
