@@ -7,6 +7,7 @@ const User = require('../models/user');
 
 require('./strategies/local.js');
 require('./strategies/jwt.js');
+
 // Use Passport's 'serializeUser' method to serialize the user id
 passport.serializeUser(function (user, done) {
   done(null, user.id);
@@ -14,6 +15,7 @@ passport.serializeUser(function (user, done) {
 
 // Use Passport's 'deserializeUser' method to load the user document
 passport.deserializeUser(function (id, done) {
+  console.log(id);
   User.findOne({
       _id: id,
     },

@@ -78,7 +78,7 @@ const getErrorMessage = function (err) {
 //   });
 // }
 exports.signIn = function (req, res, next) {
-
+  console.log(req.body)
   passport.authenticate('local', function (err, user, info) {
     if (err) {
       return next(err);
