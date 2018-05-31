@@ -76,13 +76,17 @@ const getErrorMessage = function(err) {
 //   });
 // }
 exports.signIn = function(req, res, next) {
-  // const errors = validationResult(req);
-  // if (!errors.isEmpty()) {
-  //   console.log('return');
-  //   return res.status(422).json({
-  //     errors: errors.mapped()
-  //   });
-  // }
+  const errorFormatter = ({ location, msg, param, value, nestedErrors }) => {
+    // Build your resulting errors however you want! String, object, whatever - it works!
+    return `${param} ${msg}`;
+  };
+  const errors = validationResult(req).formatWith(errorFormatter);
+  if (!errors.isEmpty()) {
+    const message = errors.mapped();
+    return res.status(422).json({
+      message
+    });
+  }
   passport.authenticate('local', function(err, user, info) {
     if (err) {
       return next(err);
@@ -118,10 +122,15 @@ exports.signIn = function(req, res, next) {
 };
 // Create a new controller method that creates new 'regular' users
 exports.create = function(req, res, next) {
-  const errors = validationResult(req);
+  const errorFormatter = ({ location, msg, param, value, nestedErrors }) => {
+    // Build your resulting errors however you want! String, object, whatever - it works!
+    return `${param} ${msg}`;
+  };
+  const errors = validationResult(req).formatWith(errorFormatter);
+  console.log(errors);
   if (!errors.isEmpty()) {
     return res.status(422).json({
-      errors: errors.mapped()
+      message: errors.mapped()
     });
   }
 
