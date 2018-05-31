@@ -13,8 +13,7 @@ opts.secretOrKey = tokenManager.publicKey;
 opts.algorithm = 'RS256';
 passport.use(
   new JwtStrategy(opts, (jwt_payload, done) => {
-    User.findOne(
-      {
+    User.findOne({
         id: jwt_payload.sub,
       },
       (err, user) => {

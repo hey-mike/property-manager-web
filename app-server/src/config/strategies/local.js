@@ -17,10 +17,7 @@ passport.use(
     },
     function (email, password, done) {
       // Use the 'User' model 'findOne' method to find a user with the current username
-      User.findOne({
-          email: email,
-        },
-        (err, user) => {
+      User.findOne({email: email,}, (err, user) => {
           // If an error occurs continue to the next middleware
           if (err) {
             return done(err);

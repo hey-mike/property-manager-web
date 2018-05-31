@@ -117,13 +117,18 @@ exports.create = function (req, res, next) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({
-      errors: errors.array()
+      errors: errors.mapped()
     });
   }
 
   passport.authenticate('local', function (err, user) {
     if (err) {
       return next(err);
+    }
+    if(user) {
+      return res.status(409).json({
+        message: 'Email has been taken, please use another one',
+      });
     }
     // Create a new 'User' model instance
     const newUser = new User(req.body);
