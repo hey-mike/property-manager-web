@@ -8,22 +8,22 @@ const userSchema = new Schema(
       type: String,
       unique: true,
       required: true,
-      trim: true,
+      trim: true
     },
     username: {
       type: String,
       unique: true,
-      trim: true,
+      trim: true
     },
     password: {
       type: String,
-      required: true,
+      required: true
     },
-    bio: String,
+    bio: String
   },
   {
-    timestamps: true,
-  },
+    timestamps: true
+  }
 );
 
 // Set the 'fullname' virtual property
@@ -39,17 +39,16 @@ userSchema
   });
 userSchema.set('toJSON', {
   getters: true,
-  virtuals: false,
+  virtuals: false
 });
 
 const saltRounds = 10;
-userSchema.pre('save', function(next) {
+userSchema.pre('save', function() {
   const user = this;
 
   bcrypt.hash(this.password, saltRounds, function(err, hashedPassword) {
     user.password = hashedPassword;
     user.updatedAt = Date.now();
-    next();
   });
 });
 
@@ -57,7 +56,7 @@ userSchema.methods.authenticate = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
 
-userSchema.methods.name = function () {
+userSchema.methods.name = function() {
   return this.displayName || this.username;
 };
 

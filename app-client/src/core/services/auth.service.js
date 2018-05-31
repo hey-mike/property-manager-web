@@ -7,7 +7,7 @@ export default class AuthService {
     return {};
   }
   static getEndPoint() {
-    return '';
+    return 'api';
   }
   static signIn(user) {
     const headers = Object.assign(
@@ -17,7 +17,7 @@ export default class AuthService {
       this.requestHeaders()
     );
     const url = this.getEndPoint();
-    const request = new Request(`${url}/auth/signin`, {
+    const request = new Request(`${url}/auth/login`, {
       method: 'POST',
       mode: 'cors',
       headers: headers,
@@ -35,7 +35,7 @@ export default class AuthService {
       this.requestHeaders()
     );
     const url = this.getEndPoint();
-    const request = new Request(`${url}/auth/signup`, {
+    const request = new Request(`${url}/auth/register`, {
       method: 'POST',
       mode: 'cors',
       headers: headers,

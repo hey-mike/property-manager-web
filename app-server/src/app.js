@@ -25,22 +25,22 @@ app.use(compression());
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
-    extended: true,
-  }),
+    extended: true
+  })
 );
 app.use(expressValidator());
 app.use(passport.initialize());
 
 // add routes
 app.use('/', index);
-app.use('/auth', auth);
+app.use('/api/auth', auth);
 app.use('/api/user', passport.authenticate('jwt'), user);
 app.use('/api/transaction', passport.authenticate('jwt'), transaction);
 app.use('/mock', mock);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err =  new Error('Not Found');
+  var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });

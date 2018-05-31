@@ -9,18 +9,20 @@ require('./strategies/local.js');
 require('./strategies/jwt.js');
 
 // Use Passport's 'serializeUser' method to serialize the user id
-passport.serializeUser(function (user, done) {
+passport.serializeUser(function(user, done) {
+  console.log('serializeUser');
   done(null, user.id);
 });
 
 // Use Passport's 'deserializeUser' method to load the user document
-passport.deserializeUser(function (id, done) {
-  console.log(id);
-  User.findOne({
-      _id: id,
+passport.deserializeUser(function(id, done) {
+  console.log('deserializeUser');
+  User.findOne(
+    {
+      _id: id
     },
     '-password -salt',
-    function (err, user) {
+    function(err, user) {
       done(err, user);
     }
   );
