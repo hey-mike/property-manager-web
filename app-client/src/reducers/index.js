@@ -1,8 +1,8 @@
-import user from '../features/user/reducers';
+import auth from '../features/user/reducers';
 import { combineReducers } from 'redux';
 
 const PropertyManager = combineReducers({
-  user,
+  auth,
 });
 
 export default PropertyManager;

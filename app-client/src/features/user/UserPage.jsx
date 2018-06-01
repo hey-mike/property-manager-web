@@ -16,14 +16,13 @@ class UserPage extends React.Component {
     this.register = this.register.bind(this);
   }
   login(values) {
-    console.log('login');
     this.props.dispatch(login(values, this.props.history));
   }
   register(values) {
-    console.log('register');
     this.props.dispatch(register(values, this.props.history));
   }
   render() {
+    console.log(this.props);
     return (
       <div className={classnames('wrapper')}>
         <div className="login-form-wrapper">
@@ -56,4 +55,9 @@ UserPage.propTypes = {
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 };
-export default withRouter(connect()(UserPage));
+
+const mapStateToProps = (state, ownProps) => {
+  console.log(state);
+  return { auth: state.auth };
+};
+export default withRouter(connect(mapStateToProps)(UserPage));

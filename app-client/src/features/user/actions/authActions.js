@@ -13,7 +13,7 @@ export const authRequestError = error => ({
   receivedAt: Date.now(),
 });
 
-export const signinSuccess = (data, history) => {
+export const loginSuccess = (data, history) => {
   // save the token
   LocalStoreService.authenticateUser(data.token);
   history.replace({
@@ -24,7 +24,7 @@ export const signinSuccess = (data, history) => {
     data,
   };
 };
-export const signupSuccess = (data, history) => {
+export const registerSuccess = (data, history) => {
   history.replace({
     pathname: `/`,
   });
@@ -38,34 +38,51 @@ export const signoutSuccess = () => ({
 });
 
 export const login = (user, history) => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(authRequest());
-    AuthService.login(user)
-      .then(response => {
-        if (!response.ok) {
-          return response.json().then(error => {
-            notification.error({
-              message: error.message,
-            });
-          });
-        }
-        response.json().then(res => {
-          dispatch(signinSuccess(res, history));
-          notification.success({
-            message: 'Sign In successfully',
-          });
-        });
-      })
-      .catch(error => {
-        const errorMsg = `Error in sending data to server: ${error.message}`;
-        notification.error({
-          message: errorMsg,
-        });
+    try {
+      const response = await AuthService.login(user);
+      dispatch(loginSuccess(response, history));
+      notification.success({
+        message: 'Sign In successfully',
       });
+    } catch (error) {
+      // console.log(error.message);
+      console.error('Failure!');
+      console.error(error.message);
+      dispatch(authRequestError(error.message));
+      // const errorMsg = `Error in sending data to server: ${error.message}`;
+      // notification.error({
+      //   message: errorMsg,
+      // });
+    }
+    // dispatch(authRequest());
+    // AuthService.login(user)
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       return response.json().then(error => {
+    //         notification.error({
+    //           message: error.message,
+    //         });
+    //       });
+    //     }
+    //     response.json().then(res => {
+    //       dispatch(signinSuccess(res, history));
+    //       notification.success({
+    //         message: 'Sign In successfully',
+    //       });
+    //     });
+    //   })
+    //   .catch(error => {
+    //     const errorMsg = `Error in sending data to server: ${error.message}`;
+    //     notification.error({
+    //       message: errorMsg,
+    //     });
+    //   });
   };
 };
 
-export const register = (user, history) => {
+export const register = async (user, history) => {
   return dispatch => {
     dispatch(authRequest());
 
@@ -79,7 +96,7 @@ export const register = (user, history) => {
           });
         }
         response.json().then(user => {
-          dispatch(signupSuccess(user, history));
+          dispatch(registerSuccess(user, history));
           notification.success({
             message: 'Sign Up successfully',
           });

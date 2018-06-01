@@ -26,7 +26,7 @@ class LoginForm extends React.Component {
             <img src="/images/logo.svg" alt="logo" />
           </div>
           <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
-            <FormItem>
+            <FormItem hasFeedback>
               {getFieldDecorator('email', {
                 rules: [
                   { required: true, message: 'Please input your email!' },
@@ -38,7 +38,7 @@ class LoginForm extends React.Component {
                 />
               )}
             </FormItem>
-            <FormItem>
+            <FormItem hasFeedback>
               {getFieldDecorator('password', {
                 rules: [
                   { required: true, message: 'Please input your Password!' },
@@ -75,8 +75,7 @@ class LoginForm extends React.Component {
   }
 }
 LoginForm.prototypes = {
-  history: PropTypes.object.isRequired,
-  form: PropTypes.any.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
 
 export default Form.create()(LoginForm);
