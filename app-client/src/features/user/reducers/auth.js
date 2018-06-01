@@ -9,6 +9,7 @@ const auth = (state = initSate, action) => {
     case types.AUTH_REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
+        error: '',
       });
 
     case types.AUTH_REQUEST_ERROR:
@@ -22,18 +23,21 @@ const auth = (state = initSate, action) => {
       return Object.assign({}, state, {
         token: action.data.token,
         isFetching: false,
+        error: '',
         receivedAt: action.receivedAt,
       });
 
     case types.SIGN_UP_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
+        error: '',
         receivedAt: action.receivedAt,
       });
 
     case types.SIGN_OUT_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
+        error: '',
         receivedAt: action.receivedAt,
       });
     default:
