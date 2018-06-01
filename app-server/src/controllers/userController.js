@@ -126,6 +126,7 @@ exports.create = function(req, res, next) {
     if (err) {
       return next(err);
     }
+    console.log('user', user);
     if (user) {
       return res.status(409).json({
         message: 'Email has been taken, please use another one'

@@ -52,7 +52,7 @@ const search = (req, res, filter) => {
   });
 }
 // TODO: should implement range pagination instead of using skip to result in better server performance
-exports.tenant_list = function (req, res) {
+exports.list = function (req, res) {
   const filter = {};
   if (req.query.status) filter.status = req.query.status;
   if (req.query.effort_lte || req.query.effort_gte) filter.effort = {};
@@ -113,7 +113,7 @@ exports.tenant_list = function (req, res) {
   }
 };
 
-exports.tenant_create = function (req, res) {
+exports.create = function (req, res) {
   const newEmployee = req.body;
   newEmployee.created = new Date();
   if (!newEmployee.status) {
@@ -133,7 +133,7 @@ exports.tenant_create = function (req, res) {
 
 
 
-exports.tenant_bulk_delete = function (req, res) {
+exports.delete = function (req, res) {
   let docIds = req.body.docIds
   try {
     docIds = docIds.map(id => mongoose.Types.ObjectId(id));
@@ -165,7 +165,7 @@ exports.tenant_bulk_delete = function (req, res) {
 };
 
 // Get tenant detail
-exports.tenant_detail = function (req, res) {
+exports.read = function (req, res) {
   let documentId;
   try {
     documentId = mongoose.Types.ObjectId(req.params.id);
@@ -199,7 +199,7 @@ const handleError = (error, res) => {
   });
 }
 // update tenant
-exports.tenant_update = function (req, res) {
+exports.update = function (req, res) {
   let _id;
   try {
     _id = mongoose.Types.ObjectId(req.params.id);
@@ -225,8 +225,8 @@ exports.tenant_update = function (req, res) {
 };
 
 // delete tenant
-exports.tenant_delete = function (req, res) {
-  console.log('tenant_delete', req.params.id);
+exports.delete = function (req, res) {
+  console.log('tenantdelete', req.params.id);
   let docId;
   try {
     docId = mongoose.Types.ObjectId(req.params.id);

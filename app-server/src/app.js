@@ -11,9 +11,10 @@ const expressValidator = require('express-validator');
 
 require('./config/passport');
 
-const auth = require('./routes/auth');
 const index = require('./routes/index');
+const auth = require('./routes/auth');
 const user = require('./routes/user');
+const tenant = require('./routes/tenant');
 const transaction = require('./routes/transaction');
 const mock = require('./routes/mock');
 
@@ -35,6 +36,7 @@ app.use(passport.initialize());
 app.use('/', index);
 app.use('/api/auth', auth);
 app.use('/api/user', passport.authenticate('jwt'), user);
+app.use('/api/tenant', passport.authenticate('jwt'), tenant);
 app.use('/api/transaction', passport.authenticate('jwt'), transaction);
 app.use('/api/mock', mock);
 

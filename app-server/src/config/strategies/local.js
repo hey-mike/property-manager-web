@@ -22,7 +22,7 @@ passport.use(
           if (err) {
             return done(err);
           }
-
+          console.log('user', user);
           // If a user was not found, continue to the next middleware with an error message
           if (!user) {
             return done(null, false, {
