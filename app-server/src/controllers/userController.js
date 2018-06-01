@@ -116,7 +116,7 @@ exports.create = function(req, res) {
       }
 
       return res.status(200).json({
-        message: 'User was created successfully',
+        message: 'User was created successfully'
       });
     });
   });
