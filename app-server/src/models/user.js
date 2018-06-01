@@ -46,14 +46,17 @@ const saltRounds = 10;
 userSchema.pre('save', function(next) {
   const user = this;
 
-  console.log('this.password',this.password);
-  bcrypt.hash(this.password, saltRounds, function(err, hashedPassword) {
-    console.log('hashedPassword',hashedPassword);
+  if (!user.isModified('password')) {
+    return next();
+  }
+
+  bcrypt.hash(user.password, saltRounds, function(err, hashedPassword) {
+    if (err) return next(err);
+
     user.password = hashedPassword;
     user.updatedAt = Date.now();
+    next();
   });
-
-  next();
 });
 
 userSchema.methods.authenticate = function(password) {

@@ -1,12 +1,12 @@
 {
-  "name": "career-dev",
+  "name": "property-manager",
   "version": "0.0.0",
   "private": true,
   "scripts": {
     "start": "nodemon --legacy-watch ./src/server.js"
   },
   "engines": {
-    "node": ">=9.7.1"
+    "node": ">=8.11.2"
   },
   "dependencies": {
     "bcrypt": "^2.0.1",

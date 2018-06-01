@@ -31,8 +31,8 @@ services:
   mongodb:
     container_name: property-manager-mongodb
     image: mongo
-    # volumes:
-    #   - ./mongo-data:/data/db
+    volumes:
+      - ./mongo-data:/data/db
     ports:
       - "27017:27017"
     networks:
