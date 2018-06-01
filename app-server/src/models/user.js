@@ -6,13 +6,13 @@ const userSchema = new Schema(
   {
     email: {
       type: String,
+      index: true,
       unique: true,
       required: true,
       trim: true
     },
     username: {
       type: String,
-      unique: true,
       trim: true
     },
     password: {
@@ -43,13 +43,15 @@ userSchema.set('toJSON', {
 });
 
 const saltRounds = 10;
-userSchema.pre('save', function() {
+userSchema.pre('save', function(next) {
   const user = this;
 
   bcrypt.hash(this.password, saltRounds, function(err, hashedPassword) {
     user.password = hashedPassword;
     user.updatedAt = Date.now();
   });
+
+  next();
 });
 
 userSchema.methods.authenticate = function(password) {

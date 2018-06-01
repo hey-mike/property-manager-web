@@ -226,7 +226,6 @@ exports.update = function (req, res) {
 
 // delete tenant
 exports.delete = function (req, res) {
-  console.log('tenantdelete', req.params.id);
   let docId;
   try {
     docId = mongoose.Types.ObjectId(req.params.id);

@@ -34,47 +34,7 @@ const getErrorMessage = function(err) {
   // Return the message error
   return message;
 };
-// /**
-//  * Validate the login form
-//  *
-//  * @param {object} payload - the HTTP body message
-//  * @returns {object} The result of validation. Object contains a boolean validation result,
-//  *                   errors tips, and a global message for the whole form.
-//  */
-// function validateLoginForm(payload) {
-//     const errors = {};
-//     let isFormValid = true;
-//     let message = '';
 
-//     if (!payload || typeof payload.email !== 'string' || payload.email.trim().length === 0) {
-//         isFormValid = false;
-//         errors.email = 'Please provide your email address.';
-//     }
-
-//     if (!payload || typeof payload.password !== 'string' || payload.password.trim().length === 0) {
-//         isFormValid = false;
-//         errors.password = 'Please provide your password.';
-//     }
-
-//     if (!isFormValid) {
-//         message = 'Check the form for errors.';
-//     }
-
-//     return {
-//         success: isFormValid,
-//         message,
-//         errors
-//     };
-// }
-// const generateToken = (payload) => {
-//   // sign with RSA SHA256
-//   const cert = fs.readFileSync(path.join(__dirname, '/../../keys/jwtRS256.key')); // get private key
-
-//   // create a token string
-//   return jwt.sign(payload, cert, {
-//     algorithm: 'RS256'
-//   });
-// }
 exports.signIn = function(req, res, next) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -122,16 +82,21 @@ exports.create = function(req, res, next) {
     });
   }
 
-  passport.authenticate('local', function(err, user) {
+  const { email } = req.body;
+  User.findOne({ email: email }, (err, user) => {
+    // If an error occurs continue to the next middleware
     if (err) {
-      return next(err);
+      return res.status(500).json({
+        message: err.message()
+      });
     }
-    console.log('user', user);
+    // If a user was not found, continue to the next middleware with an error message
     if (user) {
-      return res.status(409).json({
+      return res.status(400).json({
         message: 'Email has been taken, please use another one'
       });
     }
+
     // Create a new 'User' model instance
     const newUser = new User(req.body);
 
@@ -159,7 +124,7 @@ exports.create = function(req, res, next) {
         token
       });
     });
-  })(req, res, next);
+  });
 };
 
 // Create a new controller method that creates new 'OAuth' users
