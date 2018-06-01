@@ -38,6 +38,6 @@ tenantSchema.set('toJSON', {
   virtuals: true
 });
 
-const tenant = mongoose.model("tenants", tenantSchema);
+const tenant = mongoose.model("Tenant", tenantSchema);
 
 module.exports = tenant;

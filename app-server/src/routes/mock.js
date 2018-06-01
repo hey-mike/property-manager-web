@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-// const transactionController = require('../controllers/transactionController');
+const fakerController = require('../controllers/fakerController');
 
 
 /* GET userController listing. */
-// router.get('/transaction',transactionController.generate_fake_transiations);
+router.post('/tenants',fakerController.generate_tenants);
 
 module.exports = router;

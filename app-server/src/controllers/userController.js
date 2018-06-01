@@ -76,16 +76,9 @@ const getErrorMessage = function(err) {
 //   });
 // }
 exports.signIn = function(req, res, next) {
-  const errorFormatter = ({ location, msg, param, value, nestedErrors }) => {
-    // Build your resulting errors however you want! String, object, whatever - it works!
-    return `${param} ${msg}`;
-  };
-  const errors = validationResult(req).formatWith(errorFormatter);
+  const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    const message = errors.mapped();
-    return res.status(422).json({
-      message
-    });
+    return res.status(422).json({ errors: errors.mapped() });
   }
   passport.authenticate('local', function(err, user, info) {
     if (err) {
@@ -122,12 +115,7 @@ exports.signIn = function(req, res, next) {
 };
 // Create a new controller method that creates new 'regular' users
 exports.create = function(req, res, next) {
-  const errorFormatter = ({ location, msg, param, value, nestedErrors }) => {
-    // Build your resulting errors however you want! String, object, whatever - it works!
-    return `${param} ${msg}`;
-  };
-  const errors = validationResult(req).formatWith(errorFormatter);
-  console.log(errors);
+  const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({
       message: errors.mapped()
