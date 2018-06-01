@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import AuthService from './core/services/auth.service';
 import './App.css';
 
+import GlobalMessage from './core/component/GlobalMessage';
 import UserPage from './features/user/UserPage';
 import DashboardPage from './features/dashboard/DashboardPage';
 
@@ -29,6 +30,7 @@ class App extends React.Component {
 
     return (
       <div className="main">
+        <GlobalMessage />
         <Switch location={location}>
           <PrivateRoute path="/dashboard" component={DashboardPage} />
           <Route path="/user" component={UserPage} />

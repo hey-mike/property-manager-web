@@ -2,6 +2,11 @@ import * as types from './actionTypes';
 import AuthService from '../../../core/services/auth.service';
 import LocalStoreService from '../../../core/services/local-store.service';
 
+import {
+  addSuccessMessage,
+  addErrorMessage,
+} from '../../../core/actions/messageActions';
+
 export const authRequest = () => ({
   type: types.AUTH_REQUEST,
 });
@@ -48,7 +53,7 @@ export const login = (user, history) => {
       console.error('Failure!');
       console.error(error.message);
       const errorMsg = `Error in sending data to server: ${error.message}`;
-      dispatch(authRequestError(errorMsg));
+      dispatch(addErrorMessage(errorMsg));
 
       // notification.error({
       //   message: errorMsg,
