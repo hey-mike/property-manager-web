@@ -3,9 +3,9 @@ import AuthService from '../../../core/services/auth.service';
 import LocalStoreService from '../../../core/services/local-store.service';
 
 import {
-  addSuccessMessage,
-  addErrorMessage,
-} from '../../../core/actions/messageActions';
+  addSuccessNotification,
+  addErrorNotification,
+} from '../../../core/actions/notificationActions';
 
 export const authRequest = () => ({
   type: types.AUTH_REQUEST,
@@ -45,6 +45,7 @@ export const login = (user, history) => {
     dispatch(authRequest());
     try {
       const response = await AuthService.login(user);
+      dispatch(addSuccessNotification('Sign In successfully'));
       dispatch(loginSuccess(response, history));
       // notification.success({
       //   message: 'Sign In successfully',
@@ -53,7 +54,7 @@ export const login = (user, history) => {
       console.error('Failure!');
       console.error(error.message);
       const errorMsg = `Error in sending data to server: ${error.message}`;
-      dispatch(addErrorMessage(errorMsg));
+      dispatch(addErrorNotification(errorMsg));
 
       // notification.error({
       //   message: errorMsg,

@@ -1,9 +1,8 @@
 import * as types from './actionTypes';
 import auth from '../services/auth';
-import queryString from 'query-string';
 import AuthStore from '../store/auth';
 
-import { notification, message } from 'antd';
+import { notification } from 'antd';
 
 export const authRequest = () => ({
   type: types.AUTH_REQUEST,

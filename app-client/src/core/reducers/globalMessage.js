@@ -1,27 +1,28 @@
 import * as types from '../actions/actionTypes';
 
-// Updates error message to notify about the failed fetches.
+// Updates error NOTIFICATIONto notify about the failed fetches.
 
-const globalMessage = (state = null, action) => {
+const globalNotification = (state = null, action) => {
+  console.log(action);
   switch (action.type) {
-    case types.RESET_MESSAGE:
+    case types.RESET_NOTIFICATION:
       return Object.assign({}, state, {
-        success_message: '',
-        error_message: '',
+        success: '',
+        error: '',
       });
-    case types.ADD_SUCCESS_MESSAGE:
+    case types.ADD_SUCCESS_NOTIFICATION:
       return Object.assign({}, state, {
-        success_message: action.message,
-        error_message: '',
+        success: action.message,
+        error: '',
       });
-    case types.ADD_ERROR_MESSAGE:
+    case types.ADD_ERROR_NOTIFICATION:
       return Object.assign({}, state, {
-        success_message: '',
-        error_message: action.message,
+        success: '',
+        error: action.message,
       });
     default:
       return state;
   }
 };
 
-export default globalMessage;
+export default globalNotification;
