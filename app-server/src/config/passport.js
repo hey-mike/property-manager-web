@@ -9,6 +9,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const tokenManager = require('../utils/tokenManager');
 const User = require('../models/user');
 
+// JWT strategy
 const opts = {};
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 opts.secretOrKey = tokenManager.publicKey;
@@ -29,9 +30,7 @@ passport.use(
   })
 );
 
-// // Create the Local strategy configuration method
-// module.exports = function () {
-// Use the Passport's Local strategy
+// Create the Local strategy configuration method
 passport.use(
   new LocalStrategy(
     {
