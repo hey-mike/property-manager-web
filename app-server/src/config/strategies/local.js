@@ -32,7 +32,7 @@ passport.use(
           // If the passport is incorrect, continue to the next middleware with an error message
           if (!user.authenticate(password)) {
             return done(null, false, {
-              message: 'Invalid password',
+              message: 'Password is incorrect',
             });
           }
 

@@ -38,7 +38,9 @@ const getErrorMessage = function(err) {
 exports.signIn = function(req, res, next) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).json({ errors: errors.mapped() });
+    return res.status(422).json({
+      message: errors.mapped()
+    });
   }
   passport.authenticate('local', function(err, user, info) {
     if (err) {
@@ -74,14 +76,13 @@ exports.signIn = function(req, res, next) {
   })(req, res, next);
 };
 // Create a new controller method that creates new 'regular' users
-exports.create = function(req, res, next) {
+exports.create = function(req, res) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({
-      message: errors.mapped()
+      message: errors.array()
     });
   }
-
   const { email } = req.body;
   User.findOne({ email: email }, (err, user) => {
     // If an error occurs continue to the next middleware
@@ -105,7 +106,6 @@ exports.create = function(req, res, next) {
 
     // Try saving the new user document
     newUser.save(function(err) {
-      // If an error occurs, use flash messages to report the error
       if (err) {
         // Use the error handling method to get the error message
         const message = getErrorMessage(err);
@@ -114,14 +114,9 @@ exports.create = function(req, res, next) {
           message: message
         });
       }
-      const payload = {
-        sub: user._id
-      };
-      const token = tokenManager.generateToken(payload);
 
       return res.status(200).json({
         message: 'User was created successfully',
-        token
       });
     });
   });
