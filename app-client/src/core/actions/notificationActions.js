@@ -11,6 +11,7 @@ export const addSuccessNotification = message => {
   };
 };
 export const addErrorNotification = message => {
+  console.log('message', message);
   return {
     type: types.ADD_ERROR_NOTIFICATION,
     message,

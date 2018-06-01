@@ -3,7 +3,6 @@ import * as types from '../actions/actionTypes';
 // Updates error NOTIFICATIONto notify about the failed fetches.
 
 const globalNotification = (state = null, action) => {
-  console.log(action);
   switch (action.type) {
     case types.RESET_NOTIFICATION:
       return Object.assign({}, state, {

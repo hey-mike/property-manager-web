@@ -59,7 +59,6 @@ UserPage.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state);
   return { auth: state.auth };
 };
 export default withRouter(connect(mapStateToProps)(UserPage));

@@ -16,12 +16,12 @@ class GlobalNotification extends React.Component {
     const { globalNotification } = this.props;
     if (globalNotification.error) {
       notification.error({
-        notification: globalNotification.error,
+        message: globalNotification.error,
         onClose: this.onClose,
       });
     } else if (globalNotification.success) {
       notification.success({
-        notification: globalNotification.success,
+        message: globalNotification.success,
         onClose: this.onClose,
       });
     }
@@ -35,7 +35,6 @@ GlobalNotification.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  console.log(state);
   return { globalNotification: state.globalNotification };
 };
 export default connect(mapStateToProps)(GlobalNotification);
