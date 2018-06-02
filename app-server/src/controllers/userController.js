@@ -4,8 +4,8 @@
 // Load the module dependencies
 const User = require('../models/user');
 const passport = require('passport');
-const { validationResult } = require('express-validator/check');
 const tokenManager = require('../utils/tokenManager');
+const validationResult = require('../utils/validationResult');
 
 // Create a new error handling controller method
 const getErrorMessage = function(err) {
@@ -39,7 +39,7 @@ exports.signIn = function(req, res, next) {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).json({
-      message: errors.mapped()
+      message: errors.array()
     });
   }
   passport.authenticate('local', function(err, user, info) {
