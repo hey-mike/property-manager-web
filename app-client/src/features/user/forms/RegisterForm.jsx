@@ -141,14 +141,17 @@ class RegisterFrom extends React.Component {
                 ],
               })(<Input />)}
             </FormItem>
-
-            <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
-              Already have an account? <Link to="/user/login">Log in!</Link>
-            </FormItem>
             <FormItem {...tailFormItemLayout}>
-              <Button type="primary" htmlType="submit">
+              <Button
+                type="primary"
+                htmlType="submit"
+                className="login-form-button"
+              >
                 Register
               </Button>
+            </FormItem>
+            <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
+              Already have an account? <Link to="/user/login">Log in!</Link>
             </FormItem>
           </Form>
         </div>
