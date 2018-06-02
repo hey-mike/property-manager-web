@@ -1,28 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-
 import { Switch, Route, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { login, register } from './actions/authActions';
 import LoginForm from './forms/LoginForm.jsx';
 import RegisterForm from './forms/RegisterForm';
 
 import './UserPage.css';
 
 class UserPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onLogin = this.onLogin.bind(this);
-    this.onRegister = this.onRegister.bind(this);
-  }
-
-  onLogin(values) {
-    this.props.dispatch(login(values, this.props.history));
-  }
-  onRegister(values) {
-    this.props.dispatch(register(values, this.props.history));
-  }
   render() {
     const { isFetching } = this.props;
     return (
@@ -32,22 +17,12 @@ class UserPage extends React.Component {
             <Route
               path="/user/login"
               component={() => (
-                <LoginForm
-                  history={this.props.history}
-                  onLogin={this.onLogin}
-                  loading={isFetching}
-                />
+                <LoginForm history={this.props.history} loading={isFetching} />
               )}
             />
             <Route
               path="/user/register"
-              component={() => (
-                <RegisterForm
-                  history={this.props.history}
-                  onSubmit={this.onRegister}
-                  loading={isFetching}
-                />
-              )}
+              component={() => <RegisterForm history={this.props.history} />}
             />
           </Switch>
         </div>
@@ -59,12 +34,6 @@ UserPage.propTypes = {
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  isFetching: PropTypes.bool.isRequired,
 };
-const mapStateToProps = (state, ownProps) => {
-  const authState = state.auth;
-  return {
-    isFetching: authState.isFetching,
-  };
-};
-export default withRouter(connect(mapStateToProps)(UserPage));
+
+export default withRouter(UserPage);

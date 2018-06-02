@@ -25,6 +25,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 const NoMatch = () => <div>Can't find any route</div>;
 
 class App extends React.Component {
+  componentDidMount() {
+    console.log('App componentDidMount');
+  }
+  componentDidUpdate() {
+    console.log('App componentDidUpdate');
+  }
   render() {
     const { location } = this.props;
 

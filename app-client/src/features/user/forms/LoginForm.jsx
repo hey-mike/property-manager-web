@@ -1,22 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { login } from '../actions/authActions';
 import { Form, Icon, Input, Button, Checkbox, Card } from 'antd';
 const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
-  componentDidMount() {
-    console.log('componentDidMount');
-  }
-  componentDidUpdate() {
-    console.log('componentDidUpdate');
-  }
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // this.props.dispatch(signIn(values, this.props.history));
-        this.props.onLogin(values);
+        this.props.dispatch(login(values, this.props.history));
       }
     });
   }
@@ -75,22 +70,13 @@ class LoginForm extends React.Component {
   }
 }
 LoginForm.prototypes = {
-  onSubmit: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
-
-export default Form.create({
-  onFieldsChange(props, changedFields) {
-    props.onChange(changedFields);
-  },
-  mapPropsToFields(props) {
-    return {
-      email: Form.createFormField({
-        ...props.email,
-        value: props.email.value,
-      }),
-    };
-  },
-  onValuesChange(_, values) {
-    console.log(values);
-  },
-})(LoginForm);
+const mapStateToProps = (state, ownProps) => {
+  const authState = state.auth;
+  return {
+    isFetching: authState.isFetching,
+  };
+};
+const LoginFormContainer = Form.create()(LoginForm);
+export default connect(mapStateToProps)(LoginFormContainer);

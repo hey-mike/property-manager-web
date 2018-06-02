@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
+import { register } from '../actions/authActions';
 import { Form, Input, Tooltip, Icon, Card, Button } from 'antd';
 const FormItem = Form.Item;
 
@@ -23,7 +25,7 @@ class RegisterFrom extends React.Component {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
       if (!err) {
-        this.props.onSubmit(values);
+        this.props.dispatch(register(values, this.props.history));
       }
     });
   }
@@ -154,5 +156,15 @@ class RegisterFrom extends React.Component {
     );
   }
 }
+RegisterFrom.prototypes = {
+  isFetching: PropTypes.bool.isRequired,
+};
+const mapStateToProps = (state, ownProps) => {
+  const authState = state.auth;
+  return {
+    isFetching: authState.isFetching,
+  };
+};
+const RegisterFormContainer = Form.create()(RegisterFrom);
 
-export default Form.create()(RegisterFrom);
+export default connect(mapStateToProps)(RegisterFormContainer);
