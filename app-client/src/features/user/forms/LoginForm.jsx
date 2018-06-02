@@ -1,19 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Icon, Input, Button, Checkbox, Card } from 'antd';
-
 import { Link } from 'react-router-dom';
-// import { signIn } from '../actions/authActions';
-
+import { Form, Icon, Input, Button, Checkbox, Card } from 'antd';
 const FormItem = Form.Item;
 
 class LoginForm extends React.Component {
+  componentDidMount() {
+    console.log('componentDidMount');
+  }
+  componentDidUpdate() {
+    console.log('componentDidUpdate');
+  }
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
         // this.props.dispatch(signIn(values, this.props.history));
-        this.props.onSubmit(values);
+        this.props.onLogin(values);
       }
     });
   }
@@ -22,9 +25,6 @@ class LoginForm extends React.Component {
     return (
       <Card title="Login" style={{ width: '400px' }}>
         <div className="login-form">
-          <div className="login-form-header">
-            <img src="/images/logo.svg" alt="logo" />
-          </div>
           <Form onSubmit={this.handleSubmit.bind(this)} className="login-form">
             <FormItem hasFeedback>
               {getFieldDecorator('email', {

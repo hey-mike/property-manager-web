@@ -13,14 +13,14 @@ import './UserPage.css';
 class UserPage extends React.Component {
   constructor(props) {
     super(props);
-    this.login = this.login.bind(this);
-    this.register = this.register.bind(this);
+    this.onLogin = this.onLogin.bind(this);
+    this.onRegister = this.onRegister.bind(this);
   }
 
-  login(values) {
+  onLogin(values) {
     this.props.dispatch(login(values, this.props.history));
   }
-  register(values) {
+  onRegister(values) {
     this.props.dispatch(register(values, this.props.history));
   }
   render() {
@@ -30,19 +30,20 @@ class UserPage extends React.Component {
         <div className="login-form-wrapper">
           <Switch>
             <Route
-              exact
               path="/user/login"
               component={() => (
-                <LoginForm history={this.props.history} onSubmit={this.login} />
+                <LoginForm
+                  history={this.props.history}
+                  onLogin={this.onLogin}
+                />
               )}
             />
             <Route
-              exact
               path="/user/register"
               component={() => (
                 <RegisterForm
                   history={this.props.history}
-                  onSubmit={this.register}
+                  onSubmit={this.onRegister}
                 />
               )}
             />
@@ -58,7 +59,4 @@ UserPage.propTypes = {
   history: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return { auth: state.auth };
-};
-export default withRouter(connect(mapStateToProps)(UserPage));
+export default withRouter(connect()(UserPage));

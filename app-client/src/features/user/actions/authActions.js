@@ -51,14 +51,9 @@ export const login = (user, history) => {
       //   message: 'Sign In successfully',
       // });
     } catch (error) {
-      // console.error('Failure!');
-      // console.error(error.message);
       const errorMsg = `Error in sending data to server: ${error.message}`;
       dispatch(addErrorNotification(errorMsg));
-
-      // notification.error({
-      //   message: errorMsg,
-      // });
+      dispatch(authRequestError(errorMsg));
     }
   };
 };
@@ -69,41 +64,11 @@ export const register = (user, history) => {
     try {
       const response = await AuthService.register(user);
       dispatch(registerSuccess(response, history));
-      // notification.success({
-      //   message: 'Sign In successfully',
-      // });
+      dispatch(addSuccessNotification('Register successfully'));
     } catch (error) {
-      console.error('Failure!');
-      console.error(error.message);
       const errorMsg = `Error in sending data to server: ${error.message}`;
+      dispatch(addErrorNotification(errorMsg));
       dispatch(authRequestError(errorMsg));
-
-      // notification.error({
-      //   message: errorMsg,
-      // });
     }
-    // AuthService.register(user)
-    //   .then(response => {
-    //     if (!response.ok) {
-    //       return response.json().then(error => {
-    //         notification.error({
-    //           message: error.message,
-    //         });
-    //       });
-    //     }
-    //     response.json().then(user => {
-    //       dispatch(registerSuccess(user, history));
-    //       notification.success({
-    //         message: 'Sign Up successfully',
-    //       });
-    //     });
-    //   })
-    //   .catch(error => {
-    //     const errorMsg = `Error in sending data to server: ${error.errors}`;
-    //     // dispatch(authRequestError(errorMsg))
-    //     notification.error({
-    //       message: errorMsg,
-    //     });
-    //   });
   };
 };
