@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Form, Icon, Input, Button, Checkbox, Card } from 'antd';
 const FormItem = Form.Item;
 
@@ -78,4 +78,19 @@ LoginForm.prototypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default Form.create()(LoginForm);
+export default Form.create({
+  onFieldsChange(props, changedFields) {
+    props.onChange(changedFields);
+  },
+  mapPropsToFields(props) {
+    return {
+      email: Form.createFormField({
+        ...props.email,
+        value: props.email.value,
+      }),
+    };
+  },
+  onValuesChange(_, values) {
+    console.log(values);
+  },
+})(LoginForm);

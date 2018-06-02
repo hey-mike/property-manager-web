@@ -51,7 +51,8 @@ export const login = (user, history) => {
       //   message: 'Sign In successfully',
       // });
     } catch (error) {
-      const errorMsg = `Error in sending data to server: ${error.message}`;
+      const { data } = error.response;
+      const errorMsg = `Error in sending data to server: ${data.message}`;
       dispatch(addErrorNotification(errorMsg));
       dispatch(authRequestError(errorMsg));
     }

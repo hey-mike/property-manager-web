@@ -24,7 +24,7 @@ class UserPage extends React.Component {
     this.props.dispatch(register(values, this.props.history));
   }
   render() {
-    console.log(this.props);
+    const { isFetching } = this.props;
     return (
       <div className={classnames('wrapper')}>
         <div className="login-form-wrapper">
@@ -35,6 +35,7 @@ class UserPage extends React.Component {
                 <LoginForm
                   history={this.props.history}
                   onLogin={this.onLogin}
+                  loading={isFetching}
                 />
               )}
             />
@@ -44,6 +45,7 @@ class UserPage extends React.Component {
                 <RegisterForm
                   history={this.props.history}
                   onSubmit={this.onRegister}
+                  loading={isFetching}
                 />
               )}
             />
@@ -57,6 +59,12 @@ UserPage.propTypes = {
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  isFetching: PropTypes.bool.isRequired,
 };
-
-export default withRouter(connect()(UserPage));
+const mapStateToProps = (state, ownProps) => {
+  const authState = state.auth;
+  return {
+    isFetching: authState.isFetching,
+  };
+};
+export default withRouter(connect(mapStateToProps)(UserPage));
