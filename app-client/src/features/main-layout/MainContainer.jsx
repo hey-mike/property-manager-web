@@ -1,23 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Layout, Menu, Icon } from 'antd';
+import { Layout } from 'antd';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import DashboardPage from '../dashboard/DashboardPage';
 import './MainContainer.css';
 
-const { Header, Content, Footer, Sider } = Layout;
+import Toolbar from './toolbar/Toolbar';
+import Sidebar from './sidebar/Sidebar';
+const { Content, Footer } = Layout;
 
 class MainContainer extends React.Component {
   constructor(props) {
     super(props);
-    console.log('LoginPage', props);
+    this.state = {
+      collapsed: false,
+      date: '',
+    };
+
+    this.toggle = this.toggle.bind(this);
+  }
+  toggle() {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
   }
 
   render() {
     return (
       <Layout id="components-layout-demo-responsive">
-        <Sider
+        {/* <Sider
           breakpoint="lg"
           collapsedWidth="0"
           onCollapse={(collapsed, type) => {
@@ -42,9 +54,11 @@ class MainContainer extends React.Component {
               <span className="nav-text">Services</span>
             </Menu.Item>
           </Menu>
-        </Sider>
+        </Sider> */}
+        <Sidebar collapsed={this.state.collapsed} />
         <Layout>
-          <Header style={{ background: '#fff', padding: 0 }} />
+          {/* <Header style={{ background: '#fff', padding: 0 }} /> */}
+          <Toolbar toggleMenu={this.toggle} collapsed={this.state.collapsed} />
           <Content style={{ margin: '24px 16px 0' }}>
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
               <Switch>

@@ -1,0 +1,15 @@
+.ant-layout-sider .logo {
+    /* display: flex;
+    justify-content: space-between; */
+}
+.ant-layout-sider .logo img {
+    /* background-image: url("/images/michael_icon.png"); */
+    max-width: 100%;
+    max-height: 100%;
+}
+.ant-layout-sider .logo span {
+    font-size: 16px;
+    padding: 8px;
+    color: white;
+    float: right;
+}

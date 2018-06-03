@@ -1,0 +1,30 @@
+.ant-layout-header .header-item {
+    line-height: 64px;
+    padding: 0 16px;
+    cursor: pointer;
+    transition: color .3s;
+}
+
+.ant-layout-header .header-title {
+    font-size: 20px;
+}
+
+.ant-layout-header .anticon {
+    font-size: 18px;
+}
+
+.ant-layout-header .trigger {
+    font-size: 18px;
+    line-height: 64px;
+    padding: 0 16px;
+    cursor: pointer;
+    transition: color .3s;
+}
+
+.ant-layout-header .trigger:hover {
+    color: #108ee9;
+}
+
+.ant-layout-header .ant-menu-root {
+    float: right;
+}

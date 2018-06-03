@@ -2,17 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Layout, Menu, Icon, Badge } from 'antd';
-import AuthStore from '../store/auth';
+import AuthService from '../../../core/services/auth.service';
+
 import './Toolbar.css';
 const { Header } = Layout;
 const SubMenu = Menu.SubMenu;
 
-const AdminMenu = ({ props }) => (
+const AdminMenu = props => (
   <Menu
     mode="horizontal"
     defaultSelectedKeys={['2']}
     className="header-item"
-    onClick={this.props.handleClick}>
+    onClick={props.handleClick}>
     <Menu.Item key="mail">
       <Badge count={5}>
         <Icon type="mail" />
@@ -36,8 +37,8 @@ class Toolbar extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
   handleClick(e) {
-    if (e.key == 'logout') {
-      AuthStore.deauthenticateUser();
+    if (e.key === 'logout') {
+      AuthService.logout();
       this.props.history.replace({
         pathname: `/`,
       });
@@ -51,7 +52,6 @@ class Toolbar extends React.Component {
           type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'}
           onClick={this.props.toggleMenu}
         />
-        <span className="header-title">{'Employee Management'}</span>
         <AdminMenu handleClick={this.handleClick} />
       </Header>
     );
