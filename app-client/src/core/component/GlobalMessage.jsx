@@ -1,27 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { notification } from 'antd';
-import { resetNotification } from '../actions/notificationActions';
+import { message } from 'antd';
+import { resetMessage } from '../actions/messageActions';
 
-class GlobalNotification extends React.Component {
+class GlobalMessage extends React.Component {
   constructor(props) {
     super(props);
     this.onClose = this.onClose.bind(this);
   }
   onClose() {
-    this.props.dispatch(resetNotification());
+    this.props.dispatch(resetMessage());
   }
   componentDidUpdate() {
-    const { globalNotification } = this.props;
-    if (globalNotification.error) {
-      notification.error({
-        message: globalNotification.error,
+    const { globalMessage } = this.props;
+    if (globalMessage.error) {
+      message.error({
+        message: globalMessage.error,
         onClose: this.onClose,
       });
-    } else if (globalNotification.success) {
-      notification.success({
-        message: globalNotification.success,
+    } else if (globalMessage.success) {
+      message.success({
+        message: globalMessage.success,
         onClose: this.onClose,
       });
     }
@@ -30,11 +30,11 @@ class GlobalNotification extends React.Component {
     return <div />;
   }
 }
-GlobalNotification.propTypes = {
+GlobalMessage.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
-  return { globalNotification: state.globalNotification };
+  return { globalMessage: state.globalMessage };
 };
-export default connect(mapStateToProps)(GlobalNotification);
+export default connect(mapStateToProps)(GlobalMessage);

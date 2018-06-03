@@ -11,7 +11,7 @@ router.post(
     // username must be an email
     check('email')
       .isEmail()
-      .withMessage('Please enter a valid email'),
+      .withMessage('is not valid'),
     // password must be at least 5 chars long
     check('password')
       .isLength({

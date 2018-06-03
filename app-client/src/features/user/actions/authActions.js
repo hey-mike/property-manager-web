@@ -2,10 +2,14 @@ import * as types from './actionTypes';
 import AuthService from '../../../core/services/auth.service';
 import LocalStoreService from '../../../core/services/local-store.service';
 
+// import {
+//   addSuccessNotification,
+//   addErrorNotification,
+// } from '../../../core/actions/notificationActions';
 import {
-  addSuccessNotification,
-  addErrorNotification,
-} from '../../../core/actions/notificationActions';
+  addSuccessMessage,
+  addErrorMessage,
+} from '../../../core/actions/messageActions';
 
 export const authRequest = () => ({
   type: types.AUTH_REQUEST,
@@ -65,10 +69,10 @@ export const register = (user, history) => {
     try {
       const response = await AuthService.register(user);
       dispatch(registerSuccess(response, history));
-      dispatch(addSuccessNotification('Register successfully'));
+      dispatch(addSuccessMessage('Register successfully'));
     } catch (error) {
       const errorMsg = `Error in sending data to server: ${error.message}`;
-      dispatch(addErrorNotification(errorMsg));
+      dispatch(addErrorMessage(errorMsg));
       dispatch(authRequestError(errorMsg));
     }
   };

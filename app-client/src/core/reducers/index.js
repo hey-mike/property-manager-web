@@ -1,3 +1,5 @@
 import globalMessage from './globalMessage';
+import globalNotification from './globalNotification';
 
-export default globalMessage;
+export const globalMessage;
+export const globalNotification;
