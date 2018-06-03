@@ -15,15 +15,18 @@ class GlobalMessage extends React.Component {
   componentDidUpdate() {
     const { globalMessage } = this.props;
     if (globalMessage.error) {
-      message.error({
-        message: globalMessage.error,
-        onClose: this.onClose,
-      });
+      // message.error({
+      //   content: globalMessage.error,
+      //   duration: 2.5,
+      //   onClose: this.onClose,
+      // });
+      message.error(globalMessage.error);
     } else if (globalMessage.success) {
-      message.success({
-        message: globalMessage.success,
-        onClose: this.onClose,
-      });
+      // message.success({
+      //   content: globalMessage.success,
+      //   onClose: this.onClose,
+      // });
+      message.success(globalMessage.success);
     }
   }
   render() {

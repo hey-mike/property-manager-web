@@ -22,8 +22,8 @@ export const authRequestError = error => ({
 
 export const loginSuccess = (data, history) => {
   // save the token
-  LocalStoreService.authenticateUser(data.token);
-  history.replace({
+  LocalStoreService.setAuth(data.token);
+  history.push({
     pathname: `/`,
   });
   return {
@@ -32,7 +32,7 @@ export const loginSuccess = (data, history) => {
   };
 };
 export const registerSuccess = (data, history) => {
-  history.replace({
+  history.push({
     pathname: `/`,
   });
   return {
@@ -49,15 +49,13 @@ export const login = (user, history) => {
     dispatch(authRequest());
     try {
       const response = await AuthService.login(user);
-      dispatch(addSuccessNotification('Sign In successfully'));
-      dispatch(loginSuccess(response, history));
-      // notification.success({
-      //   message: 'Sign In successfully',
-      // });
+      dispatch(addSuccessMessage('Sign In successfully'));
+      dispatch(loginSuccess(response.data, history));
     } catch (error) {
+      console.error(error);
       const { data } = error.response;
       const errorMsg = `Error in sending data to server: ${data.message}`;
-      dispatch(addErrorNotification(errorMsg));
+      dispatch(addErrorMessage(errorMsg));
       dispatch(authRequestError(errorMsg));
     }
   };
@@ -68,7 +66,7 @@ export const register = (user, history) => {
     dispatch(authRequest());
     try {
       const response = await AuthService.register(user);
-      dispatch(registerSuccess(response, history));
+      dispatch(registerSuccess(response.data, history));
       dispatch(addSuccessMessage('Register successfully'));
     } catch (error) {
       const errorMsg = `Error in sending data to server: ${error.message}`;

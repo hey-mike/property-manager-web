@@ -38,6 +38,7 @@ export default class AuthService {
   }
 
   static isUserAuthenticated() {
+    console.log('LocalStorageService.getAuth()', LocalStorageService.getAuth());
     return LocalStorageService.getAuth() != null;
   }
 }

@@ -2,7 +2,7 @@ import * as types from '../actions/actionTypes';
 
 // Updates error MESSAGEto notify about the failed fetches.
 
-const globalNotification = (state = null, action) => {
+const globalMessage = (state = null, action) => {
   switch (action.type) {
     case types.RESET_MESSAGE:
       return Object.assign({}, state, {
@@ -24,4 +24,4 @@ const globalNotification = (state = null, action) => {
   }
 };
 
-export default globalNotification;
+export default globalMessage;
