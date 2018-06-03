@@ -7,8 +7,9 @@ import './App.css';
 
 import GlobalNotification from './core/component/GlobalNotification';
 import GlobalMessage from './core/component/GlobalMessage';
+import MainContainer from './features/main-layout/MainContainer';
 import UserPage from './features/user/UserPage';
-import DashboardPage from './features/dashboard/DashboardPage';
+// import DashboardPage from './features/dashboard/DashboardPage';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -40,9 +41,13 @@ class App extends React.Component {
         <GlobalMessage />
         <GlobalNotification />
         <Switch location={location}>
-          <PrivateRoute path="/dashboard" component={DashboardPage} />
+          <PrivateRoute path="/" component={MainContainer} />
           <Route path="/user" component={UserPage} />
-          <Redirect exact from="/" to="/dashboard" />
+          {/* <Redirect exact from="/" to="/dashboard" /> */}
+          {/* <Route path="/dashboard" component={DashboardPage} /> */}
+          {/* <Route path="/tenant" component={EmployeePage} />
+          <Route path="/tenant/:id" component={EmployeeEdit} />
+          <Route exact path="/schedule" component={SchedulePage} /> */}
           <Route component={NoMatch} />
         </Switch>
       </div>
