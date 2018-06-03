@@ -28,8 +28,7 @@ class SideMenu extends Component {
           console.log(collapsed, type);
         }}
         trigger={null}
-        collapsible
-        collapsed={this.props.collapsed}>
+        collapsible>
         <div className="logo">
           {/* <img src="/images/logo.svg" alt="logo" /> */}
           {/* {this.props.collapsed ? '' : <span>{'EMS ADMIN'}</span>} */}

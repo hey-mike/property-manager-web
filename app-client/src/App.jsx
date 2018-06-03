@@ -27,12 +27,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 const NoMatch = () => <div>Can't find any route</div>;
 
 class App extends React.Component {
-  componentDidMount() {
-    console.log('App componentDidMount');
-  }
-  componentDidUpdate() {
-    console.log('App componentDidUpdate');
-  }
   render() {
     const { location } = this.props;
 
@@ -41,8 +35,9 @@ class App extends React.Component {
         <GlobalMessage />
         <GlobalNotification />
         <Switch location={location}>
-          <PrivateRoute path="/" component={MainContainer} />
           <Route path="/user" component={UserPage} />
+          <PrivateRoute path="/" component={MainContainer} />
+
           {/* <Redirect exact from="/" to="/dashboard" /> */}
           {/* <Route path="/dashboard" component={DashboardPage} /> */}
           {/* <Route path="/tenant" component={EmployeePage} />

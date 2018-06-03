@@ -53,8 +53,11 @@ export const login = (user, history) => {
       dispatch(loginSuccess(response.data, history));
     } catch (error) {
       console.error(error);
-      const { data } = error.response;
-      const errorMsg = `Error in sending data to server: ${data.message}`;
+      let errorMsg = `Error in sending data to server: ${error.message}`;
+      if (error.response) {
+        const { data } = error.response;
+        errorMsg = `Error in sending data to server: ${data.message}`;
+      }
       dispatch(addErrorMessage(errorMsg));
       dispatch(authRequestError(errorMsg));
     }
