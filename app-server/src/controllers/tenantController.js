@@ -52,7 +52,7 @@ const search = (req, res, filter) => {
   });
 }
 // TODO: should implement range pagination instead of using skip to result in better server performance
-exports.list = function (req, res) {
+exports.list = async function (req, res,next) {
   const filter = {};
   if (req.query.status) filter.status = req.query.status;
   if (req.query.effort_lte || req.query.effort_gte) filter.effort = {};
@@ -81,7 +81,6 @@ exports.list = function (req, res) {
         });
     } else search(req, res, filter);
   } else {
-    console.log('doing aggregation', filter);
     Tenant.aggregate([{
           $match: filter
         },
@@ -106,6 +105,7 @@ exports.list = function (req, res) {
       })
       .catch(error => {
         console.log(error);
+        next(error);
         res.status(500).json({
           message: `Internal Server Error: ${error}`
         });
@@ -113,22 +113,31 @@ exports.list = function (req, res) {
   }
 };
 
-exports.create = function (req, res) {
-  const newEmployee = req.body;
-  newEmployee.created = new Date();
-  if (!newEmployee.status) {
-    newEmployee.status = 'New';
+exports.create = async function (req, res) {
+  const newTenant = req.body;
+  newTenant.created = new Date();
+  if (!newTenant.status) {
+    newTenant.status = 'New';
   }
-
-  var newUser = new Tenant(newEmployee);
-  newUser.save().then(savedEmployee => {
-    res.json(savedEmployee);
-  }).catch(error => {
-    console.log(error);
-    res.status(500).json({
-      message: `Internal Server Error: ${error}`
+  try {
+    const newTenant = new Tenant(newTenant);
+    const Tenants = await newTenant.save();
+    console.log(Tenants);
+    return Tenants;
+  } catch (err) {
+      res.status(500).json({
+      message: `Internal Server Error: ${err}`
     });
-  });
+  }
+  // var newTenant = new Tenant(newTenant);
+  // newTenant.save().then(savedTenant => {
+  //   res.json(savedTenant);
+  // }).catch(error => {
+  //   console.log(error);
+  //   res.status(500).json({
+  //     message: `Internal Server Error: ${error}`
+  //   });
+  // });
 };
 
 
@@ -218,9 +227,9 @@ exports.update = function (req, res) {
     "$set": tenant
   }, {
     new: true
-  }, function (err, updatedEmployee) {
+  }, function (err, updatedTenant) {
     if (err) return handleError(err, res);
-    res.json(updatedEmployee);
+    res.json(updatedTenant);
   })
 };
 
