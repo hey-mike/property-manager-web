@@ -7,7 +7,7 @@ import './App.css';
 
 import GlobalNotification from './core/component/GlobalNotification';
 import GlobalMessage from './core/component/GlobalMessage';
-import MainContainer from './features/main-layout/MainContainer';
+import MainContainer from './features/MainContainer';
 import UserPage from './features/user/UserPage';
 // import DashboardPage from './features/dashboard/DashboardPage';
 

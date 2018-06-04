@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Layout } from 'antd';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import DashboardPage from '../dashboard/DashboardPage';
+
+import Toolbar from './main-layout/toolbar/Toolbar';
+import Sidebar from './main-layout/sidebar/Sidebar';
+import DashboardPage from './dashboard/DashboardPage';
+import Tenant from './tenant/Tenant';
 import './MainContainer.css';
 
-import Toolbar from './toolbar/Toolbar';
-import Sidebar from './sidebar/Sidebar';
 const { Content, Footer } = Layout;
 
 class MainContainer extends React.Component {
@@ -70,8 +72,8 @@ class MainContainer extends React.Component {
               <Switch>
                 <Redirect exact from="/" to="/dashboard" />
                 <Route path="/dashboard" component={DashboardPage} />
-                {/* <Route path="/tenant" component={EmployeePage} />
-          <Route path="/tenant/:id" component={EmployeeEdit} />
+                <Route path="/tenant" component={Tenant} />
+                {/* <Route path="/tenant/:id" component={EmployeeEdit} />
           <Route exact path="/schedule" component={SchedulePage} /> */}
               </Switch>
             </div>
