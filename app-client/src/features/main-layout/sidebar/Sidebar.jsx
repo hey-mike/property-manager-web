@@ -22,14 +22,14 @@ class SideMenu extends Component {
 
     return (
       <Sider
+        className="sider"
         breakpoint="lg"
         collapsedWidth="0"
-        onCollapse={(collapsed, type) => {
-          setCollapsed(collapsed);
-        }}
         collapsed={open}
         trigger={null}
-        collapsible>
+        onCollapse={(collapsed, type) => {
+          setCollapsed(collapsed);
+        }}>
         <div className="logo" />
         <Menu
           theme="dark"
@@ -40,7 +40,7 @@ class SideMenu extends Component {
           onClick={item => this.onSelect(item)}>
           <Menu.Item key="/dashboard">
             <Icon type="appstore-o" />
-            <span>Dashboardsss</span>
+            <span>Dashboard</span>
           </Menu.Item>
 
           <Menu.Item key="/tenant">

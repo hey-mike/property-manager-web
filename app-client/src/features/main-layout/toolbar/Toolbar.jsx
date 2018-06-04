@@ -49,7 +49,7 @@ class Toolbar extends React.Component {
       <Header style={{ background: '#fff', padding: 0 }}>
         <Icon
           className="trigger header-item"
-          type={this.props.collapsed ? 'menu-unfold' : 'menu-fold'}
+          type={this.props.open ? 'menu-unfold' : 'menu-fold'}
           onClick={this.props.toggleMenu}
         />
         <AdminMenu handleClick={this.handleClick} />
