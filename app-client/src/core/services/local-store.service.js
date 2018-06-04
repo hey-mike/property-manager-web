@@ -14,7 +14,6 @@ export default class LocalStorageService {
 
   // Retrieves the auth JSON object (or NULL if none)
   static getAuth() {
-    console.log(Constant.AUTH_KEY);
     const token = localStorage.getItem(Constant.AUTH_KEY);
     if (token) {
       return JSON.parse(token);

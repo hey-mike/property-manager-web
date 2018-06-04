@@ -10,39 +10,37 @@ class SideMenu extends Component {
   constructor(props) {
     super(props);
 
-    this.handleClick = this.handleClick.bind(this);
+    this.onSelect = this.onSelect.bind(this);
   }
 
-  handleClick(item) {
+  onSelect(item) {
     this.props.history.push(`${item.key}`);
   }
 
   render() {
-    const { location } = this.props;
+    const { location, open, setCollapsed } = this.props;
 
     return (
       <Sider
         breakpoint="lg"
         collapsedWidth="0"
         onCollapse={(collapsed, type) => {
-          console.log(collapsed, type);
+          setCollapsed(collapsed);
         }}
+        collapsed={open}
         trigger={null}
         collapsible>
-        <div className="logo">
-          {/* <img src="/images/logo.svg" alt="logo" /> */}
-          {/* {this.props.collapsed ? '' : <span>{'EMS ADMIN'}</span>} */}
-        </div>
+        <div className="logo" />
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={[
             location.pathname === '/' ? '/dashboard' : location.pathname,
           ]}
-          onClick={item => this.handleClick(item)}>
+          onClick={item => this.onSelect(item)}>
           <Menu.Item key="/dashboard">
             <Icon type="appstore-o" />
-            <span>Dashboard</span>
+            <span>Dashboardsss</span>
           </Menu.Item>
 
           <Menu.Item key="/tenant">

@@ -19,10 +19,16 @@ class MainContainer extends React.Component {
     };
 
     this.toggle = this.toggle.bind(this);
+    this.setCollapsed = this.setCollapsed.bind(this);
   }
   toggle() {
     this.setState({
       collapsed: !this.state.collapsed,
+    });
+  }
+  setCollapsed(collapsed) {
+    this.setState({
+      collapsed: collapsed,
     });
   }
 
@@ -55,10 +61,10 @@ class MainContainer extends React.Component {
             </Menu.Item>
           </Menu>
         </Sider> */}
-        <Sidebar collapsed={this.state.collapsed} />
+        <Sidebar open={this.state.collapsed} setCollapsed={this.setCollapsed} />
         <Layout>
           {/* <Header style={{ background: '#fff', padding: 0 }} /> */}
-          <Toolbar toggleMenu={this.toggle} collapsed={this.state.collapsed} />
+          <Toolbar toggleMenu={this.toggle} open={this.state.collapsed} />
           <Content style={{ margin: '24px 16px 0' }}>
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
               <Switch>
