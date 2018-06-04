@@ -15,14 +15,17 @@ class DashboardPage extends React.Component {
     return (
       <div>
         <Row gutter={16}>
-          <Col span={8}>
-            <Card title="Total Employee">Card content</Card>
+          <Col xs={24} sm={24} md={24} lg={12} xl={6}>
+            <Card title="Total Income">Card content</Card>
           </Col>
-          <Col span={8}>
-            <Card title="Leave Requests">Card content</Card>
+          <Col xs={24} sm={24} md={24} lg={12} xl={6}>
+            <Card title="Total Expense">Card content</Card>
           </Col>
-          <Col span={8}>
-            <Card title="On Leave">Card content</Card>
+          <Col xs={24} sm={24} md={24} lg={12} xl={6}>
+            <Card title="Total tenants">Card content</Card>
+          </Col>
+          <Col xs={24} sm={24} md={24} lg={12} xl={6}>
+            <Card title="Total vancies">Card content</Card>
           </Col>
         </Row>
 

@@ -1,14 +1,14 @@
 import React from 'react';
 import { Tabs } from 'antd';
 import ExpenseGraph from './ExpenseGraph';
-import DateRangePicker from './DateRangePicker';
+import UserActionContainer from './UserActionContainer';
 import './BudgetSectionContainer.css';
 const TabPane = Tabs.TabPane;
 
 class BudgetSectionContainer extends React.Component {
   render() {
     return (
-      <Tabs tabBarExtraContent={<DateRangePicker />}>
+      <Tabs tabBarExtraContent={<UserActionContainer />}>
         <TabPane tab="Income" key="1">
           <ExpenseGraph />
         </TabPane>
