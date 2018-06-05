@@ -2,7 +2,7 @@
     line-height: 64px;
     padding: 0 16px;
     cursor: pointer;
-    transition: color .3s;
+    transition: color 0.3s;
 }
 
 .ant-layout-header .header-title {
@@ -18,7 +18,7 @@
     line-height: 64px;
     padding: 0 16px;
     cursor: pointer;
-    transition: color .3s;
+    transition: color 0.3s;
 }
 
 .ant-layout-header .trigger:hover {

@@ -18,10 +18,16 @@ class SideMenu extends Component {
   }
 
   render() {
-    const { location, open, setCollapsed } = this.props;
+    const { location, disableSider } = this.props;
 
     return (
-      <Sider breakpoint="lg" collapsedWidth="0" trigger={null}>
+      <Sider
+        breakpoint="lg"
+        collapsedWidth="0"
+        trigger={null}
+        onCollapse={(collapsed, type) => {
+          disableSider(collapsed);
+        }}>
         <div className="logo" />
         <Menu
           theme="dark"

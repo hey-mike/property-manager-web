@@ -24,23 +24,19 @@ class NavDrawer extends Component {
       open: false,
     });
   };
-  onSwitch = () => {
-    this.setState({
-      open: !this.state.open,
-    });
-  };
+
   onSelect(item) {
     this.props.history.push(`${item.key}`);
   }
 
   render() {
-    const { location, open, setCollapsed } = this.props;
+    const { location, open } = this.props;
 
     return (
       <Drawer
         onHandleClick={this.onChange}
         onChange={this.onChange}
-        open={this.state.open}
+        open={open}
         onMaskClick={this.onTouchEnd}
         handleChild={false}
         level={null}>

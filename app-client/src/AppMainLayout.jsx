@@ -18,37 +18,35 @@ class MainContainer extends React.Component {
     super(props);
     this.state = {
       collapsed: false,
+      showSider: false,
       date: '',
     };
-
+    this.disableSider = this.disableSider.bind(this);
     this.toggle = this.toggle.bind(this);
-    this.setCollapsed = this.setCollapsed.bind(this);
   }
   toggle() {
     this.setState({
       collapsed: !this.state.collapsed,
     });
   }
-  setCollapsed(collapsed) {
+  disableSider(disable) {
+    console.log('disable', disable);
     this.setState({
-      collapsed: collapsed,
+      showSider: disable,
     });
   }
 
   render() {
     return (
       <div className="parent-demo">
-        <NavDrawer
-          open={this.state.collapsed}
-          setCollapsed={this.setCollapsed}
-        />
+        <NavDrawer open={this.state.collapsed} toggle={this.toggle} />
         <Layout>
-          <Sidebar
-            open={this.state.collapsed}
-            setCollapsed={this.setCollapsed}
-          />
+          <Sidebar disableSider={this.disableSider} />
           <Layout>
-            <Toolbar toggleMenu={this.toggle} open={this.state.collapsed} />
+            <Toolbar
+              toggleMenu={this.toggle}
+              showBurger={this.state.showSider}
+            />
             <Content style={{ margin: '24px 16px 0' }}>
               <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <Switch>
