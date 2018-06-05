@@ -20,25 +20,26 @@ const getSearchReg = search => {
 
   return new RegExp(regexString, 'ig');
 };
-exports.search = async function(req, res, filter) {
+exports.search = async function(req, res) {
+  const { text } = req.body;
   const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
   let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
 
   console.log('offset', offset);
   console.log('limit', limit);
-  console.log('filter', filter);
+  console.log('text', text);
 
   if (limit > 50) limit = 50;
 
   try {
     const tenants = await Tenant.find(
-      filter,
-      { skip: offset },
-      { limit: limit }
+      { $text: { $search: text }},
+      { score: { $meta: 'textScore' }},
+      { skip: offset, limit: limit }
     );
-    return res.json(tenants);
+    res.json(tenants);
   } catch (error) {
-    return res.status(500).json({
+    res.status(500).json({
       message: `Internal Server Error: ${error}`
     });
   }
