@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Calendar, Alert, Modal, Button, message, notification } from 'antd';
+import { Calendar, Alert, Modal } from 'antd';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import AddScheduleForm from './forms/AddScheduleForm.jsx';
@@ -140,6 +140,7 @@ class LeaseCalendar extends React.Component {
           onPanelChange={this.onPanelChange}
         />
         <Modal
+          wrapClassName="vertical-center-modal"
           visible={visible}
           title={'Add a new schedule'}
           okText="Add"
