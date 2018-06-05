@@ -6,7 +6,7 @@ const tenantSchema = new Schema({
   name: {
     type: Object,
     required: true,
-    text: true
+    text: true,
   },
   gender: String,
   age: Number,

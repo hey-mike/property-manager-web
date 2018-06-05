@@ -162,8 +162,8 @@ exports.create = async function(req, res) {
   // });
 };
 
-exports.delete = function(req, res) {
-  let docIds = req.body.docIds;
+exports.delete = async function(req, res) {
+  let { docIds } = req.body;
   try {
     docIds = docIds.map(id => mongoose.Types.ObjectId(id));
   } catch (error) {
@@ -173,67 +173,96 @@ exports.delete = function(req, res) {
     return;
   }
 
-  Tenant.deleteMany({
-    _id: {
-      $in: docIds
-    }
-  })
-    .then(deleteResult => {
-      console.log('deleteResult', deleteResult.result);
-      if (deleteResult.result.n === docIds.length)
-        res.json({
-          status: 'OK'
-        });
-      else
-        res.json({
-          status: 'Warning: object not found'
-        });
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(500).json({
-        message: `Internal Server Error: ${error}`
-      });
+  try {
+    const deleteResult = await Tenant.deleteMany({
+      _id: {
+        $in: docIds
+      }
     });
+    if (deleteResult.result.n === docIds.length) {
+      return res.json({
+        status: 'OK'
+      });
+    } else {
+      return res.json({
+        status: 'Warning: object not found'
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: `Internal Server Error: ${error}`
+    });
+  }
+  // Tenant.deleteMany({
+  //   _id: {
+  //     $in: docIds
+  //   }
+  // })
+  //   .then(deleteResult => {
+  //     console.log('deleteResult', deleteResult.result);
+  //     if (deleteResult.result.n === docIds.length)
+  //       res.json({
+  //         status: 'OK'
+  //       });
+  //     else
+  //       res.json({
+  //         status: 'Warning: object not found'
+  //       });
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //     res.status(500).json({
+  //       message: `Internal Server Error: ${error}`
+  //     });
+  //   });
 };
 
 // Get tenant detail
-exports.read = function(req, res) {
+exports.read = async function(req, res) {
   let documentId;
   try {
     documentId = mongoose.Types.ObjectId(req.params.id);
   } catch (error) {
-    console.log('error', error);
-    res.status(422).json({
+    return res.status(422).json({
       message: `Invalid issue ID format: ${error}`
     });
-    return;
   }
 
-  Tenant.findOne({
-    _id: documentId
-  })
-    .then(tenant => {
-      if (!tenant)
-        res.status(404).json({
-          message: `No such tenant: ${documentId}`
-        });
-      else res.json(tenant);
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(500).json({
-        message: `Internal Server Error: ${error}`
-      });
+  try {
+    const tenant = await Tenant.findOne({
+      _id: documentId
     });
+    if (tenant) {
+      return res.status(404).json({
+        message: `No such tenant: ${documentId}`
+      });
+    } else {
+      return res.json(tenant);
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: `Internal Server Error: ${error}`
+    });
+  }
+  // Tenant.findOne({
+  //   _id: documentId
+  // })
+  //   .then(tenant => {
+  //     if (!tenant)
+  //       res.status(404).json({
+  //         message: `No such tenant: ${documentId}`
+  //       });
+  //     else res.json(tenant);
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //     res.status(500).json({
+  //       message: `Internal Server Error: ${error}`
+  //     });
+  //   });
 };
 
-const handleError = (error, res) => {
-  console.error(error);
-  return res.status(500).json({
-    message: `Internal Server Error: ${error}`
-  });
-};
 // update tenant
 exports.update = function(req, res) {
   let _id;
@@ -248,21 +277,40 @@ exports.update = function(req, res) {
   const tenant = req.body;
   tenant.updatedAt = new Date();
 
-  Tenant.findOneAndUpdate(
-    {
-      _id: _id
-    },
-    {
-      $set: tenant
-    },
-    {
-      new: true
-    },
-    function(err, updatedTenant) {
-      if (err) return handleError(err, res);
-      res.json(updatedTenant);
-    }
-  );
+  try {
+    const tenant = Tenant.findOneAndUpdate(
+      {
+        _id: _id
+      },
+      {
+        $set: tenant
+      },
+      {
+        new: true
+      }
+    );
+    res.json(tenant);
+  } catch (error) {
+    return res.status(500).json({
+      message: `Internal Server Error: ${error}`
+    });
+  }
+
+  // Tenant.findOneAndUpdate(
+  //   {
+  //     _id: _id
+  //   },
+  //   {
+  //     $set: tenant
+  //   },
+  //   {
+  //     new: true
+  //   },
+  //   function(err, updatedTenant) {
+  //     if (err) return handleError(err, res);
+  //     res.json(updatedTenant);
+  //   }
+  // );
 };
 
 // delete tenant

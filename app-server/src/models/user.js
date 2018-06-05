@@ -9,6 +9,7 @@ const userSchema = new Schema(
       index: true,
       unique: true,
       required: true,
+      text : true,
       trim: true
     },
     username: {
@@ -33,7 +34,7 @@ userSchema
     return this.firstName + ' ' + this.lastName;
   })
   .set(function(fullName) {
-    var splitName = fullName.split(' ');
+    const splitName = fullName.split(' ');
     this.firstName = splitName[0] || '';
     this.lastName = splitName[1] || '';
   });
