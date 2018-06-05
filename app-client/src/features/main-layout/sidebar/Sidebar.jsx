@@ -21,15 +21,7 @@ class SideMenu extends Component {
     const { location, open, setCollapsed } = this.props;
 
     return (
-      <Sider
-        className="sider"
-        breakpoint="lg"
-        collapsedWidth="0"
-        collapsed={open}
-        trigger={null}
-        onCollapse={(collapsed, type) => {
-          setCollapsed(collapsed);
-        }}>
+      <Sider breakpoint="lg" collapsedWidth="0" trigger={null}>
         <div className="logo" />
         <Menu
           theme="dark"
