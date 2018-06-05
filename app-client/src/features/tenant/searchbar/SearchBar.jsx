@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Icon, Input, AutoComplete } from 'antd';
 const Option = AutoComplete.Option;
 const OptGroup = AutoComplete.OptGroup;
@@ -79,7 +78,7 @@ const options = dataSource
     </Option>,
   ]);
 
-function Complete() {
+let SearchBar = () => {
   return (
     <div className="certain-category-search-wrapper" style={{ width: 250 }}>
       <AutoComplete
@@ -98,5 +97,5 @@ function Complete() {
       </AutoComplete>
     </div>
   );
-}
-export default Complete;
+};
+export default SearchBar;

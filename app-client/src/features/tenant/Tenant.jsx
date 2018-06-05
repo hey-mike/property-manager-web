@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { List, Avatar, Button, Spin, AutoComplete } from 'antd';
+import { List, Avatar, Button, Spin } from 'antd';
 import { withRouter } from 'react-router-dom';
 import './Tenant.css';
 import axios from 'axios';
+import SearchBar from './searchbar/SearchBar';
 
 const fakeDataUrl =
   'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
@@ -76,25 +77,28 @@ class Tenant extends React.Component {
       </div>
     ) : null;
     return (
-      <List
-        className="demo-loadmore-list"
-        loading={loading}
-        itemLayout="horizontal"
-        loadMore={loadMore}
-        dataSource={data}
-        renderItem={item => (
-          <List.Item actions={[<a>edit</a>, <a>more</a>]}>
-            <List.Item.Meta
-              avatar={
-                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-              }
-              title={<a href="https://ant.design">{item.name.last}</a>}
-              description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-            />
-            <div>content</div>
-          </List.Item>
-        )}
-      />
+      <div>
+        <SearchBar />
+        <List
+          className="demo-loadmore-list"
+          loading={loading}
+          itemLayout="horizontal"
+          loadMore={loadMore}
+          dataSource={data}
+          renderItem={item => (
+            <List.Item actions={[<a>edit</a>, <a>more</a>]}>
+              <List.Item.Meta
+                avatar={
+                  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+                }
+                title={<a href="https://ant.design">{item.name.last}</a>}
+                description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+              />
+              <div>content</div>
+            </List.Item>
+          )}
+        />
+      </div>
     );
   }
 }
