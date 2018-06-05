@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Layout, Menu, Icon, Badge } from 'antd';
-import AuthService from '../../../core/services/auth.service';
+import AuthService from '../services/auth.service';
 
 import './Toolbar.css';
 const { Header } = Layout;

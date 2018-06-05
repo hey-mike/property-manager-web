@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
-import PrivateRoute from './core/component/PrivateRoute';
+import PrivateRoute from './core/components/PrivateRoute';
+import GlobalNotification from './core/components/GlobalNotification';
+import GlobalMessage from './core/components/GlobalMessage';
 import './App.css';
 
-import GlobalNotification from './core/component/GlobalNotification';
-import GlobalMessage from './core/component/GlobalMessage';
 import AppMainLayout from './AppMainLayout';
 import UserPage from './features/user/UserPage';
 

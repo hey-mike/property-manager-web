@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 import { Layout } from 'antd';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import Toolbar from './features/main-layout/toolbar/Toolbar';
-import Sidebar from './features/main-layout/sidebar/Sidebar';
-import NavDrawer from './features/main-layout/nav-drawer/NavDrawer';
+import Toolbar from './core/components/Toolbar';
+import Sidebar from './core/components/Sidebar';
+import NavDrawer from './core/components/NavDrawer';
 import DashboardPage from './features/dashboard/DashboardPage';
 import Tenant from './features/tenant/Tenant';
+import LeaseCalendar from './features/calendar/LeaseCalendar';
 import './AppMainLayout.css';
 
 const { Content, Footer } = Layout;
@@ -36,7 +37,7 @@ class MainContainer extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="parent-demo">
         <NavDrawer
           open={this.state.collapsed}
           setCollapsed={this.setCollapsed}
@@ -54,6 +55,7 @@ class MainContainer extends React.Component {
                   <Redirect exact from="/" to="/dashboard" />
                   <Route path="/dashboard" component={DashboardPage} />
                   <Route path="/tenant" component={Tenant} />
+                  <Route path="/calendar" component={LeaseCalendar} />
                 </Switch>
               </div>
             </Content>
