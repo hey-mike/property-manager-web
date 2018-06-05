@@ -16,7 +16,7 @@ mongoose.connect(config.get('db:uri'), config.get('db:options')).then(
     console.error('Mongoose ERROR:', err);
   }
 );
-
+mongoose.set('debug', true)
 const port = process.env.PORT || config.get('server:port');
 app.set('port', port);
 

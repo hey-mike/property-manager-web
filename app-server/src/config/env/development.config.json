@@ -5,7 +5,7 @@
   "db": {
     "uri": "mongodb://localhost:27017/Property-manager",
     "options": {
-      "autoIndex": false, 
+      "autoIndex": true, 
       "reconnectTries": "Number.MAX_VALUE", 
       "reconnectInterval": 500,
       "poolSize": 10, 
