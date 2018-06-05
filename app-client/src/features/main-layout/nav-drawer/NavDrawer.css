@@ -1,0 +1,9 @@
+.drawer-content-wrapper .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
+
+.drawer-content-wrapper .drawer-content {
+  background: #001529;
+}

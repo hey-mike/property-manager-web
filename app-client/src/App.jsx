@@ -1,28 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
-import AuthService from './core/services/auth.service';
+import PrivateRoute from './core/component/PrivateRoute';
 import './App.css';
 
 import GlobalNotification from './core/component/GlobalNotification';
 import GlobalMessage from './core/component/GlobalMessage';
-import MainContainer from './features/MainContainer';
+import AppMainLayout from './AppMainLayout';
 import UserPage from './features/user/UserPage';
-// import DashboardPage from './features/dashboard/DashboardPage';
-
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      AuthService.isUserAuthenticated() ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to="/user/login" />
-      )
-    }
-  />
-);
 
 const NoMatch = () => <div>Can't find any route</div>;
 
@@ -36,13 +22,7 @@ class App extends React.Component {
         <GlobalNotification />
         <Switch location={location}>
           <Route path="/user" component={UserPage} />
-          <PrivateRoute path="/" component={MainContainer} />
-
-          {/* <Redirect exact from="/" to="/dashboard" /> */}
-          {/* <Route path="/dashboard" component={DashboardPage} /> */}
-          {/* <Route path="/tenant" component={EmployeePage} />
-          <Route path="/tenant/:id" component={EmployeeEdit} />
-          <Route exact path="/schedule" component={SchedulePage} /> */}
+          <PrivateRoute path="/" component={AppMainLayout} />
           <Route component={NoMatch} />
         </Switch>
       </div>
