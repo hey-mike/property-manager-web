@@ -36,7 +36,7 @@ app.use(passport.initialize());
 app.use('/', index);
 app.use('/api/auth', auth);
 app.use('/api/user', passport.authenticate('jwt'), user);
-app.use('/api/tenant', passport.authenticate('jwt'), tenant);
+app.use('/api/tenant',  tenant);
 app.use('/api/transaction', passport.authenticate('jwt'), transaction);
 app.use('/api/mock', mock);
 
