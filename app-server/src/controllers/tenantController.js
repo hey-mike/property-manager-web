@@ -20,7 +20,7 @@ const getSearchReg = search => {
 
   return new RegExp(regexString, 'ig');
 };
-const search = (req, res, filter) => {
+exports.search = async function(req, res, filter) {
   const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
   let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
 
@@ -29,32 +29,45 @@ const search = (req, res, filter) => {
   console.log('filter', filter);
 
   if (limit > 50) limit = 50;
-  const cursor = Tenant.find(filter)
-    .sort({
-      createdAt: -1
-    })
-    .skip(offset)
-    .limit(limit);
+
+  try {
+    const tenants = await Tenant.find(
+      filter,
+      { skip: offset },
+      { limit: limit }
+    );
+    return res.json(tenants);
+  } catch (error) {
+    return res.status(500).json({
+      message: `Internal Server Error: ${error}`
+    });
+  }
+  // const cursor = Tenant.find(filter)
+  //   .sort({
+  //     createdAt: -1
+  //   })
+  //   .skip(offset)
+  //   .limit(limit);
 
   // ensures that the effects of skip() and limit() will be ignored
-  cursor
-    .exec()
-    .then(tenant => {
-      Tenant.count().then(totalCount => {
-        res.json({
-          metadata: {
-            totalCount
-          },
-          records: tenant
-        });
-      });
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(500).json({
-        message: `Internal Server Error: ${error}`
-      });
-    });
+  // cursor
+  //   .exec()
+  //   .then(tenant => {
+  //     Tenant.count().then(totalCount => {
+  //       res.json({
+  //         metadata: {
+  //           totalCount
+  //         },
+  //         records: tenant
+  //       });
+  //     });
+  //   })
+  //   .catch(error => {
+  //     console.log(error);
+  //     res.status(500).json({
+  //       message: `Internal Server Error: ${error}`
+  //     });
+  //   });
 };
 exports.list = async function(req, res) {
   try {

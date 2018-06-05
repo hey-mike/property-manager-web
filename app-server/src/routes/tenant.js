@@ -26,6 +26,9 @@ router.delete('/:tenantId', function (req, res) {
   tenantController.delete(req, res);
   //  res.send("delete");
 })
-
+router.search('/search', function (req, res) {
+  tenantController.search(req, res);
+  //  res.send("delete");
+})
 
 module.exports = router;
