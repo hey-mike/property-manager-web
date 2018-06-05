@@ -47,7 +47,7 @@ class Toolbar extends React.Component {
   }
   render() {
     const { showBurger } = this.props;
-    console.log(showBurger);
+
     return (
       <Header style={{ background: '#fff', padding: 0 }}>
         {showBurger && (

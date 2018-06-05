@@ -20,9 +20,7 @@ class NavDrawer extends Component {
     console.log(bool);
   };
   onTouchEnd = () => {
-    this.setState({
-      open: false,
-    });
+    this.props.toggle();
   };
 
   onSelect(item) {

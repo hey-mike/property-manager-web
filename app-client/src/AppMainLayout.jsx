@@ -30,7 +30,6 @@ class MainContainer extends React.Component {
     });
   }
   disableSider(disable) {
-    console.log('disable', disable);
     this.setState({
       showSider: disable,
     });
