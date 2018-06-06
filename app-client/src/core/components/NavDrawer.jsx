@@ -24,6 +24,7 @@ class NavDrawer extends Component {
   };
 
   onSelect(item) {
+    this.props.toggle();
     this.props.history.push(`${item.key}`);
   }
 

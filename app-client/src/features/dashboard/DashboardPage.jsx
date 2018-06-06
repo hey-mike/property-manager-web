@@ -29,9 +29,7 @@ class DashboardPage extends React.Component {
           </Col>
         </Row>
 
-        <Card>
-          <BudgetSectionContainer />
-        </Card>
+        <BudgetSectionContainer />
       </div>
     );
   }
