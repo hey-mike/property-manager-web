@@ -5968,9 +5968,9 @@ rc-dialog@~7.1.0:
     rc-animate "2.x"
     rc-util "^4.4.0"
 
-rc-drawer-menu@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/rc-drawer-menu/-/rc-drawer-menu-1.1.0.tgz#75609fd3f795a4c87d322b12184bf8082bade014"
+rc-drawer@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/rc-drawer/-/rc-drawer-1.2.0.tgz#08441e17282d1b4fad2f5a3da4d49246ab92c97f"
   dependencies:
     babel-runtime "6.x"
     classnames "^2.2.5"

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import { Menu, Icon } from 'antd';
 import './NavDrawer.css';
-import Drawer from 'rc-drawer-menu';
+import SideNavMenu from './SideNavMenu';
+import Drawer from 'rc-drawer';
 import 'rc-drawer-menu/assets/index.css';
 
 class NavDrawer extends Component {
@@ -29,7 +29,8 @@ class NavDrawer extends Component {
   }
 
   render() {
-    const { location, open } = this.props;
+    const { open } = this.props;
+    console.log('open', open);
 
     return (
       <Drawer
@@ -40,32 +41,7 @@ class NavDrawer extends Component {
         handleChild={false}
         level={null}>
         <div className="logo" />
-        <Menu
-          style={{ width: 240 }}
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={[
-            location.pathname === '/' ? '/dashboard' : location.pathname,
-          ]}
-          onClick={item => this.onSelect(item)}>
-          <Menu.Item key="/dashboard">
-            <Icon type="appstore-o" />
-            <span>Dashboard</span>
-          </Menu.Item>
-
-          <Menu.Item key="/tenant">
-            <Icon type="team" />
-            <span>Tanents</span>
-          </Menu.Item>
-          <Menu.Item key="/calendar">
-            <Icon type="schedule" />
-            <span>Calendar</span>
-          </Menu.Item>
-          <Menu.Item key="/service">
-            <Icon type="info-circle-o" />
-            <span className="nav-text">Services</span>
-          </Menu.Item>
-        </Menu>
+        <SideNavMenu toggle={this.props.toggle} />
       </Drawer>
     );
   }

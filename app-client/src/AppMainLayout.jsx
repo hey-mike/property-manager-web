@@ -21,40 +21,45 @@ class MainContainer extends React.Component {
       showSider: false,
       date: '',
     };
-    this.disableSider = this.disableSider.bind(this);
+    this.toggleSidebar = this.toggleSidebar.bind(this);
     this.toggle = this.toggle.bind(this);
   }
   toggle() {
     this.setState({
-      collapsed: !this.state.collapsed,
+      showSider: !this.state.showSider,
     });
   }
-  disableSider(disable) {
+  toggleSidebar(collapsed) {
     this.setState({
-      showSider: disable,
+      collapsed: collapsed,
     });
+    if (!collapsed) {
+      this.setState({
+        showSider: false,
+      });
+    }
   }
 
   render() {
     return (
       <div className="parent-demo">
-        <NavDrawer open={this.state.collapsed} toggle={this.toggle} />
+        {this.state.collapsed && (
+          <NavDrawer open={this.state.showSider} toggle={this.toggle} />
+        )}
         <Layout>
-          <Sidebar disableSider={this.disableSider} />
+          <Sidebar toggleSidebar={this.toggleSidebar} />
           <Layout>
             <Toolbar
               toggleMenu={this.toggle}
-              showBurger={this.state.showSider}
+              showBurger={this.state.collapsed}
             />
             <Content style={{ margin: '24px 16px 0' }}>
-              <div>
-                <Switch>
-                  <Redirect exact from="/" to="/dashboard" />
-                  <Route path="/dashboard" component={DashboardPage} />
-                  <Route path="/tenant" component={Tenant} />
-                  <Route path="/calendar" component={LeaseCalendar} />
-                </Switch>
-              </div>
+              <Switch>
+                <Redirect exact from="/" to="/dashboard" />
+                <Route path="/dashboard" component={DashboardPage} />
+                <Route path="/tenant" component={Tenant} />
+                <Route path="/calendar" component={LeaseCalendar} />
+              </Switch>
             </Content>
             <Footer style={{ textAlign: 'center' }}>
               Ant Design ©2016 Created by Ant UED
