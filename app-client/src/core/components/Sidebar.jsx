@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Layout, Menu, Icon } from 'antd';
+import * as Constants from '../constant';
 import './Sidebar.css';
 
 const { Sider } = Layout;
@@ -38,20 +39,20 @@ class SideMenu extends Component {
           onClick={item => this.onSelect(item)}>
           <Menu.Item key="/dashboard">
             <Icon type="appstore-o" />
-            <span>Dashboard</span>
+            <span>{Constants.MENU_ITEMS_DASHBOARD}</span>
           </Menu.Item>
 
           <Menu.Item key="/tenant">
             <Icon type="team" />
-            <span>Tanents</span>
+            <span>{Constants.MENU_ITEMS_TENANT}</span>
           </Menu.Item>
           <Menu.Item key="/calendar">
             <Icon type="schedule" />
-            <span>Calendar</span>
+            <span>{Constants.MENU_ITEMS_CALENDAR}</span>
           </Menu.Item>
           <Menu.Item key="/service">
             <Icon type="info-circle-o" />
-            <span className="nav-text">Services</span>
+            <span>{Constants.MENU_ITEMS_SERVICE}</span>
           </Menu.Item>
         </Menu>
       </Sider>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import { Layout, Menu, Icon, Badge } from 'antd';
+import * as Constants from '../constant';
 import AuthService from '../services/auth.service';
 
 import './Toolbar.css';
@@ -46,7 +47,22 @@ class Toolbar extends React.Component {
     }
   }
   render() {
-    const { showBurger } = this.props;
+    const { showBurger, location } = this.props;
+
+    let title = Constants.MENU_ITEMS_DASHBOARD;
+    switch (location.pathname) {
+      case `/${Constants.MENU_ITEMS_TENANT.toLowerCase()}`:
+        title = Constants.MENU_ITEMS_TENANT;
+        break;
+      case `/${Constants.MENU_ITEMS_CALENDAR.toLowerCase()}`:
+        title = Constants.MENU_ITEMS_CALENDAR;
+        break;
+      case `/${Constants.MENU_ITEMS_SERVICE}`:
+        title = Constants.MENU_ITEMS_SERVICE;
+        break;
+      default:
+        title = Constants.MENU_ITEMS_DASHBOARD;
+    }
 
     return (
       <Header style={{ background: '#fff', padding: 0 }}>
@@ -57,6 +73,7 @@ class Toolbar extends React.Component {
             onClick={this.props.toggleMenu}
           />
         )}
+        <span className="toolbar-title">{title}</span>
         <AdminMenu handleClick={this.handleClick} />
       </Header>
     );

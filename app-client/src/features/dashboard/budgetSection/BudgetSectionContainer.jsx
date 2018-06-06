@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tabs } from 'antd';
 import { Card } from 'antd';
+import IncomeGraph from './IncomeGraph';
 import ExpenseGraph from './ExpenseGraph';
 import UserActionContainer from './UserActionContainer';
 import './BudgetSectionContainer.css';
@@ -24,14 +25,12 @@ class BudgetSectionContainer extends React.Component {
       <section className="budget-section">
         <Card loading={this.state.loading} title="Budget">
           <Tabs tabBarExtraContent={<UserActionContainer />}>
-            <TabPane tab="Income" key="1">
-              <ExpenseGraph />
+            <TabPane tab="Overview" key="1" />
+            <TabPane tab="Income" key="2">
+              <IncomeGraph chartId="income-chart" />
             </TabPane>
-            <TabPane tab="Tab 2" key="2">
-              Content of tab 2
-            </TabPane>
-            <TabPane tab="Tab 3" key="3">
-              Content of tab 3
+            <TabPane tab="Expense" key="3">
+              <ExpenseGraph chartId="expense-chart" />
             </TabPane>
           </Tabs>
         </Card>
