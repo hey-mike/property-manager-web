@@ -34,8 +34,6 @@ exports.search = async function(req, res) {
   try {
     const tenants = await Tenant.find(
       { $text: { $search: text }},
-      { score: { $meta: 'textScore' }},
-      { skip: offset, limit: limit }
     );
     res.json(tenants);
   } catch (error) {

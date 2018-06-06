@@ -6,14 +6,16 @@ const tenantSchema = new Schema({
   name: {
     type: Object,
     required: true,
-    text: true,
-    index: true,
     trim: true
   },
   gender: String,
   age: Number,
   title: String,
-  email: String,
+  email: {
+    type: String,
+    required: true,
+    trim: true
+  } ,
   phone: String,
   address: String,
 }, {
@@ -24,21 +26,22 @@ const tenantSchema = new Schema({
 tenantSchema.virtual('fullName').get(function () {
   return this.name.first + ' ' + this.name.last;
 }).set(function (v) {
-  this.name.first = v.substr(0, v.indexOf(' '));
-  this.name.last = v.substr(v.indexOf(' ') + 1);
+  this.name.firstName = v.substr(0, v.indexOf(' '));
+  this.name.lastName = v.substr(v.indexOf(' ') + 1);
 });
 tenantSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
 });
 tenantSchema.index({
-  name: 'text'
+  email:'text'
 });
 // Configure the 'tenantSchema' to use getters and virtuals when transforming to JSON
 tenantSchema.set('toJSON', {
   getters: true,
   virtuals: true
 });
+
 
 const tenant = mongoose.model("Tenant", tenantSchema);
 
