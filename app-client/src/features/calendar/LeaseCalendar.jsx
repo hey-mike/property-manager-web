@@ -127,7 +127,7 @@ class LeaseCalendar extends React.Component {
   render() {
     const { value, selectedValue, visible, isFetching } = this.state;
     return (
-      <div>
+      <div className="calendar">
         <Alert
           message={`You selected date: ${selectedValue &&
             selectedValue.format('YYYY-MM-DD')}`}
@@ -158,7 +158,6 @@ class LeaseCalendar extends React.Component {
 LeaseCalendar.propTypes = {
   history: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired,
-  isFetching: PropTypes.bool.isRequired,
 };
 
 export default connect()(LeaseCalendar);
