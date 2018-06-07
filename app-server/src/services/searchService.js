@@ -1,7 +1,8 @@
 const elasticsearch = require('elasticsearch');
+const _ = require('lodash');
 
 // https://www.elastic.co/blog/setting-up-elasticsearch-for-a-blog
-const ES_INDEX = "property_manager";
+const ES_INDEX = 'property_manager';
 class SearchService {
   constructor() {
     this.client = new elasticsearch.Client({
@@ -63,19 +64,19 @@ class SearchService {
     } catch (error) {
       //if the error is not index error
       if (error.status !== 400) {
-        console.trace('createIndex err', error.status);
+        console.trace('createIndex err', error);
       }
     }
   }
   toIndex(tenant) {
     return {
       created: tenant.created,
-      name: tenant.title,
-      gender: tenant.slug,
-      age: tenant.teaser,
-      title: tenant.introduction,
-      email: tenant.body,
-      phone: tenant.tags
+      name: tenant.name,
+      gender: tenant.gender,
+      age: tenant.age,
+      title: tenant.title,
+      email: tenant.email,
+      phone: tenant.phone
     };
   }
 
@@ -97,12 +98,54 @@ class SearchService {
     }
     return result;
   }
-  async search() {
+  async bulk(tenants) {
     try {
-      const response = await this.client.search({
-        q: 'pants'
+      const response = await this.client.bulk({
+        body: _.flatMap(tenants, article => [
+          {
+            update: {
+              _index: ES_INDEX,
+              _type: 'tenant',
+              _id: article._id.toString()
+            }
+          },
+          {
+            doc: this.toIndex(article),
+            doc_as_upsert: true
+          }
+        ])
       });
-      console.log('response', response.hits.hits);
+
+      console.log(`bulk successfully`, response);
+    } catch (error) {
+      console.trace('createIndex err', error);
+    }
+  }
+  searchHitToResult(hit) {
+    console.log('hit',hit);
+    return {
+      _score: hit._score,
+      _id: hit._id,
+      name: hit._source.name,
+      email: hit._source.email
+    };
+  }
+  async search(options) {
+    console.log(options);
+    try {
+      const result = await this.client.search({
+        index: ES_INDEX,
+        type: 'tenant',
+        body: {
+          query: {
+            match: {
+              email: options.input
+            }
+          }
+        }
+      });
+      console.log(result);
+      return result.hits.hits.map(this.searchHitToResult);
     } catch (error) {
       console.trace(error.message);
     }

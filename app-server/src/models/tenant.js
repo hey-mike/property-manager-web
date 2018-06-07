@@ -37,6 +37,9 @@ tenantSchema.pre('save', function (next) {
 tenantSchema.post('save', function (doc) {
   ElasticSearch.update(doc)
 });
+tenantSchema.post('insertMany', function (docs) {
+  ElasticSearch.bulk(docs);
+});
 tenantSchema.index({
   email:'text'
 });
