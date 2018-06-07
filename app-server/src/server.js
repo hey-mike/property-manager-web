@@ -31,5 +31,5 @@ app.listen(app.get('port'), () => {
   console.log('  Press CTRL-C to stop\n');
 
  const result = ElasticSearch.search({input:"Heather10@yahoo.com"});
-//  console.log('result',result);
+ console.log('result',result);
 });

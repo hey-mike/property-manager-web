@@ -122,7 +122,6 @@ class SearchService {
     }
   }
   searchHitToResult(hit) {
-    console.log('hit',hit);
     return {
       _score: hit._score,
       _id: hit._id,
@@ -144,12 +143,13 @@ class SearchService {
           }
         }
       });
-      console.log(result);
       return result.hits.hits.map(this.searchHitToResult);
     } catch (error) {
       console.trace(error.message);
     }
   }
+
+
 }
 
 module.exports = new SearchService();
