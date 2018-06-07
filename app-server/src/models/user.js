@@ -9,7 +9,6 @@ const userSchema = new Schema(
       index: true,
       unique: true,
       required: true,
-      text : true,
       trim: true
     },
     username: {

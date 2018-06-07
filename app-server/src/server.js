@@ -6,6 +6,7 @@ const app = require('./app');
 const mongoose = require('mongoose');
 const errorHandler = require('errorhandler');
 const config = require('./config/config.js');
+const ElasticSearch = require('./services/searchService'); 
 
 // connect to database
 mongoose.connect(config.get('db:uri'), config.get('db:options')).then(
@@ -16,7 +17,6 @@ mongoose.connect(config.get('db:uri'), config.get('db:options')).then(
     console.error('Mongoose ERROR:', err);
   }
 );
-mongoose.set('debug', true)
 const port = process.env.PORT || config.get('server:port');
 app.set('port', port);
 
@@ -29,4 +29,6 @@ app.listen(app.get('port'), () => {
     app.get('env')
   );
   console.log('  Press CTRL-C to stop\n');
+
+  ElasticSearch.search();
 });

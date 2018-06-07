@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const ElasticSearch = require('../services/searchService'); 
 const Schema = mongoose.Schema;
 
 const tenantSchema = new Schema({
@@ -24,7 +25,7 @@ const tenantSchema = new Schema({
 
 
 tenantSchema.virtual('fullName').get(function () {
-  return this.name.first + ' ' + this.name.last;
+  return this.name.firstName + ' ' + this.name.lastName;
 }).set(function (v) {
   this.name.firstName = v.substr(0, v.indexOf(' '));
   this.name.lastName = v.substr(v.indexOf(' ') + 1);
@@ -32,6 +33,9 @@ tenantSchema.virtual('fullName').get(function () {
 tenantSchema.pre('save', function (next) {
   this.updatedAt = Date.now();
   next();
+});
+tenantSchema.post('save', function (doc) {
+  ElasticSearch.update(doc)
 });
 tenantSchema.index({
   email:'text'
