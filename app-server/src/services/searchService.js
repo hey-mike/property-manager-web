@@ -129,6 +129,24 @@ class SearchService {
       email: hit._source.email
     };
   }
+
+  filters (options) {
+    const tags = Array.isArray(options.tags) ? options.tags : [];
+    const clauses = tags.map(this.tagToFilter);
+    if (options.since) {
+      clauses.unshift(this.since(options.since));
+    }
+    return this.all(clauses);
+  }
+  all (clauses) {
+    return { bool: { must: clauses } };
+  }
+  since (date) {
+    return { range: { created: { gte: date } } };
+  }
+  tagToFilter (tag) {
+    return { term: { tags: tag } };
+  }
   async search(options) {
     console.log(options);
     try {
