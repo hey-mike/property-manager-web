@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classnames from 'classnames';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteEmployee } from '../../../actions/employeeActions';
+import { deleteEmployee } from '../actions/tenantActions';
 
-
-import { Modal, Button, Icon } from 'antd';
-
-import ComplexForm from '../forms/ComplexForm.jsx';
-
+import { Modal } from 'antd';
 
 class TableDeleteBtn extends Component {
   constructor(props) {
@@ -23,19 +18,19 @@ class TableDeleteBtn extends Component {
     this.delete = this.delete.bind(this);
   }
   delete() {
-    console.log('this.props',this.props);
+    console.log('this.props', this.props);
     const { dispatch, id } = this.props;
     dispatch(deleteEmployee(id));
   }
   showModal(e) {
     e.preventDefault();
-  
+
     Modal.confirm({
       title: 'Warning',
       content: 'Are you sure you want to delete this employee?',
       okText: 'Confirm',
       cancelText: 'Cancel',
-      onOk : this.delete
+      onOk: this.delete,
     });
   }
   handleCancel() {
@@ -43,15 +38,16 @@ class TableDeleteBtn extends Component {
   }
 
   render() {
-    const { visible, confirmLoading, ModalText } = this.state;
     return (
       <span>
-        <a href="#" onClick={this.showModal}>Delete</a>
+        <a href="#" onClick={this.showModal}>
+          Delete
+        </a>
       </span>
-    )
+    );
   }
 }
 TableDeleteBtn.propTypes = {
-  id: PropTypes.string.isRequired
+  id: PropTypes.string.isRequired,
 };
 export default withRouter(connect()(TableDeleteBtn));

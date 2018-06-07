@@ -3,18 +3,20 @@ import PropTypes from 'prop-types';
 import { Card } from 'antd';
 import { withRouter } from 'react-router-dom';
 import withSizes from 'react-sizes';
-import SearchBar from './searchbar/SearchBar';
+import ActionBar from './actionbar/ActionBar';
 import TenantList from './tenant-list/TenantList';
+import TenantTable from './tenant-table/TenantTable';
 import './TenantPage.css';
 
 class Tenant extends React.Component {
   render() {
-    const { isMobile } = this.props;
-    console.log(isMobile);
+    const { isTabletAndSmaller } = this.props;
+    console.log('isTabletAndSmaller', isTabletAndSmaller);
     return (
       <Card>
-        <SearchBar />
-        <TenantList />
+        <ActionBar />
+        {isTabletAndSmaller && <TenantList />}
+        {!isTabletAndSmaller && <TenantTable />}
       </Card>
     );
   }
@@ -22,7 +24,7 @@ class Tenant extends React.Component {
 Tenant.prototypes = {
   history: PropTypes.object.isRequired,
 };
-const mapSizesToProps = ({ width }) => ({
-  isMobile: width < 480,
+const mapSizesToProps = sizes => ({
+  isTabletAndSmaller: !withSizes.isDesktop(sizes),
 });
 export default withRouter(withSizes(mapSizesToProps)(Tenant));

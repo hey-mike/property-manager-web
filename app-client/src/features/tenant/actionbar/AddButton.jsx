@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 // import { createEmployee } from '../../../actions/employeeActions';
-import { Button } from 'antd';
+import { Button, Modal } from 'antd';
 import AddEmployeeForm from '../forms/AddEmployeeForm.jsx';
 
-class EmployeeAddTableItem extends React.Component {
+class AddButton extends React.Component {
   constructor(props) {
     super(props);
 
@@ -56,21 +56,30 @@ class EmployeeAddTableItem extends React.Component {
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>
-          Add
+          Add new tanent
         </Button>
-
-        <AddEmployeeForm
-          ref={this.saveFormRef}
-          confirmLoading={this.props.isFetching}
-          visible={this.state.visible}
+        <Modal
+          visible={visible}
+          title="Add a new employee"
+          okText="Add"
           onCancel={this.handleCancel}
-          onCreate={this.handleCreate}
-        />
+          confirmLoading={this.props.isFetching}
+          onOk={this.handleCreate}
+          closable={false}
+          maskClosable={false}>
+          <AddEmployeeForm
+            ref={this.saveFormRef}
+            confirmLoading={this.props.isFetching}
+            visible={this.state.visible}
+            onCancel={this.handleCancel}
+            onCreate={this.handleCreate}
+          />
+        </Modal>
       </div>
     );
   }
 }
-EmployeeAddTableItem.propTypes = {
+AddButton.propTypes = {
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
@@ -79,7 +88,7 @@ EmployeeAddTableItem.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { updatedEmployee, error, isFetching } = state.employeeState;
+  const { updatedEmployee, error, isFetching } = state.tenant;
   return {
     updatedEmployee: updatedEmployee,
     isFetching: isFetching,
@@ -87,4 +96,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default withRouter(connect()(EmployeeAddTableItem));
+export default withRouter(connect(mapStateToProps)(AddButton));

@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import qs from 'query-string';
-import { Select, Spin, Icon, Button, Input, AutoComplete } from 'antd';
+import { Select, Spin, Icon } from 'antd';
+// import Auth from '../../../store/auth';
 import debounce from 'lodash.debounce';
 const Option = Select.Option;
-import Highlighter from 'react-highlight-words';
-import Auth from '../../../store/auth';
 
 function getRandomInt(max, min = 0) {
   return Math.floor(Math.random() * (max - min + 1)) + min; // eslint-disable-line no-mixed-operators
@@ -24,18 +22,6 @@ function searchResult(query) {
     }));
 }
 
-function renderOption(item) {
-  return (
-    <Option key={item.id} text={item.text} value={item.text}>
-      <Highlighter
-        highlightClassName="highlight"
-        searchWords={[item.search]}
-        textToHighlight={item.text}
-      />
-    </Option>
-  );
-}
-
 let lastFetchId = 0;
 class TableToolbarSearch extends React.Component {
   constructor(props) {
@@ -47,54 +33,16 @@ class TableToolbarSearch extends React.Component {
       fetching: false,
     };
 
-    this.fetchUser = debounce(this.fetchUser, 500);
+    // this.fetchUser = debounce(this.fetchUser, 500);
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
     this.findEmployee = this.findEmployee.bind(this);
   }
 
-  requestHeaders() {
-    const jwt = Auth.getToken();
-    return { AUTHORIZATION: `Bearer ${jwt}` };
-  }
-  fetchUser(value) {
-    console.log('fetching user', value);
-    lastFetchId += 1;
-    const fetchId = lastFetchId;
-    this.setState({ fetching: true });
-
-    const headers = Object.assign(
-      {
-        'Content-Type': 'application/json',
-      },
-      this.requestHeaders()
-    );
-    const request = new Request(`/api/employee/?_limit=5&search=${value}`, {
-      method: 'GET',
-      headers: headers,
-    });
-
-    fetch(request)
-      .then(response => response.json())
-      .then(body => {
-        // if (fetchId !== lastFetchId) { // for fetch callback order
-        //   return;
-        // }
-        const data = body.records.map(user => ({
-          // id: user._id,
-          // search: value,
-          value: user._id,
-          text: `${user.name.firstName} ${user.name.lastName}`,
-          fetching: false,
-        }));
-        console.log('data', data);
-        this.setState({ data });
-      });
-  }
   handleSearch(value) {
     this.setState({
-      data: value ? fetchUser(value) : [],
+      data: value ? this.fetchUser(value) : [],
     });
   }
   handleChange(value, option) {
@@ -130,7 +78,6 @@ class TableToolbarSearch extends React.Component {
           placeholder="Select users"
           notFoundContent={fetching ? <Spin size="small" /> : null}
           filterOption={false}
-          onSearch={this.fetchUser.bind(this)}
           onChange={this.handleChange}
           style={{ width: '100%' }}>
           {data.map(d => <Option key={d.value}>{d.text}</Option>)}
@@ -151,4 +98,4 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(TableToolbarSearch));
+export default withRouter(connect()(TableToolbarSearch));
