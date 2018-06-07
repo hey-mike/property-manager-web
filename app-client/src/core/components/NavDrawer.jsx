@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import './NavDrawer.css';
 import SideNavMenu from './SideNavMenu';
 import Drawer from 'rc-drawer';
-import 'rc-drawer-menu/assets/index.css';
+import 'rc-drawer/assets/index.css';
 
 class NavDrawer extends Component {
   constructor(props) {
@@ -30,8 +30,6 @@ class NavDrawer extends Component {
 
   render() {
     const { open } = this.props;
-    console.log('open', open);
-
     return (
       <Drawer
         onHandleClick={this.onChange}

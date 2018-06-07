@@ -8,7 +8,7 @@ import Toolbar from './core/components/Toolbar';
 import Sidebar from './core/components/Sidebar';
 import NavDrawer from './core/components/NavDrawer';
 import DashboardPage from './features/dashboard/DashboardPage';
-import Tenant from './features/tenant/Tenant';
+import TenantPage from './features/tenant/TenantPage';
 import LeaseCalendar from './features/calendar/LeaseCalendar';
 import './AppMainLayout.css';
 
@@ -57,7 +57,7 @@ class MainContainer extends React.Component {
               <Switch>
                 <Redirect exact from="/" to="/dashboard" />
                 <Route path="/dashboard" component={DashboardPage} />
-                <Route path="/tenant" component={Tenant} />
+                <Route path="/tenant" component={TenantPage} />
                 <Route path="/calendar" component={LeaseCalendar} />
               </Switch>
             </Content>
