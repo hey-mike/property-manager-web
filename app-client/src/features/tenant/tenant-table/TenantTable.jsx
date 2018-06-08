@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Table } from 'antd';
+import { Table, Divider } from 'antd';
 import TableEditBtn from './TableEditBtn.jsx';
 import TableDeleteBtn from './TableDeleteBtn.jsx';
 
@@ -39,18 +39,21 @@ const columns = [
   {
     title: 'CreatedAt',
     render: createdAt => new Date(createdAt).toDateString(),
-    dataIndex: 'createdAt',
+    dataIndex: 'registered',
   },
   {
     title: 'Action',
     key: 'action',
-    render: (text, record) => (
-      <span>
-        <TableEditBtn id={record.key} />
-        <span className="ant-divider" />
-        <TableDeleteBtn id={record.key} />
-      </span>
-    ),
+    render: (text, record) => {
+      console.log('record', record);
+      return (
+        <span>
+          <TableEditBtn id={record.cell} />
+          <Divider type="vertical" />
+          <TableDeleteBtn id={record.cell} />
+        </span>
+      );
+    },
   },
 ];
 
@@ -87,8 +90,6 @@ class TenantTable extends Component {
       type: 'json',
     }).then(res => {
       const { data } = res;
-      console.log('res', res);
-      console.log(data);
       const pagination = { ...this.state.pagination };
       // Read total count from server
       // pagination.total = data.totalCount;

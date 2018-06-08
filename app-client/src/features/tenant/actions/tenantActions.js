@@ -1,53 +1,57 @@
 import * as types from './actionTypes';
-import employeeApi from '../services/api/employeeApi';
+import TenatService from '../tenant.service';
 import queryString from 'query-string';
+import {
+  addSuccessMessage,
+  addErrorMessage,
+} from '../../../core/actions/messageActions';
 
-import { notification, message } from 'antd';
+import { notification } from 'antd';
 
-// export const requestEmployeesError = error => ({
-//   type: types.REQUEST_SERVER_ERROR,
-//   error: error,
-//   receivedAt: Date.now(),
-// });
+export const requestTenantsError = error => ({
+  type: types.REQUEST_SERVER_ERROR,
+  error: error,
+  receivedAt: Date.now(),
+});
 
 export const sendRequest = () => ({
-  type: types.SEND_EMPLOYEE_REQUEST,
+  type: types.SEND_TENANT_REQUEST,
 });
 
-export const requestEmployeesSuccess = data => ({
-  type: types.LOAD_EMPLOYEES_SUCCESS,
+export const requestTenantsSuccess = data => ({
+  type: types.LOAD_TENANTS_SUCCESS,
   data,
   receivedAt: Date.now(),
 });
-export const readEmployeeSuccess = data => ({
-  type: types.READ_EMPLOYEE_SUCCESS,
+export const readTenantSuccess = data => ({
+  type: types.READ_TENANT_SUCCESS,
   data,
   receivedAt: Date.now(),
 });
-export const createEmployeeSuccess = (employee, history) => {
+export const createTenantSuccess = (employee, history) => {
   // history.push({
   //   pathname: `/employee/${employee._id}`
   // })
   return {
-    type: types.CREATE_EMPLOYEE_SUCCESS,
+    type: types.CREATE_TENANT_SUCCESS,
     employee,
     receivedAt: Date.now(),
   };
 };
-export const updateEmployeeSuccess = (employee, history) => {
+export const updateTenantSuccess = (employee, history) => {
   return {
-    type: types.UPDATE_EMPLOYEE_SUCCESS,
+    type: types.UPDATE_TENANT_SUCCESS,
     employee,
     receivedAt: Date.now(),
   };
 };
-export const deleteEmployeeSuccess = employeeIds => ({
-  type: types.DELETE_EMPLOYEE_SUCCESS,
+export const deleteTenantSuccess = employeeIds => ({
+  type: types.DELETE_TENANT_SUCCESS,
   employeeIds,
   receivedAt: Date.now(),
 });
 
-const convertedEmployee = employee => {
+const convertedTenant = employee => {
   employee.createdAt = new Date(employee.createdAt);
   if (employee.completionDate) {
     employee.completionDate = new Date(employee.completionDate);
@@ -55,7 +59,7 @@ const convertedEmployee = employee => {
   return employee;
 };
 
-export const fetchEmployees = (location, page_size) => dispatch => {
+export const fetchTenants = (location, page_size) => dispatch => {
   const query = Object.assign({}, queryString.parse(location.search));
   const pageStr = query._page;
 
@@ -68,8 +72,7 @@ export const fetchEmployees = (location, page_size) => dispatch => {
     .join('&');
 
   dispatch(sendRequest());
-  return employeeApi
-    .getAllEmployees(search)
+  return TenatService.getAllTenants(search)
     .then(response => {
       if (!response.ok)
         return response.json().then(error => Promise.reject(error));
@@ -83,27 +86,24 @@ export const fetchEmployees = (location, page_size) => dispatch => {
         });
 
         dispatch(
-          requestEmployeesSuccess({
-            pageNum: pageStr ? parseInt(pageStr) : 1,
+          requestTenantsSuccess({
+            pageNum: pageStr ? parseInt(pageStr, 0) : 1,
             offset: query._offset,
             employees,
             totalCount: data.metadata.totalCount,
           })
         );
-        message.success('Load employees successfull');
+        dispatch(addSuccessMessage('Load employees successfull'));
       });
     })
     .catch(err => {
       const errorMsg = `Error in fetching data from server: ${err.message}`;
       console.log('errorMsg', errorMsg);
-      dispatch(requestEmployeesError(errorMsg));
-      notification.error({
-        message: errorMsg,
-      });
+      dispatch(addErrorMessage(errorMsg));
     });
 };
 
-const shouldFetchEmployees = (location, state) => {
+const shouldFetchTenants = (location, state) => {
   const employeeState = state.employeeState;
   if (!employeeState.employees.length) {
     return true;
@@ -113,33 +113,30 @@ const shouldFetchEmployees = (location, state) => {
   return false;
 };
 
-export const fetchEmployeesIfNeeded = (location, page_size) => (
+export const fetchTenantsIfNeeded = (location, page_size) => (
   dispatch,
   getState
 ) => {
-  if (shouldFetchEmployees(location, getState())) {
-    return dispatch(fetchEmployees(location, page_size));
+  if (shouldFetchTenants(location, getState())) {
+    return dispatch(fetchTenants(location, page_size));
   }
 };
 
-export const createEmployee = (employee, history) => {
+export const createTenant = (employee, history) => {
   return dispatch => {
     dispatch(sendRequest());
 
-    employeeApi
-      .createEmployee(employee)
+    TenatService.createTenant(employee)
       .then(response => {
         if (!response.ok) {
           return response.json().then(error => {
-            dispatch(requestEmployeesError(errorMsg));
-            notification.error({
-              message: errorMsg,
-            });
+            dispatch(requestTenantsError(error));
+            dispatch(addErrorMessage(error));
           });
         }
-        response.json().then(updatedEmployee => {
-          updatedEmployee = convertedEmployee(updatedEmployee);
-          dispatch(createEmployeeSuccess(updatedEmployee, history));
+        response.json().then(updatedTenant => {
+          updatedTenant = convertedTenant(updatedTenant);
+          dispatch(createTenantSuccess(updatedTenant, history));
           notification.success({
             message: 'Create employee successfully',
           });
@@ -147,43 +144,39 @@ export const createEmployee = (employee, history) => {
       })
       .catch(error => {
         const errorMsg = `Error in sending data to server: ${error.message}`;
-        dispatch(requestEmployeesError(errorMsg));
+        dispatch(addErrorMessage(errorMsg));
       });
   };
 };
 
-export const readEmployee = id => {
+export const readTenant = id => {
   return dispatch => {
     dispatch(sendRequest());
-    employeeApi
-      .readEmployee(id)
+    TenatService.readTenant(id)
       .then(response => {
         if (!response.ok) {
           return response.json().then(error => {
-            dispatch(requestEmployeesError(errorMsg));
-            notification.error({
-              message: errorMsg,
-            });
+            dispatch(requestTenantsError(error));
+            dispatch(addErrorMessage(error));
           });
         }
         response.json().then(employee => {
           console.log('employee', employee);
-          employee = convertedEmployee(employee);
-          dispatch(readEmployeeSuccess(employee, history));
+          employee = convertedTenant(employee);
+          dispatch(readTenantSuccess(employee));
         });
       })
       .catch(error => {
         const errorMsg = `Error in sending data to server: ${error.message}`;
-        dispatch(requestEmployeesError(errorMsg));
+        dispatch(requestTenantsError(errorMsg));
       });
   };
 };
 
-export const updateEmployee = (employee, history) => {
+export const updateTenant = (employee, history) => {
   return dispatch => {
     dispatch(sendRequest());
-    employeeApi
-      .updateEmployee(employee)
+    TenatService.updateTenant(employee)
       .then(response => {
         if (!response.ok) {
           return response.json().then(error => {
@@ -193,12 +186,12 @@ export const updateEmployee = (employee, history) => {
             });
           });
         }
-        response.json().then(updatedEmployee => {
-          updatedEmployee = convertedEmployee(updatedEmployee);
+        response.json().then(updatedTenant => {
+          updatedTenant = convertedTenant(updatedTenant);
           notification.success({
             message: 'Update employee successfully',
           });
-          return dispatch(updateEmployeeSuccess(updatedEmployee, history));
+          return dispatch(updateTenantSuccess(updatedTenant, history));
         });
       })
       .catch(error => {
@@ -209,11 +202,10 @@ export const updateEmployee = (employee, history) => {
       });
   };
 };
-export const deleteEmployee = (id, history) => {
+export const deleteTenant = (id, history) => {
   return dispatch => {
     dispatch(sendRequest());
-    employeeApi
-      .deleteEmployee(id)
+    TenatService.deleteTenant(id)
       .then(response => {
         if (!response.ok) {
           return response.json().then(error => {
@@ -223,34 +215,33 @@ export const deleteEmployee = (id, history) => {
             });
           });
         }
-        return dispatch(deleteEmployeeSuccess(id, history));
+        return dispatch(deleteTenantSuccess(id, history));
       })
       .catch(error => {
         const errorMsg = `Error in sending data to server: ${error.message}`;
         notification.error({
           message: errorMsg,
         });
-        // dispatch(requestEmployeesError(errorMsg))
+        // dispatch(requestTenantsError(errorMsg))
       });
   };
 };
-export const deleteBulkEmployee = employeeIds => {
+export const deleteBulkTenant = employeeIds => {
   return dispatch => {
     dispatch(sendRequest());
-    employeeApi
-      .deleteBulkEmployee(employeeIds)
+    TenatService.deleteBulkTenant(employeeIds)
       .then(response => {
         if (!response.ok) {
           return response.json().then(error => {
             const errorMsg = `Failed to delete employee`;
-            dispatch(requestEmployeesError(errorMsg));
+            dispatch(requestTenantsError(errorMsg));
           });
         }
-        return dispatch(deleteEmployeeSuccess(employeeIds));
+        return dispatch(deleteTenantSuccess(employeeIds));
       })
       .catch(error => {
         const errorMsg = `Error in sending data to server: ${error.message}`;
-        dispatch(requestEmployeesError(errorMsg));
+        dispatch(requestTenantsError(errorMsg));
       });
   };
 };

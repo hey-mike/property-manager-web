@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteEmployee } from '../actions/tenantActions';
+import { deleteTenant } from '../actions/tenantActions';
 
 import { Modal } from 'antd';
 
@@ -20,7 +20,7 @@ class TableDeleteBtn extends Component {
   delete() {
     console.log('this.props', this.props);
     const { dispatch, id } = this.props;
-    dispatch(deleteEmployee(id));
+    dispatch(deleteTenant(id));
   }
   showModal(e) {
     e.preventDefault();

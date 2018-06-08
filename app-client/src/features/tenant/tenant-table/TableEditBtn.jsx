@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Modal, Tabs, Avatar } from 'antd';
 import EditEmployeeForm from '../forms/EditEmployeeForm.jsx';
+import { readTenant } from '../actions/tenantActions';
 const TabPane = Tabs.TabPane;
 
 const TabNames = {
@@ -50,7 +51,7 @@ class TableEditBtn extends Component {
     this.setState({ visible: true });
 
     const { dispatch, id } = this.props;
-    // dispatch(readEmployee(id));
+    dispatch(readTenant(id));
   }
   onClose() {
     this.setState({ visible: false });
@@ -90,7 +91,7 @@ class TableEditBtn extends Component {
     const { visible, confirmLoading } = this.state;
     return (
       <span>
-        <a href="#" onClick={this.showModal}>
+        <a href="" onClick={this.showModal}>
           Edit
         </a>
         <Modal
@@ -133,11 +134,11 @@ TableEditBtn.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { updatedEmployee, error, isFetching } = state.employeeState;
+  const { updatedEmployee, error, isFetching } = state.tenant;
   return {
     updatedEmployee: updatedEmployee,
     isFetching: isFetching,
     error: error,
   };
 };
-export default withRouter(connect()(TableEditBtn));
+export default withRouter(connect(mapStateToProps)(TableEditBtn));

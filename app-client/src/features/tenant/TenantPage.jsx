@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card } from 'antd';
 import { withRouter } from 'react-router-dom';
 import withSizes from 'react-sizes';
-import ActionBar from './actionbar/ActionBar';
+import ActionBar from './tenant-actionbar/ActionBar';
 import TenantList from './tenant-list/TenantList';
 import TenantTable from './tenant-table/TenantTable';
 import './TenantPage.css';

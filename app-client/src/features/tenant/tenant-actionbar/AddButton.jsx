@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 // import { createEmployee } from '../../../actions/employeeActions';
 import { Button, Modal } from 'antd';
-import AddEmployeeForm from '../forms/AddEmployeeForm.jsx';
+import AddEmployeeForm from '../tenant-forms/AddEmployeeForm.jsx';
 
 class AddButton extends React.Component {
   constructor(props) {

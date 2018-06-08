@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../axiosClient';
 import LocalStorageService from './local-store.service';
 
 export default class AuthService {

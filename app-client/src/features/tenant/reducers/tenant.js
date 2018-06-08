@@ -13,7 +13,7 @@ const initSate = {
 };
 const tenant = (state = initSate, action) => {
   switch (action.type) {
-    case types.SEND_EMPLOYEE_REQUEST:
+    case types.SEND_TENANT_REQUEST:
       return Object.assign({}, state, {
         isFetching: true,
       });
@@ -33,8 +33,8 @@ const tenant = (state = initSate, action) => {
     //     isFetching: false,
     //   });
 
-    case types.LOAD_EMPLOYEES_SUCCESS:
-      // console.log('LOAD_EMPLOYEES_SUCCESS');
+    case types.LOAD_TENANTS_SUCCESS:
+      // console.log('LOAD_TENANTS_SUCCESS');
       return Object.assign({}, state, {
         employees: action.data.employees,
         totalCount: action.data.totalCount,
@@ -44,21 +44,21 @@ const tenant = (state = initSate, action) => {
         receivedAt: action.receivedAt,
       });
 
-    case types.CREATE_EMPLOYEE_SUCCESS:
-      // console.log('CREATE_EMPLOYEE_SUCCESS');
+    case types.CREATE_TENANT_SUCCESS:
+      // console.log('CREATE_TENANT_SUCCESS');
       const updatedEmployee = action.employee;
       return Object.assign({}, state, {
         employees: [updatedEmployee, ...state.employees],
         receivedAt: action.receivedAt,
         isFetching: false,
       });
-    case types.READ_EMPLOYEE_SUCCESS:
+    case types.READ_TENANT_SUCCESS:
       return Object.assign({}, state, {
         currentEmployee: action.employee,
         receivedAt: action.receivedAt,
         isFetching: false,
       });
-    case types.UPDATE_EMPLOYEE_SUCCESS:
+    case types.UPDATE_TENANT_SUCCESS:
       const updatedEmployees = state.employees.map(employee => {
         if (employee._id === action.employee._id) {
           return action.employee;
@@ -72,10 +72,10 @@ const tenant = (state = initSate, action) => {
         isFetching: false,
       });
 
-    case types.DELETE_EMPLOYEE_SUCCESS:
-      // console.log('DELETE_EMPLOYEE_SUCCESS');
+    case types.DELETE_TENANT_SUCCESS:
+      // console.log('DELETE_TENANT_SUCCESS');
       const newEmployees = state.employees.filter(
-        employee => action.employeeIds.indexOf(employee._id) == -1
+        employee => action.employeeIds.indexOf(employee._id) === -1
       );
       return Object.assign({}, state, {
         employees: newEmployees,

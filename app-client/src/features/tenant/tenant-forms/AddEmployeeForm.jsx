@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Modal, Select, AutoComplete } from 'antd';
+import { Form, Input, Select, AutoComplete } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -25,7 +25,7 @@ class AddEmployeeForm extends React.Component {
     });
   }
   render() {
-    const { visible, onCancel, onCreate, form, confirmLoading } = this.props;
+    const { form } = this.props;
     const { getFieldDecorator } = form;
     const formItemLayout = {
       labelCol: { span: 6 },
