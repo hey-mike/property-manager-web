@@ -1,12 +1,14 @@
 const elasticsearch = require('elasticsearch');
+const config = require('../config/config.js');
 const _ = require('lodash');
 
 // https://www.elastic.co/blog/setting-up-elasticsearch-for-a-blog
 const ES_INDEX = 'property_manager';
+const URI = 'http://localhost:9200';
 class SearchService {
   constructor() {
     this.client = new elasticsearch.Client({
-      host: 'http://localhost:9200'
+      host: URI
     });
     this.healthCheck();
     this.createIndex();
@@ -18,7 +20,7 @@ class SearchService {
       await this.client.ping({
         requestTimeout: 1000
       });
-      console.log('Elasticsearch is connected');
+      console.log('Connect to elasticsearch:', URI);
     } catch (error) {
       console.trace('elasticsearch cluster is down!');
     }
@@ -130,7 +132,7 @@ class SearchService {
     };
   }
 
-  filters (options) {
+  filters(options) {
     const tags = Array.isArray(options.tags) ? options.tags : [];
     const clauses = tags.map(this.tagToFilter);
     if (options.since) {
@@ -138,13 +140,13 @@ class SearchService {
     }
     return this.all(clauses);
   }
-  all (clauses) {
+  all(clauses) {
     return { bool: { must: clauses } };
   }
-  since (date) {
+  since(date) {
     return { range: { created: { gte: date } } };
   }
-  tagToFilter (tag) {
+  tagToFilter(tag) {
     return { term: { tags: tag } };
   }
   async search(options) {
@@ -166,8 +168,6 @@ class SearchService {
       console.trace(error.message);
     }
   }
-
-
 }
 
 module.exports = new SearchService();

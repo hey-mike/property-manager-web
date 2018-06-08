@@ -10,7 +10,7 @@ class Mongoose {
         config.get('db:uri'),
         config.get('db:options')
       );
-      console.log('Connect to database:', config.get('db:uri'));
+      console.log('Connect to mongodb:', config.get('db:uri'));
     } catch (err) {
       console.error('Mongoose ERROR:', err);
     }
