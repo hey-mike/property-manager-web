@@ -11,8 +11,8 @@ class SearchService {
     this.client = new elasticsearch.Client({
       host: config.get('es:uri')
     });
-    this.healthCheck();
     this.createIndex();
+    this.healthCheck();
     this.createMapping();
   }
   async healthCheck() {
@@ -21,7 +21,7 @@ class SearchService {
       await this.client.ping({
         requestTimeout: 3000
       });
-      console.log('Connect to elasticsearch:',  config.get('es:uri'));
+      console.log('Connect to elasticsearch:', config.get('es:uri'));
     } catch (error) {
       console.trace('elasticsearch cluster is down!');
     }
