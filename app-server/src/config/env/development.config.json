@@ -12,5 +12,8 @@
       "poolSize": 10, 
       "bufferMaxEntries": 0
     }
+  },
+  "es": {
+    "uri": "http://localhost:9200"
   }
 }

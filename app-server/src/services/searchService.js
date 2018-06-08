@@ -4,11 +4,12 @@ const _ = require('lodash');
 
 // https://www.elastic.co/blog/setting-up-elasticsearch-for-a-blog
 const ES_INDEX = 'property_manager';
-const URI = 'http://localhost:9200';
 class SearchService {
-  constructor() {
+  constructor() {}
+
+  connect() {
     this.client = new elasticsearch.Client({
-      host: URI
+      host: config.get('es:uri')
     });
     this.healthCheck();
     this.createIndex();
@@ -18,9 +19,9 @@ class SearchService {
     try {
       // ping usually has a 3000ms timeout
       await this.client.ping({
-        requestTimeout: 1000
+        requestTimeout: 3000
       });
-      console.log('Connect to elasticsearch:', URI);
+      console.log('Connect to elasticsearch:',  config.get('es:uri'));
     } catch (error) {
       console.trace('elasticsearch cluster is down!');
     }

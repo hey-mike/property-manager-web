@@ -7,18 +7,13 @@ const app = require('./app');
 const errorHandler = require('errorhandler');
 const config = require('./config/config.js');
 const mongoose = require('./config/mongoose.js');
+const SearchService = require('./services/searchService.js');
 
-// connect to database
-// mongoose.connect(config.get('db:uri'), config.get('db:options')).then(
-//   () => {
-//     console.log('Connect to database:', config.get('db:uri'));
-//   },
-//   err => {
-//     console.error('Mongoose ERROR:', err);
-//   }
-// );
-// connect mongodb
+// connect to mongodb
 mongoose.connect();
+// connect to elasticsearch
+SearchService.connect();
+
 const port = process.env.PORT || config.get('server:port');
 app.set('port', port);
 
