@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 // import { createEmployee } from '../../../actions/employeeActions';
 import { Button, Modal } from 'antd';
-import AddEmployeeForm from '../tenant-forms/AddEmployeeForm.jsx';
+import AddTenantForm from '../tenant-forms/AddTenantForm.jsx';
 
 class AddButton extends React.Component {
   constructor(props) {
@@ -67,7 +67,7 @@ class AddButton extends React.Component {
           onOk={this.handleCreate}
           closable={false}
           maskClosable={false}>
-          <AddEmployeeForm
+          <AddTenantForm
             ref={this.saveFormRef}
             confirmLoading={this.props.isFetching}
             visible={this.state.visible}

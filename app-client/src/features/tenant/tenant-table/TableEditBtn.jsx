@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Modal, Tabs, Avatar } from 'antd';
-import EditEmployeeForm from '../forms/EditEmployeeForm.jsx';
+import EditTenantForm from '../tenant-forms/EditTenantForm.jsx';
 import { readTenant } from '../actions/tenantActions';
 const TabPane = Tabs.TabPane;
 
@@ -108,8 +108,7 @@ class TableEditBtn extends Component {
             onChange={this.onChange}
             tabPosition="left">
             <TabPane tab={TabNames['1']} key="1">
-              {' '}
-              <EditEmployeeForm ref={this.saveFormRef} />
+              <EditTenantForm ref={this.saveFormRef} />
             </TabPane>
             <TabPane tab={TabNames['2']} key="2">
               Content of Tab Pane 2

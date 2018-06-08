@@ -3,7 +3,7 @@ import { Form, Input, Select } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
-const EditEmployeeForm = props => {
+const EditTenantForm = props => {
   const { form } = props;
   const { getFieldDecorator } = form;
   const formItemLayout = {
@@ -39,4 +39,4 @@ const EditEmployeeForm = props => {
   );
 };
 
-export default Form.create()(EditEmployeeForm);
+export default Form.create()(EditTenantForm);
