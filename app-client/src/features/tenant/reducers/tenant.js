@@ -1,12 +1,12 @@
 import * as types from '../actions/actionTypes';
 
 const initSate = {
-  employees: [],
-  updatedEmployee: {},
+  tenants: [],
+  updatedTenant: {},
   totalCount: 0,
   isFetching: false,
   failed: false,
-  deletedEmployees: [],
+  deletedTenants: [],
   pageSize: 10,
   pageNum: 1,
   offset: 0,
@@ -36,7 +36,7 @@ const tenant = (state = initSate, action) => {
     case types.LOAD_TENANTS_SUCCESS:
       // console.log('LOAD_TENANTS_SUCCESS');
       return Object.assign({}, state, {
-        employees: action.data.employees,
+        tenants: action.data.tenants,
         totalCount: action.data.totalCount,
         isFetching: false,
         pageNum: action.data.pageNum,
@@ -46,40 +46,40 @@ const tenant = (state = initSate, action) => {
 
     case types.CREATE_TENANT_SUCCESS:
       // console.log('CREATE_TENANT_SUCCESS');
-      const updatedEmployee = action.employee;
+      const updatedTenant = action.tenant;
       return Object.assign({}, state, {
-        employees: [updatedEmployee, ...state.employees],
+        tenants: [updatedTenant, ...state.tenants],
         receivedAt: action.receivedAt,
         isFetching: false,
       });
     case types.READ_TENANT_SUCCESS:
       return Object.assign({}, state, {
-        currentEmployee: action.employee,
+        currentTenant: action.tenant,
         receivedAt: action.receivedAt,
         isFetching: false,
       });
     case types.UPDATE_TENANT_SUCCESS:
-      const updatedEmployees = state.employees.map(employee => {
-        if (employee._id === action.employee._id) {
-          return action.employee;
+      const updatedTenants = state.tenants.map(tenant => {
+        if (tenant._id === action.tenant._id) {
+          return action.tenant;
         }
-        return employee;
+        return tenant;
       });
       return Object.assign({}, state, {
-        employees: updatedEmployees,
-        updatedEmployee: action.employee,
+        tenants: updatedTenants,
+        updatedTenant: action.tenant,
         receivedAt: action.receivedAt,
         isFetching: false,
       });
 
     case types.DELETE_TENANT_SUCCESS:
       // console.log('DELETE_TENANT_SUCCESS');
-      const newEmployees = state.employees.filter(
-        employee => action.employeeIds.indexOf(employee._id) === -1
+      const newTenants = state.tenants.filter(
+        tenant => action.tenantIds.indexOf(tenant._id) === -1
       );
       return Object.assign({}, state, {
-        employees: newEmployees,
-        deletedEmployees: state.deletedEmployees.concat(action.employeeIds),
+        tenants: newTenants,
+        deletedTenants: state.deletedTenants.concat(action.tenantIds),
         isFetching: false,
         receivedAt: action.receivedAt,
       });

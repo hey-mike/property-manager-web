@@ -103,6 +103,21 @@ export const fetchTenants = (location, page_size) => dispatch => {
     });
 };
 
+export const searchTenants = () => {
+  return async dispatch => {
+    console.log('searchTenants');
+    dispatch(sendRequest());
+    try {
+      const response = await TenatService.searchTenants();
+      console.log('searchTenants', response);
+    } catch (err) {
+      const errorMsg = `Error in sending data to server: ${err.message}`;
+      dispatch(addErrorMessage(errorMsg));
+    }
+    return TenatService.searchTenants();
+  };
+};
+
 const shouldFetchTenants = (location, state) => {
   const employeeState = state.employeeState;
   if (!employeeState.employees.length) {

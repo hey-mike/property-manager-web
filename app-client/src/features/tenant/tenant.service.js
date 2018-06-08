@@ -14,6 +14,14 @@ class TenantService {
   //     console.error(error);
   //   }
   // }
+  static async searchTenants() {
+    try {
+      const response = await axios.post('/tenant/search');
+      console.log(response);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   static async getAllTenants() {
     try {
       const response = await axios.get('/tenant');

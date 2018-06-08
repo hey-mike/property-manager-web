@@ -7,6 +7,8 @@ import { Table, Divider } from 'antd';
 import TableEditBtn from './TableEditBtn.jsx';
 import TableDeleteBtn from './TableDeleteBtn.jsx';
 
+import { searchTenants } from '../actions/tenantActions';
+
 const columns = [
   {
     title: 'Name',
@@ -102,7 +104,9 @@ class TenantTable extends Component {
     });
   };
   componentDidMount() {
-    this.fetch();
+    console.log('componentDidMount');
+    // this.fetch();
+    this.props.dispatch(searchTenants());
   }
   render() {
     return (
@@ -124,28 +128,28 @@ TenantTable.defaultProps = {
 };
 TenantTable.propTypes = {
   location: PropTypes.object.isRequired,
-  employees: PropTypes.array.isRequired,
+  tenants: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
   dispatch: PropTypes.func.isRequired,
 };
 const mapStateToProps = (state, ownProps) => {
   const {
-    employees,
+    tenants,
     totalCount,
     isFetching,
     lastUpdated,
-    deletedEmployees,
+    deletedTenants,
     pageNum,
     offset,
   } = state.tenant;
 
   return {
-    employees: employees,
+    tenants: tenants,
     totalCount: totalCount,
     isFetching: isFetching,
     lastUpdated: lastUpdated,
-    deletedEmployees: deletedEmployees,
+    deletedTenants: deletedTenants,
     pageNum: pageNum,
     offset: offset,
   };

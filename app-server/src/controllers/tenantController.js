@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Tenant = require('../models/tenant');
+const SearchService = require('../services/searchService.js');
 
 const getAggreateMatchedIds = result => {
   let ids = [];
@@ -21,26 +22,28 @@ const getSearchReg = search => {
   return new RegExp(regexString, 'ig');
 };
 exports.search = async function(req, res) {
-  const { text } = req.body;
-  const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
-  let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
+  const result = SearchService.search();
+  console.log(result);
+  // const { text } = req.body;
+  // const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
+  // let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
 
-  console.log('offset', offset);
-  console.log('limit', limit);
-  console.log('text', text);
+  // console.log('offset', offset);
+  // console.log('limit', limit);
+  // console.log('text', text);
 
-  if (limit > 50) limit = 50;
+  // if (limit > 50) limit = 50;
 
-  try {
-    const tenants = await Tenant.find(
-      { $text: { $search: text }},
-    );
-    res.json(tenants);
-  } catch (error) {
-    res.status(500).json({
-      message: `Internal Server Error: ${error}`
-    });
-  }
+  // try {
+  //   const tenants = await Tenant.find(
+  //     { $text: { $search: text }},
+  //   );
+  //   res.json(tenants);
+  // } catch (error) {
+  //   res.status(500).json({
+  //     message: `Internal Server Error: ${error}`
+  //   });
+  // }
   // const cursor = Tenant.find(filter)
   //   .sort({
   //     createdAt: -1

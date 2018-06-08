@@ -2,7 +2,7 @@ import axios from 'axios';
 import LocalStorageService from './services/local-store.service';
 
 const axiosClient = axios.create({
-  baseURL: 'https://domain.com/foo/bar',
+  baseURL: 'http://localhost:8080',
   /* other custom settings */
 });
 axiosClient.interceptors.request.use(
