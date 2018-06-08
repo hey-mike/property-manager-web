@@ -18,10 +18,11 @@ class SearchService {
   async healthCheck() {
     try {
       // ping usually has a 3000ms timeout
-      await this.client.ping({
+      const result = await this.client.ping({
         requestTimeout: 3000
       });
       console.log('Connect to elasticsearch:', config.get('es:uri'));
+      console.log('-- ES Client Health --', result);
     } catch (error) {
       console.trace('elasticsearch cluster is down!');
     }
@@ -150,23 +151,54 @@ class SearchService {
   tagToFilter(tag) {
     return { term: { tags: tag } };
   }
-  async search(options) {
-    console.log(options);
+  async search(match) {
+    console.log(match);
     try {
       const result = await this.client.search({
         index: ES_INDEX,
         type: 'tenant',
         body: {
           query: {
-            match: {
-              email: options.input
-            }
+            match: match
           }
         }
       });
       return result.hits.hits.map(this.searchHitToResult);
     } catch (error) {
       console.trace(error.message);
+    }
+  }
+  async count() {
+    try {
+      const result = await this.client.count({
+        index: ES_INDEX,
+        type: 'tenant'
+      });
+      console.log('count index', result);
+    } catch (err) {
+      console.trace(err.message);
+    }
+  }
+
+  async deleteIndex() {
+    try {
+      const result = await this.client.indices.delete({ index: ES_INDEX });
+      console.log('Index deleted', result);
+    } catch (err) {
+      console.trace(err.message);
+    }
+  }
+
+  async deleteDoc(id) {
+    try {
+      const result = await this.client.delete({
+        index: ES_INDEX,
+        type: 'tenant',
+        id: id
+      });
+      console.log('deleteDoc', result);
+    } catch (err) {
+      console.trace(err.message);
     }
   }
 }

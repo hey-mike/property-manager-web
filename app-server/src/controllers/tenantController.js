@@ -21,8 +21,14 @@ const getSearchReg = search => {
 
   return new RegExp(regexString, 'ig');
 };
+
 exports.search = async function(req, res) {
-  const result = SearchService.search();
+  // const { text ,offset ,limit} = req.body;
+  // const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
+  // let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
+
+  // const result = SearchService.search();
+  const result = SearchService.count();
   console.log(result);
   // const { text } = req.body;
   // const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
@@ -70,6 +76,9 @@ exports.search = async function(req, res) {
   //       message: `Internal Server Error: ${error}`
   //     });
   //   });
+};
+exports.count = async function(req, res) {
+  const result = SearchService.count();
 };
 exports.list = async function(req, res) {
   try {

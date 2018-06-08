@@ -60,7 +60,8 @@ class AddButton extends React.Component {
         </Button>
         <Modal
           visible={visible}
-          title="Add a new employee"
+          title="Add a new tenant"
+          wrapClassName="vertical-center-modal"
           okText="Add"
           onCancel={this.handleCancel}
           confirmLoading={this.props.isFetching}
