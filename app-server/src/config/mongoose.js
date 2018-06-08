@@ -3,7 +3,6 @@ const config = require('./config.js');
 
 class Mongoose {
   constructor() {
-    console.log('called');
   }
   async connect() {
     try {
@@ -28,10 +27,9 @@ class Mongoose {
     }
   }
   async drop() {
-      console.log('drop');
     try {
-      await this.connection.dropDatabase();
-      await this.connection.close();
+      await mongoose.connection.dropDatabase();
+      await mongoose.connection.close();
     } catch (err) {
       console.error(err);
     }

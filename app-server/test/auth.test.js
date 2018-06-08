@@ -5,15 +5,21 @@ const mongoose = require('../src/config/mongoose.js');
 
 const expect = chai.expect;
 
-describe('Auth Tests', function() {
+describe('Auth', function() {
   before(async (done) => {
-    await mongoose.connectTest();
-
-    // Renew a database
-    await mongoose.drop();
+    mongoose.connectTest();
     done();
   });
-  describe('Registration Tests', function() {
+  describe('Register Tests', function() {
+    it('should return status code 422', function(done) {
+      request(app)
+        .post('/api/auth/register')
+        .end(function(err, res) {
+          if (err) return done(err);
+          expect(res.statusCode).to.be.equal(422);
+          done();
+        });
+    });
     it('should return the user if the email is valid', function(done) {
       request(app)
         .post('/api/auth/register')
@@ -24,7 +30,39 @@ describe('Auth Tests', function() {
         .end(function(err, res) {
           if (err) return done(err);
           expect(res.statusCode).to.be.equal(200);
+          expect(res.body).to.have.property('email');
           expect(res.body.email).to.be.equal('JoshMatz@test.com');
+          done();
+        });
+    });
+  });
+
+  describe('Login Tests', function() {
+    it('should return status code 400 if the credential is invalid', function(done) {
+      request(app)
+        .post('/api/auth/login')
+        .send({
+          email: 'JoshMat2z@test.com',
+          password: 'password123'
+        })
+        .end(function(err, res) {
+          if (err) return done(err);
+          expect(res.statusCode).to.be.equal(400);
+          done();
+        });
+    });
+    it('should return token if the credential is valid', function(done) {
+      request(app)
+        .post('/api/auth/login')
+        .send({
+          email: 'JoshMatz@test.com',
+          password: 'password123'
+        })
+        .end(function(err, res) {
+          if (err) return done(err);
+          expect(res.statusCode).to.be.equal(200);
+          expect(res.body).to.have.property('token');
+          expect(res.body.token).to.be.a('string');
           done();
         });
     });
