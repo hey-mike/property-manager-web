@@ -6,7 +6,6 @@ const app = require('./app');
 const mongoose = require('mongoose');
 const errorHandler = require('errorhandler');
 const config = require('./config/config.js');
-const ElasticSearch = require('./services/searchService'); 
 
 // connect to database
 mongoose.connect(config.get('db:uri'), config.get('db:options')).then(
@@ -29,7 +28,4 @@ app.listen(app.get('port'), () => {
     app.get('env')
   );
   console.log('  Press CTRL-C to stop\n');
-
- const result = ElasticSearch.search({input:"Heather10@yahoo.com"});
- console.log('result',result);
 });

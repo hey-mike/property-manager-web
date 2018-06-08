@@ -18,7 +18,7 @@ class SearchService {
       await this.client.ping({
         requestTimeout: 1000
       });
-      console.log('All is well');
+      console.log('Elasticsearch is connected');
     } catch (error) {
       console.trace('elasticsearch cluster is down!');
     }

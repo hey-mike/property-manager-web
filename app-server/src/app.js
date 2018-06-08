@@ -34,6 +34,11 @@ app.use(passport.initialize());
 
 // add routes
 app.use('/', index);
+app.get('/api', function(req, res) {
+  res.send({
+    version: '1.0.0'
+  });
+});
 app.use('/api/auth', auth);
 app.use('/api/user', passport.authenticate('jwt'), user);
 app.use('/api/tenant',  tenant);

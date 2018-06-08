@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --legacy-watch ./src/server.js"
+    "start": "nodemon --ignore test/* --legacy-watch ./src/server.js",
+    "test": "mocha"
   },
   "engines": {
     "node": ">=8.11.2"
@@ -37,6 +38,7 @@
     "eslint": "^4.19.1",
     "eslint-plugin-node": "^6.0.1",
     "faker": "^4.1.0",
+    "mocha": "^5.2.0",
     "nodemon": "^1.17.4",
     "supertest": "^3.1.0"
   }

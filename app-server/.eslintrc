@@ -1,7 +1,12 @@
 {
-    "plugins": ["node"],
-    "extends": ["eslint:recommended", "plugin:node/recommended"],
-    "rules": {
-        "no-console": 0
-      }
+  "env": {
+    "commonjs": true,
+    "node": true,
+    "mocha": true
+  },
+  "plugins": ["node"],
+  "extends": ["eslint:recommended", "plugin:node/recommended"],
+  "rules": {
+    "no-console": 0
+  }
 }
