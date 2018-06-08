@@ -4,6 +4,7 @@
   },
   "db": {
     "uri": "mongodb://localhost:27017/Property-manager",
+    "test": "mongodb://localhost:27017/Property-manager-test",
     "options": {
       "autoIndex": true, 
       "reconnectTries": "Number.MAX_VALUE", 
