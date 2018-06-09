@@ -126,7 +126,6 @@ class SearchService {
     }
   }
   searchHitToResult(hit) {
-    console.log('hit', hit);
     return {
       _score: hit._score,
       _id: hit._id,
@@ -161,7 +160,10 @@ class SearchService {
         type: 'tenant',
         body: body
       });
-      return result.hits.hits.map(this.searchHitToResult);
+      return {
+        data: result.hits.hits.map(this.searchHitToResult),
+        total: result.hits.total
+      };
     } catch (error) {
       console.trace(error.message);
     }

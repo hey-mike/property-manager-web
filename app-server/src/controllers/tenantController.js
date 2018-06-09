@@ -29,61 +29,13 @@ exports.search = async function(req, res) {
 
   try {
     const result = await SearchService.search(body);
+    console.log('search', result);
     res.json(result);
   } catch (err) {
     res.status(500).json({
       message: `Internal Server Error: ${err}`
     });
   }
-  // const { text } = req.body;
-  // const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
-  // let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
-
-  // console.log('offset', offset);
-  // console.log('limit', limit);
-  // console.log('text', text);
-
-  // if (limit > 50) limit = 50;
-
-  // try {
-  //   const tenants = await Tenant.find(
-  //     { $text: { $search: text }},
-  //   );
-  //   res.json(tenants);
-  // } catch (error) {
-  //   res.status(500).json({
-  //     message: `Internal Server Error: ${error}`
-  //   });
-  // }
-  // const cursor = Tenant.find(filter)
-  //   .sort({
-  //     createdAt: -1
-  //   })
-  //   .skip(offset)
-  //   .limit(limit);
-
-  // ensures that the effects of skip() and limit() will be ignored
-  // cursor
-  //   .exec()
-  //   .then(tenant => {
-  //     Tenant.count().then(totalCount => {
-  //       res.json({
-  //         metadata: {
-  //           totalCount
-  //         },
-  //         records: tenant
-  //       });
-  //     });
-  //   })
-  //   .catch(error => {
-  //     console.log(error);
-  //     res.status(500).json({
-  //       message: `Internal Server Error: ${error}`
-  //     });
-  //   });
-};
-exports.count = async function(req, res) {
-  const result = SearchService.count();
 };
 exports.list = async function(req, res) {
   try {
@@ -180,15 +132,6 @@ exports.create = async function(req, res) {
       message: `Internal Server Error: ${err}`
     });
   }
-  // var newTenant = new Tenant(newTenant);
-  // newTenant.save().then(savedTenant => {
-  //   res.json(savedTenant);
-  // }).catch(error => {
-  //   console.log(error);
-  //   res.status(500).json({
-  //     message: `Internal Server Error: ${error}`
-  //   });
-  // });
 };
 
 exports.delete = async function(req, res) {

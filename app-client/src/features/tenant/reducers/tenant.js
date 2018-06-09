@@ -3,7 +3,7 @@ import * as types from '../actions/actionTypes';
 const initSate = {
   tenants: [],
   updatedTenant: {},
-  totalCount: 0,
+  total: 0,
   isFetching: false,
   failed: false,
   deletedTenants: [],
@@ -34,10 +34,9 @@ const tenant = (state = initSate, action) => {
     //   });
 
     case types.LOAD_TENANTS_SUCCESS:
-      // console.log('LOAD_TENANTS_SUCCESS');
       return Object.assign({}, state, {
         tenants: action.data,
-        totalCount: action.data.totalCount,
+        total: action.total,
         isFetching: false,
         pageNum: action.data.pageNum,
         offset: action.data.offset,

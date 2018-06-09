@@ -33,9 +33,9 @@ const columns = [
     render: (text, record) => {
       return (
         <span>
-          <TableEditBtn id={record.cell} />
+          <TableEditBtn id={record._id} />
           <Divider type="vertical" />
-          <TableDeleteBtn id={record.cell} />
+          <TableDeleteBtn id={record._id} />
         </span>
       );
     },
@@ -45,7 +45,7 @@ const columns = [
 class TenantTable extends Component {
   state = {
     data: [],
-    pagination: {},
+    pagination: { current: 1 },
     loading: false,
   };
   handleTableChange = (pagination, filters, sorter) => {
@@ -62,65 +62,38 @@ class TenantTable extends Component {
       ...filters,
     });
   };
-  fetch = (params = {}) => {
-    console.log('params:', params);
-    this.setState({ loading: true });
-    axios({
-      url: 'https://randomuser.me/api',
-      method: 'get',
-      data: {
-        results: 10,
-        ...params,
-      },
-      type: 'json',
-    }).then(res => {
-      const { data } = res;
-      const pagination = { ...this.state.pagination };
-      // Read total count from server
-      // pagination.total = data.totalCount;
-      pagination.total = 200;
-      this.setState({
-        loading: false,
-        data: data.results,
-        pagination,
-      });
-    });
-  };
   componentDidMount() {
-    console.log('componentDidMount');
-    // this.fetch();
     this.props.dispatch(searchTenants());
   }
   render() {
-    const { tenants } = this.props;
+    const { tenants, isFetching, total } = this.props;
     return (
       <div>
         <Table
           columns={columns}
-          rowKey={record => record.registered}
+          rowKey={record => record._id}
           dataSource={tenants}
-          pagination={this.state.pagination}
-          loading={this.state.loading}
+          pagination={{ current: this.state.pagination.current, total: total }}
+          loading={isFetching}
           onChange={this.handleTableChange}
         />
       </div>
     );
   }
 }
-TenantTable.defaultProps = {
-  className: 'table-enter-leave-demo',
-};
+
 TenantTable.propTypes = {
   location: PropTypes.object.isRequired,
   tenants: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
   dispatch: PropTypes.func.isRequired,
+  total: PropTypes.number.isRequired,
 };
 const mapStateToProps = (state, ownProps) => {
   const {
     tenants,
-    totalCount,
+    total,
     isFetching,
     lastUpdated,
     deletedTenants,
@@ -130,7 +103,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     tenants: tenants,
-    totalCount: totalCount,
+    total: total,
     isFetching: isFetching,
     lastUpdated: lastUpdated,
     deletedTenants: deletedTenants,

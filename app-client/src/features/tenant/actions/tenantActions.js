@@ -4,6 +4,7 @@ import queryString from 'query-string';
 import {
   addSuccessMessage,
   addErrorMessage,
+  resetMessage,
 } from '../../../core/actions/messageActions';
 
 import { notification } from 'antd';
@@ -20,7 +21,8 @@ export const sendRequest = () => ({
 
 export const requestTenantsSuccess = data => ({
   type: types.LOAD_TENANTS_SUCCESS,
-  data,
+  data: data.data,
+  total: data.total,
   receivedAt: Date.now(),
 });
 export const readTenantSuccess = data => ({
