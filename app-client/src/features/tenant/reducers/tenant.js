@@ -36,7 +36,7 @@ const tenant = (state = initSate, action) => {
     case types.LOAD_TENANTS_SUCCESS:
       // console.log('LOAD_TENANTS_SUCCESS');
       return Object.assign({}, state, {
-        tenants: action.data.tenants,
+        tenants: action.data,
         totalCount: action.data.totalCount,
         isFetching: false,
         pageNum: action.data.pageNum,

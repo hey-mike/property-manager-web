@@ -1,5 +1,6 @@
 import axios from '../../core/axiosClient';
 import LocalStorageService from '../../core/services/local-store.service';
+import bodybuilder from 'bodybuilder';
 
 class TenantService {
   static requestHeaders() {
@@ -16,8 +17,10 @@ class TenantService {
   // }
   static async searchTenants() {
     try {
-      const response = await axios.post('/tenant/search');
-      console.log(response);
+      const body = bodybuilder()
+        .size(10)
+        .build();
+      return await axios.post('/api/tenant/search', { body });
     } catch (error) {
       console.error(error);
     }

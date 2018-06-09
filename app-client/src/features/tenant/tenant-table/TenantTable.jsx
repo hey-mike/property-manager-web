@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Table, Divider } from 'antd';
@@ -14,25 +15,8 @@ const columns = [
     title: 'Name',
     dataIndex: 'name',
     sorter: true,
-    render: (name, record) => `${name.first} ${name.last}`,
+    render: (name, record) => `${name.firstName} ${name.lastName}`,
     width: 150,
-  },
-  {
-    title: 'Gender',
-    dataIndex: 'gender',
-    filters: [
-      { text: 'Male', value: 'male' },
-      { text: 'Female', value: 'female' },
-    ],
-    width: 150,
-  },
-  {
-    title: 'Department',
-    dataIndex: 'department',
-  },
-  {
-    title: 'Title',
-    dataIndex: 'title',
   },
   {
     title: 'Email',
@@ -40,14 +24,13 @@ const columns = [
   },
   {
     title: 'CreatedAt',
-    render: createdAt => new Date(createdAt).toDateString(),
+    render: createdAt => moment(createdAt).format('DD-MM-YYYY'),
     dataIndex: 'registered',
   },
   {
     title: 'Action',
     key: 'action',
     render: (text, record) => {
-      console.log('record', record);
       return (
         <span>
           <TableEditBtn id={record.cell} />
@@ -109,12 +92,13 @@ class TenantTable extends Component {
     this.props.dispatch(searchTenants());
   }
   render() {
+    const { tenants } = this.props;
     return (
       <div>
         <Table
           columns={columns}
           rowKey={record => record.registered}
-          dataSource={this.state.data}
+          dataSource={tenants}
           pagination={this.state.pagination}
           loading={this.state.loading}
           onChange={this.handleTableChange}

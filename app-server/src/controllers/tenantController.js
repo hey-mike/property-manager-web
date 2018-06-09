@@ -23,13 +23,18 @@ const getSearchReg = search => {
 };
 
 exports.search = async function(req, res) {
-  // const { text ,offset ,limit} = req.body;
+  const { body } = req.body;
   // const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
   // let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
 
-  // const result = SearchService.search();
-  const result = SearchService.count();
-  console.log(result);
+  try {
+    const result = await SearchService.search(body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({
+      message: `Internal Server Error: ${err}`
+    });
+  }
   // const { text } = req.body;
   // const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
   // let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
@@ -217,28 +222,6 @@ exports.delete = async function(req, res) {
       message: `Internal Server Error: ${error}`
     });
   }
-  // Tenant.deleteMany({
-  //   _id: {
-  //     $in: docIds
-  //   }
-  // })
-  //   .then(deleteResult => {
-  //     console.log('deleteResult', deleteResult.result);
-  //     if (deleteResult.result.n === docIds.length)
-  //       res.json({
-  //         status: 'OK'
-  //       });
-  //     else
-  //       res.json({
-  //         status: 'Warning: object not found'
-  //       });
-  //   })
-  //   .catch(error => {
-  //     console.log(error);
-  //     res.status(500).json({
-  //       message: `Internal Server Error: ${error}`
-  //     });
-  //   });
 };
 
 // Get tenant detail

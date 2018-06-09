@@ -51,7 +51,7 @@ class SearchService {
         type: 'tenant',
         body: {
           properties: {
-            created: { type: 'date' },
+            createdAt: { type: 'date' },
             name: { type: 'string' },
             gender: { type: 'string' },
             age: { type: 'string' },
@@ -74,7 +74,7 @@ class SearchService {
   }
   toIndex(tenant) {
     return {
-      created: tenant.created,
+      createdAt: tenant.createdAt,
       name: tenant.name,
       gender: tenant.gender,
       age: tenant.age,
@@ -126,11 +126,13 @@ class SearchService {
     }
   }
   searchHitToResult(hit) {
+    console.log('hit', hit);
     return {
       _score: hit._score,
       _id: hit._id,
       name: hit._source.name,
-      email: hit._source.email
+      email: hit._source.email,
+      createdAt: hit._source.createdAt
     };
   }
 
@@ -151,17 +153,13 @@ class SearchService {
   tagToFilter(tag) {
     return { term: { tags: tag } };
   }
-  async search(match) {
-    console.log(match);
+
+  async search(body) {
     try {
       const result = await this.client.search({
         index: ES_INDEX,
         type: 'tenant',
-        body: {
-          query: {
-            match: match
-          }
-        }
+        body: body
       });
       return result.hits.hits.map(this.searchHitToResult);
     } catch (error) {
