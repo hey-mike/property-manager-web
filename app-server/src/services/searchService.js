@@ -160,12 +160,14 @@ class SearchService {
         type: 'tenant',
         body: body
       });
+      console.log('result', result);
       return {
         data: result.hits.hits.map(this.searchHitToResult),
         total: result.hits.total
       };
     } catch (error) {
       console.trace(error.message);
+      throw new Error(error);
     }
   }
   async count() {
@@ -177,6 +179,7 @@ class SearchService {
       console.log('count index', result);
     } catch (err) {
       console.trace(err.message);
+      return err;
     }
   }
 

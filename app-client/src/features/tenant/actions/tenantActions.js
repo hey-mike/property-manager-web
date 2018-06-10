@@ -4,7 +4,6 @@ import queryString from 'query-string';
 import {
   addSuccessMessage,
   addErrorMessage,
-  resetMessage,
 } from '../../../core/actions/messageActions';
 
 import { notification } from 'antd';
@@ -105,15 +104,20 @@ export const fetchTenants = (location, page_size) => dispatch => {
     });
 };
 
-export const searchTenants = () => {
+export const searchTenants = (pagination, sorter) => {
   return async dispatch => {
     dispatch(sendRequest());
     try {
-      const response = await TenatService.searchTenants();
+      const response = await TenatService.searchTenants(pagination, sorter);
       dispatch(requestTenantsSuccess(response.data));
     } catch (err) {
-      const errorMsg = `Error in sending data to server: ${err.message}`;
+      let errorMsg = `Error in sending data to server: ${err.message}`;
+      if (err.response) {
+        const { data } = err.response;
+        errorMsg = `Error in sending data to server: ${data.message}`;
+      }
       dispatch(addErrorMessage(errorMsg));
+      dispatch(requestTenantsError(errorMsg));
     }
   };
 };

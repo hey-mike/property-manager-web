@@ -55,31 +55,33 @@ class TenantTable extends Component {
   }
 
   handleTableChange = (pagination, filters, sorter) => {
-    const pager = { ...this.state.pagination };
+    const pager = { ...this.props.pagination };
     pager.current = pagination.current;
-    this.setState({
-      pagination: pager,
-    });
-    this.fetch({
-      results: pagination.pageSize,
-      page: pagination.current,
-      sortField: sorter.field,
-      sortOrder: sorter.order,
-      ...filters,
-    });
+    // this.setState({
+    //   pagination: pager,
+    // });
+    // this.fetch({
+    //   results: pagination.pageSize,
+    //   page: pagination.current,
+    //   sortField: sorter.field,
+    //   sortOrder: sorter.order,
+    //   ...filters,
+    // });
+    console.log('sorter', sorter);
+    this.props.dispatch(searchTenants(pagination, sorter));
   };
   componentDidMount() {
-    this.props.dispatch(searchTenants());
+    this.props.dispatch(searchTenants(this.props.pagination));
   }
   render() {
-    const { tenants, isFetching, total } = this.props;
+    const { tenants, isFetching, pagination } = this.props;
     return (
       <div>
         <Table
           columns={columns}
           rowKey={record => record._id}
           dataSource={tenants}
-          pagination={{ current: this.state.pagination.current, total: total }}
+          pagination={pagination}
           loading={isFetching}
           onChange={this.handleTableChange}
         />
@@ -94,27 +96,23 @@ TenantTable.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
   dispatch: PropTypes.func.isRequired,
-  total: PropTypes.number.isRequired,
+  pagination: PropTypes.object.isRequired,
 };
 const mapStateToProps = (state, ownProps) => {
   const {
     tenants,
-    total,
     isFetching,
     lastUpdated,
     deletedTenants,
-    pageNum,
-    offset,
+    pagination,
   } = state.tenant;
 
   return {
     tenants: tenants,
-    total: total,
     isFetching: isFetching,
     lastUpdated: lastUpdated,
     deletedTenants: deletedTenants,
-    pageNum: pageNum,
-    offset: offset,
+    pagination: pagination,
   };
 };
 

@@ -3,13 +3,13 @@ import * as types from '../actions/actionTypes';
 const initSate = {
   tenants: [],
   updatedTenant: {},
-  total: 0,
   isFetching: false,
-  failed: false,
   deletedTenants: [],
-  pageSize: 10,
-  pageNum: 1,
-  offset: 0,
+  pagination: {
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  },
 };
 const tenant = (state = initSate, action) => {
   switch (action.type) {
@@ -17,30 +17,21 @@ const tenant = (state = initSate, action) => {
       return Object.assign({}, state, {
         isFetching: true,
       });
-    case types.TURN_ON_FILTER:
+    case types.REQUEST_SERVER_ERROR:
       return Object.assign({}, state, {
-        openFilter: true,
+        error: action.error,
+        receivedAt: action.receivedAt,
+        isFetching: false,
       });
-    case types.TURN_OFF_FILTER:
-      return Object.assign({}, state, {
-        openFilter: false,
-      });
-    // case types.REQUEST_SERVER_ERROR:
-    //   // console.log('REQUEST_SERVER_ERROR', action);
-    //   return Object.assign({}, state, {
-    //     error: action.error,
-    //     receivedAt: action.receivedAt,
-    //     isFetching: false,
-    //   });
 
     case types.LOAD_TENANTS_SUCCESS:
       return Object.assign({}, state, {
         tenants: action.data,
-        total: action.total,
         isFetching: false,
-        pageNum: action.data.pageNum,
-        offset: action.data.offset,
         receivedAt: action.receivedAt,
+        pagination: {
+          total: action.total,
+        },
       });
 
     case types.CREATE_TENANT_SUCCESS:

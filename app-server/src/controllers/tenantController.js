@@ -2,26 +2,6 @@ const mongoose = require('mongoose');
 const Tenant = require('../models/tenant');
 const SearchService = require('../services/searchService.js');
 
-const getAggreateMatchedIds = result => {
-  let ids = [];
-  for (let i = 0; i < result.length; i++) {
-    ids.push(result[i]._id);
-  }
-  return ids;
-};
-const getSearchReg = search => {
-  var terms = search.split(' ');
-
-  var regexString = '';
-
-  for (var i = 0; i < terms.length; i++) {
-    regexString += terms[i];
-    if (i < terms.length - 1) regexString += '|';
-  }
-
-  return new RegExp(regexString, 'ig');
-};
-
 exports.search = async function(req, res) {
   const { body } = req.body;
   // const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
@@ -40,11 +20,10 @@ exports.search = async function(req, res) {
 exports.list = async function(req, res) {
   try {
     const Tenants = await Tenant.find({});
-    console.log(Tenants);
     res.json(Tenants);
   } catch (err) {
     res.status(500).json({
-      message: `Internal Server Error: ${err}`
+      message: `Internal Server Error: ${err.message}`
     });
   }
 };

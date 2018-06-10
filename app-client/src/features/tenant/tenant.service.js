@@ -7,22 +7,30 @@ class TenantService {
     const jwt = LocalStorageService.getAuth();
     return { AUTHORIZATION: `Bearer ${jwt}` };
   }
-  // async function getUser() {
-  //   try {
-  //     const response = await axios.get('/user?ID=12345');
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // }
-  static async searchTenants() {
+
+  static async searchTenants(pagination, sorter) {
+    const mapSorter = sorter => {
+      const orderMap = { descend: 'desc', ascend: 'asc' };
+      return orderMap[sorter.order];
+    };
     try {
+      const from = (pagination.current - 1) * pagination.pageSize;
+      const sort = {};
+      if (sorter) {
+        sort[sorter.field] = mapSorter(sorter);
+      }
       const body = bodybuilder()
-        .size(10)
+        .from(from)
+        .size(pagination.pageSize)
+        .sort([sort])
         .build();
+
+      console.log('body', body);
+
       return await axios.post('/api/tenant/search', { body });
     } catch (error) {
       console.error(error);
+      throw new Error(error);
     }
   }
   static async getAllTenants() {
@@ -31,6 +39,7 @@ class TenantService {
       console.log(response);
     } catch (error) {
       console.error(error);
+      throw new Error(error);
     }
   }
   static createTenant(employee) {
