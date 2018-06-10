@@ -52,7 +52,16 @@ class SearchService {
         body: {
           properties: {
             createdAt: { type: 'date' },
-            name: { type: 'string' },
+            name: {
+              firstName: {
+                type: 'string',
+                fielddata: true
+              },
+              lastName: {
+                type: 'string',
+                fielddata: true
+              }
+            },
             gender: { type: 'string' },
             age: { type: 'string' },
             title: { type: 'string' },
@@ -166,7 +175,7 @@ class SearchService {
         total: result.hits.total
       };
     } catch (error) {
-      console.trace(error.message);
+      console.trace(error);
       throw new Error(error);
     }
   }
