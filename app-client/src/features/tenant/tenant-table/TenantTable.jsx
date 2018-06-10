@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -43,11 +42,18 @@ const columns = [
 ];
 
 class TenantTable extends Component {
-  state = {
-    data: [],
-    pagination: { current: 1 },
-    loading: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [],
+      pagination: {
+        current: 1,
+        pageSize: 20,
+      },
+      loading: false,
+    };
+  }
+
   handleTableChange = (pagination, filters, sorter) => {
     const pager = { ...this.state.pagination };
     pager.current = pagination.current;
