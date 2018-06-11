@@ -11,7 +11,7 @@ class TenantService {
   static async searchTenants(pagination, sorter) {
     const mapSorter = sorter => {
       const orderMap = { descend: 'desc', ascend: 'asc' };
-      return orderMap[sorter.order];
+      return orderMap[sorter.order] ? orderMap[sorter.order] : {};
     };
     try {
       const from = (pagination.current - 1) * pagination.pageSize;

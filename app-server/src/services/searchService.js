@@ -144,24 +144,6 @@ class SearchService {
     };
   }
 
-  filters(options) {
-    const tags = Array.isArray(options.tags) ? options.tags : [];
-    const clauses = tags.map(this.tagToFilter);
-    if (options.since) {
-      clauses.unshift(this.since(options.since));
-    }
-    return this.all(clauses);
-  }
-  all(clauses) {
-    return { bool: { must: clauses } };
-  }
-  since(date) {
-    return { range: { created: { gte: date } } };
-  }
-  tagToFilter(tag) {
-    return { term: { tags: tag } };
-  }
-
   async search(body) {
     try {
       const result = await this.client.search({
@@ -169,7 +151,6 @@ class SearchService {
         type: 'tenant',
         body: body
       });
-      console.log('result', result);
       return {
         data: result.hits.hits.map(this.searchHitToResult),
         total: result.hits.total

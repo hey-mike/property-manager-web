@@ -9,7 +9,6 @@ exports.search = async function(req, res) {
 
   try {
     const result = await SearchService.search(body);
-    console.log('search', result);
     res.json(result);
   } catch (err) {
     res.status(500).json({
