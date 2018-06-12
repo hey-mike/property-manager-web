@@ -6,9 +6,30 @@ exports.search = async function(req, res) {
   const { body } = req.body;
   // const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
   // let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
-
+  console.log();
   try {
     const result = await SearchService.search(body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({
+      message: `Internal Server Error: ${err}`
+    });
+  }
+};
+exports.createMapping = async function(req, res) {
+  try {
+    const result = await SearchService.createMapping();
+    console.log(result);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({
+      message: `Internal Server Error: ${err}`
+    });
+  }
+};
+exports.getMapping = async function(req, res) {
+  try {
+    const result = await SearchService.getMapping();
     res.json(result);
   } catch (err) {
     res.status(500).json({

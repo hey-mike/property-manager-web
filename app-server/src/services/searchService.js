@@ -7,13 +7,17 @@ const ES_INDEX = 'property_manager';
 class SearchService {
   constructor() {}
 
-  connect() {
+  async connect() {
     this.client = new elasticsearch.Client({
-      host: config.get('es:uri')
+      host: config.get('es:uri'),
     });
-    this.createIndex();
-    this.healthCheck();
-    this.createMapping();
+    try {
+    await this.createIndex();
+    await this.healthCheck();
+    await this.createMapping();
+    } catch(err) {
+      console.trace('connect',err);
+    }
   }
   async healthCheck() {
     try {
@@ -53,32 +57,50 @@ class SearchService {
           properties: {
             createdAt: { type: 'date' },
             name: {
-              firstName: {
-                type: 'string',
-                fielddata: true
-              },
-              lastName: {
-                type: 'string',
-                fielddata: true
+              properties: {
+                firstName: {
+                  type: 'text',
+                  fielddata: true
+                },
+                lastName: {
+                  type: 'text',
+                  fielddata: true
+                }
               }
             },
-            gender: { type: 'string' },
-            age: { type: 'string' },
-            title: { type: 'string' },
-            email: { type: 'string' },
-            phone: { type: 'string' }
+            gender: { type: 'text' },
+            age: { type: 'text' },
+            title: { type: 'text' },
+            email: { type: 'text' },
+            phone: { type: 'text' }
           }
         }
       });
 
       if (response.acknowledged) {
-        console.log(`Create index ${response.index} successfully`);
+        console.log(`Mapping successfully`);
       }
+      return response;
     } catch (error) {
       //if the error is not index error
       if (error.status !== 400) {
         console.trace('createIndex err', error);
       }
+      throw new Error(error);
+    }
+  }
+  async getMapping() {
+    try {
+      const response = await this.client.indices.getMapping({
+        index: ES_INDEX,
+        type: 'tenant'
+      });
+
+      console.log(response);
+
+      return response;
+    } catch (err) {
+      throw new Error(err);
     }
   }
   toIndex(tenant) {
