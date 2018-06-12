@@ -16,5 +16,12 @@
   "es": {
     "uri": "http://localhost:9200"
   },
-  "amqp": "amqp://localhost"
+  "amqp": {
+    "uri":"amqp://localhost" ,
+    "queue": "nodemailer-amqp",
+    "email-server": {
+      "port": 12345,
+      "host": "127.0.0.1"
+    }
+  } 
 }
