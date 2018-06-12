@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.16.3",
     "koa": "^2.5.1",
+    "nconf": "^0.10.0",
     "nodemailer": "^4.6.5"
   },
   "devDependencies": {

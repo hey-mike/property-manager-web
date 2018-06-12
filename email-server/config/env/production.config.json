@@ -1,0 +1,15 @@
+{
+  "server": {
+    "port": 8080
+  },
+  "db": {
+    "uri": "mongodb://admin:password@ds161162.mlab.com:61162/property_manager",
+    "options": {
+      "autoIndex": false, 
+      "reconnectTries": "Number.MAX_VALUE", 
+      "reconnectInterval": 500,
+      "poolSize": 10, 
+      "bufferMaxEntries": 0
+    }
+  }
+}

@@ -27,3 +27,9 @@ app.listen(app.get('port'), () => {
   );
   console.log('  Press CTRL-C to stop\n');
 });
+process.on('uncaughtException', (err) => {
+  console.error('Unhandled Exception', err)
+})
+process.on('uncaughtRejection', (err) => {
+  console.error('Unhandled Rejection', err)
+})

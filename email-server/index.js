@@ -1,18 +1,19 @@
-var express = require('express');
-var nodemailer = require('nodemailer');
-var app = express();
+const express = require('express');
+const nodemailer = require('nodemailer');
+const config = require('./config/config.js');
+const app = express();
 /*
     Here we are configuring our SMTP Server details.
     STMP is mail server which is responsible for sending and recieving email.
 */
-var smtpTransport = nodemailer.createTransport({
+const smtpTransport = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
     user: 'magicmike.test@gmail.com',
     pass: 'Lcw20092009'
   }
 });
-var rand, mailOptions, host, link;
+let rand, mailOptions, host, link;
 /*------------------SMTP Over-----------------------------*/
 
 /*------------------Routing Started ------------------------*/
@@ -69,3 +70,9 @@ app.get('/verify', function(req, res) {
 app.listen(3000, function() {
   console.log('Express Started on Port 3000');
 });
+process.on('uncaughtException', (err) => {
+  console.error('Unhandled Exception', err)
+})
+process.on('uncaughtRejection', (err) => {
+  console.error('Unhandled Rejection', err)
+})
