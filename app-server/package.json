@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon --ignore test/ --legacy-watch ./src/server.js",
-    "test": "mocha"
+    "test": "mocha --recursive"
   },
   "engines": {
     "node": ">=8.11.2"

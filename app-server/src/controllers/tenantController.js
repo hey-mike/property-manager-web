@@ -47,73 +47,6 @@ exports.list = async function(req, res) {
     });
   }
 };
-// TODO: should implement range pagination instead of using skip to result in better server performance
-// exports.list = async function(req, res, next) {
-//   const filter = {};
-//   if (req.query.status) filter.status = req.query.status;
-//   if (req.query.effort_lte || req.query.effort_gte) filter.effort = {};
-//   if (req.query.effort_lte)
-//     filter.effort.$lte = parseInt(req.query.effort_lte, 10);
-//   if (req.query.effort_gte)
-//     filter.effort.$gte = parseInt(req.query.effort_gte, 10);
-
-//   if (req.query._summary === undefined) {
-//     if (req.query.search) {
-//       Tenant.aggregate()
-//         .project({
-//           fullName: {
-//             $concat: ['$name.firstName', ' ', '$name.lastName']
-//           }
-//         })
-//         .match({
-//           fullName: new RegExp(req.query.search, 'ig')
-//         })
-//         .exec()
-//         .then(results => {
-//           console.log('results', getSearchReg(req.query.search));
-//           const ids = getAggreateMatchedIds(results);
-//           if (ids.length > 0)
-//             filter._id = {
-//               $in: ids
-//             };
-//           search(req, res, filter);
-//         });
-//     } else search(req, res, filter);
-//   } else {
-//     Tenant.aggregate([
-//       {
-//         $match: filter
-//       },
-//       {
-//         $group: {
-//           _id: {
-//             name: '$owner',
-//             createdAt: '$createdAt'
-//           },
-//           count: {
-//             $sum: 1
-//           }
-//         }
-//       }
-//     ])
-//       .exec()
-//       .then(results => {
-//         const stats = {};
-//         results.forEach(result => {
-//           if (!stats[result._id.owner]) stats[result._id.owner] = {};
-//           stats[result._id.owner][result._id.status] = result.count;
-//         });
-//         res.json(stats);
-//       })
-//       .catch(error => {
-//         console.log(error);
-//         next(error);
-//         res.status(500).json({
-//           message: `Internal Server Error: ${error}`
-//         });
-//       });
-//   }
-// };
 
 exports.create = async function(req, res) {
   const req_tenant = req.body;
@@ -194,22 +127,6 @@ exports.read = async function(req, res) {
       message: `Internal Server Error: ${error}`
     });
   }
-  // Tenant.findOne({
-  //   _id: documentId
-  // })
-  //   .then(tenant => {
-  //     if (!tenant)
-  //       res.status(404).json({
-  //         message: `No such tenant: ${documentId}`
-  //       });
-  //     else res.json(tenant);
-  //   })
-  //   .catch(error => {
-  //     console.log(error);
-  //     res.status(500).json({
-  //       message: `Internal Server Error: ${error}`
-  //     });
-  //   });
 };
 
 // update tenant

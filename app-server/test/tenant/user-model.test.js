@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
  
-const User = require('../src/models/user');
+const User = require('../../src/models/user');
  
 describe('User', function() {
     it('should be invalid if email is empty', function(done) {

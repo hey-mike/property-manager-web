@@ -30,16 +30,31 @@ tenantSchema.virtual('fullName').get(function () {
   this.name.firstName = v.substr(0, v.indexOf(' '));
   this.name.lastName = v.substr(v.indexOf(' ') + 1);
 });
-tenantSchema.pre('save', function (next) {
+tenantSchema.pre('save', async function () {
   this.updatedAt = Date.now();
-  next();
 });
-tenantSchema.post('save', function (doc) {
-  ElasticSearch.update(doc)
+tenantSchema.post('save', async function (doc) {
+  try{
+    await ElasticSearch.update(doc)
+  } catch(err) {
+    throw new Error('something went wrong:' ,err);
+  }
+
 });
-tenantSchema.post('insertMany', function (docs) {
-  ElasticSearch.bulk(docs);
+tenantSchema.post('insertMany', async function (docs) {
+  try{
+    await ElasticSearch.bulk(docs)
+  } catch(err) {
+    throw new Error('something went wrong:' ,err);
+  }
 });
+tenantSchema.post('update', function(doc) {
+  console.log('%s has been update', doc._id);
+});
+tenantSchema.post('remove', function(doc) {
+  console.log('%s has been removed', doc._id);
+});
+
 tenantSchema.index({
   email:'text'
 });
