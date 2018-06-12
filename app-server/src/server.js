@@ -8,11 +8,15 @@ const errorHandler = require('errorhandler');
 const config = require('./config/config.js');
 const mongoose = require('./config/mongoose.js');
 const SearchService = require('./services/searchService.js');
+const EmailService = require('./services/emailService.js');
+
 
 // connect to mongodb
 mongoose.connect();
 // connect to elasticsearch
 SearchService.connect();
+// connect to email service
+EmailService.connect();
 
 const port = process.env.PORT || config.get('server:port');
 app.set('port', port);
@@ -21,11 +25,11 @@ app.use(errorHandler());
 
 app.listen(app.get('port'), () => {
   console.log(
-    '  App is running at http://localhost:%d in %s mode',
+    'App is running at http://localhost:%d in %s mode',
     app.get('port'),
     app.get('env')
   );
-  console.log('  Press CTRL-C to stop\n');
+  console.log('Press CTRL-C to stop\n');
 });
 process.on('uncaughtException', (err) => {
   console.error('Unhandled Exception', err)

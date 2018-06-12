@@ -1,78 +1,39 @@
-const express = require('express');
+'use strict';
 const nodemailer = require('nodemailer');
-const config = require('./config/config.js');
-const app = express();
-/*
-    Here we are configuring our SMTP Server details.
-    STMP is mail server which is responsible for sending and recieving email.
-*/
-const smtpTransport = nodemailer.createTransport({
-  service: 'Gmail',
-  auth: {
-    user: 'magicmike.test@gmail.com',
-    pass: 'Lcw20092009'
-  }
-});
-let rand, mailOptions, host, link;
-/*------------------SMTP Over-----------------------------*/
 
-/*------------------Routing Started ------------------------*/
-
-app.get('/', function(req, res) {
-  res.sendfile('index.html');
-});
-app.post('/send', function(req, res) {
-  console.log(req.body);
-  const { to, subject, message } = req.body;
-
-
-  rand = Math.floor(Math.random() * 100 + 54);
-  host = req.get('host');
-  link = 'http://' + req.get('host') + '/verify?id=' + rand;
-  mailOptions = {
-    to: to,
-    subject: subject,
-    html:
-      'Hello,<br> Please Click on the link to verify your email.<br><a href=' +
-      link +
-      '>Click here to verify</a>'
-  };
-  console.log(mailOptions);
-  smtpTransport.sendMail(mailOptions, function(error, response) {
-    if (error) {
-      console.log(error);
-      res.end('error');
-    } else {
-      console.log('Message sent: ' + response.message);
-      res.end('sent');
+// Generate test SMTP service account from ethereal.email
+// Only needed if you don't have a real mail account for testing
+nodemailer.createTestAccount((err, account) => {
+  // create reusable transporter object using the default SMTP transport
+  let transporter = nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: account.user, // generated ethereal user
+      pass: account.pass // generated ethereal password
     }
   });
-});
 
-app.get('/verify', function(req, res) {
-  console.log(req.protocol + ':/' + req.get('host'));
-  if (req.protocol + '://' + req.get('host') == 'http://' + host) {
-    console.log('Domain is matched. Information is from Authentic email');
-    if (req.query.id == rand) {
-      console.log('email is verified');
-      res.end('<h1>Email ' + mailOptions.to + ' is been Successfully verified');
-    } else {
-      console.log('email is not verified');
-      res.end('<h1>Bad Request</h1>');
+  // setup email data with unicode symbols
+  let mailOptions = {
+    from: '"Fred Foo 👻" <foo@example.com>', // sender address
+    to: 'bar@example.com, baz@example.com', // list of receivers
+    subject: 'Hello ✔', // Subject line
+    text: 'Hello world?', // plain text body
+    html: '<b>Hello world?</b>' // html body
+  };
+
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
     }
-  } else {
-    res.end('<h1>Request is from unknown source');
-  }
-});
+    console.log('Message sent: %s', info.messageId);
+    // Preview only available when sending through an Ethereal account
+    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
-/*--------------------Routing Over----------------------------*/
-
-app.listen(3000, function() {
-  console.log('Express Started on Port 3000');
+    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+  });
 });
-process.on('uncaughtException', (err) => {
-  console.error('Unhandled Exception', err)
-})
-process.on('uncaughtRejection', (err) => {
-  console.error('Unhandled Rejection', err)
-})

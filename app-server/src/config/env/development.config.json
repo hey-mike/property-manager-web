@@ -15,5 +15,6 @@
   },
   "es": {
     "uri": "http://localhost:9200"
-  }
+  },
+  "amqp": "amqp://localhost"
 }
