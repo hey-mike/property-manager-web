@@ -1,5 +1,5 @@
 const amqp = require('amqplib');
-const config = require('../config/config');
+const config = require('./config/config');
 const nodemailer = require('nodemailer');
 
 // Create connection to AMQP server
@@ -12,7 +12,7 @@ class EmailService {
       console.log('Connect to email service queue:', config.get('amqp:uri'));
 
       await this.createChannel();
-      await this.sendEmail();
+      await this.consume();
     } catch (err) {
       console.trace('Email service queue connect failed: ', err);
     }
@@ -20,40 +20,35 @@ class EmailService {
   async createChannel() {
     try {
       this.channel = await this.connection.createChannel();
-      this.channel.assertQueue(config.get('amqp:queue'), { durable: false });
-      console.log('Create channel successfully');
+      await this.channel.assertQueue(config.get('amqp:queue'), { durable: true });
+      // Only request 1 unacked message from queue
+      // This value indicates how many messages we want to process in parallel
+      const result = await this.channel.prefetch(1);
+      console.log('Create channel successfully',result);
     } catch (err) {
       console.trace('Create channel failed: ', err);
     }
   }
 
-  async publish(content) {
+  async consume() {
     try {
-      await this.channel.sendToQueue(
-        config.get('amqp:queue'),
-        Buffer.from(JSON.stringify(content)),
-        {
-          // Store queued elements on disk
-          persistent: true,
-          contentType: 'application/json'
-        }
-      );
-    } catch (err) {
-      console.trace('Publish message failed: ', err);
-    }
-  }
-
-  async sendEmail() {
-    try {
-      for (let i = 0; i < 100; i++) {
-        await this.publish({
-          to: 'recipient@example.com',
-          subject: 'Test message #' + i,
-          text: 'hello world!'
-        });
+      const data = await this.channel.consume(config.get('amqp:queue'));
+      if (data === null) {
+        return;
       }
+      console.log('data',data);
+      // Decode message contents
+      // let message = JSON.parse(data.content.toString());
+
+      // attach message specific authentication options
+      // this is needed if you want to send different messages from
+      // different user accounts
+      // message.auth = {
+      //   user: 'testuser',
+      //   pass: 'testpass'
+      // };
     } catch (err) {
-      console.trace('Send email failed: ', err);
+      console.trace('Consume message failed: ', err);
     }
   }
 }
