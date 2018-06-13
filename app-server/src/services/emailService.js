@@ -19,8 +19,10 @@ class EmailService {
   async createChannel() {
     try {
       this.channel = await this.connection.createChannel();
-      this.channel.assertQueue(config.get('amqp:queue'), { durable: false });
-      console.log('Create channel successfully');
+      const result = await this.channel.assertQueue(config.get('amqp:queue'), {
+        durable: true
+      });
+      console.log('Create channel successfully',result);
     } catch (err) {
       console.trace('Create channel failed: ', err);
     }
@@ -53,6 +55,15 @@ class EmailService {
       }
     } catch (err) {
       console.trace('Send email failed: ', err);
+    }
+  }
+
+  async deleteQueue() {
+    try {
+      const result = await this.channel.deleteQueue(config.get('amqp:queue'));
+      console.log('Delete Queue successfully',result);
+    } catch (err) {
+      console.trace('Delete Queue failed: ', err);
     }
   }
 }
