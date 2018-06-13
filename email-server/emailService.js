@@ -33,30 +33,17 @@ class EmailService {
   }
 
   async consume() {
-    try {
-      // const data = await this.channel.consume(config.get('amqp:queue'));
-      this.channel.consume(config.get('amqp:queue'), data => {
-        if (data === null) {
-          return;
-        }
-        // Decode message contents
-        let message = JSON.parse(data.content.toString());
-
-        console.log(message);
-      });
+    const test = this.channel;
+    this.channel.consume(config.get('amqp:queue'), data => {
+      if (data === null) {
+        return;
+      }
       // Decode message contents
-      // let message = JSON.parse(data.content.toString());
+      let message = JSON.parse(data.content.toString());
 
-      // attach message specific authentication options
-      // this is needed if you want to send different messages from
-      // different user accounts
-      // message.auth = {
-      //   user: 'testuser',
-      //   pass: 'testpass'
-      // };
-    } catch (err) {
-      console.trace('Consume message failed: ', err);
-    }
+      console.log(message);
+      test.ack('successfully');
+    });
   }
 }
 
