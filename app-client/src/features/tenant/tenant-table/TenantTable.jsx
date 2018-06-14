@@ -41,18 +41,6 @@ const columns = [
 ];
 
 class TenantTable extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: [],
-      pagination: {
-        current: 1,
-        pageSize: 20,
-      },
-      loading: false,
-    };
-  }
-
   handleTableChange = (pagination, filters, sorter) => {
     const orderMap = { descend: 'desc', ascend: 'asc' };
     sorter.order = sorter.order ? orderMap[sorter.order] : {};
@@ -60,6 +48,7 @@ class TenantTable extends Component {
     this.props.dispatch(searchTenants({ pagination, sorter }));
   };
   componentDidMount() {
+    console.log('this.props.pagination', this.props.pagination);
     this.props.dispatch(searchTenants({ pagination: this.props.pagination }));
   }
   render() {

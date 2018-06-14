@@ -13,7 +13,6 @@ class TenantService {
       let body = bodybuilder();
 
       if (query) {
-        body = body.query('fuzzy', query.field, query.value);
       }
       // handle pagination
       if (pagination) {

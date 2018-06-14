@@ -29,9 +29,9 @@ const tenant = (state = initSate, action) => {
         tenants: action.data,
         isFetching: false,
         receivedAt: action.receivedAt,
-        pagination: {
+        pagination: Object.assign(state.pagination, {
           total: action.total,
-        },
+        }),
       });
 
     case types.CREATE_TENANT_SUCCESS:

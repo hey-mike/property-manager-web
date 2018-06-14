@@ -10,13 +10,14 @@ class SearchService {
   async connect() {
     this.client = new elasticsearch.Client({
       host: config.get('es:uri'),
+      log: 'debug'
     });
     try {
-    await this.createIndex();
-    await this.healthCheck();
-    await this.createMapping();
-    } catch(err) {
-      console.trace('connect',err);
+      await this.createIndex();
+      await this.healthCheck();
+      await this.createMapping();
+    } catch (err) {
+      console.trace('connect', err);
     }
   }
   async healthCheck() {
