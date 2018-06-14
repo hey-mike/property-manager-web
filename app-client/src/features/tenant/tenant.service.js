@@ -8,14 +8,21 @@ class TenantService {
     return { AUTHORIZATION: `Bearer ${jwt}` };
   }
 
-  static async searchTenants(pagination, sorter) {
+  static async searchTenants({ query, pagination, sorter }) {
     try {
-      const from = (pagination.current - 1) * pagination.pageSize;
+      let body = bodybuilder();
 
-      let body = bodybuilder()
-        .from(from)
-        .size(pagination.pageSize);
+      if (query) {
+        body = body.query('fuzzy', query.field, query.value);
+      }
+      // handle pagination
+      if (pagination) {
+        const from = (pagination.current - 1) * pagination.pageSize;
 
+        body = body.from(from).size(pagination.pageSize);
+      }
+
+      //handle sorting
       if (sorter && sorter.field) {
         const searchSort = {};
         if (sorter.field === 'name') {
@@ -26,6 +33,7 @@ class TenantService {
 
         body = body.sort([searchSort]);
       }
+
       body = body.build();
 
       console.log('body', body);

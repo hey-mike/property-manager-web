@@ -1,102 +1,102 @@
 import React from 'react';
-import { Icon, Input, AutoComplete } from 'antd';
 import './Search.css';
+import { Icon, Button, Input, AutoComplete } from 'antd';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { searchTenants } from '../actions/tenantActions';
 const Option = AutoComplete.Option;
-const OptGroup = AutoComplete.OptGroup;
 
-const dataSource = [
-  {
-    title: '话题',
-    children: [
-      {
-        title: 'AntDesign',
-        count: 10000,
-      },
-      {
-        title: 'AntDesign UI',
-        count: 10600,
-      },
-    ],
-  },
-  {
-    title: '问题',
-    children: [
-      {
-        title: 'AntDesign UI 有多好',
-        count: 60100,
-      },
-      {
-        title: 'AntDesign 是啥',
-        count: 30010,
-      },
-    ],
-  },
-  {
-    title: '文章',
-    children: [
-      {
-        title: 'AntDesign 是一个设计语言',
-        count: 100000,
-      },
-    ],
-  },
-];
+function onSelect(value) {
+  console.log('onSelect', value);
+}
 
-function renderTitle(title) {
+function getRandomInt(max, min = 0) {
+  return Math.floor(Math.random() * (max - min + 1)) + min; // eslint-disable-line no-mixed-operators
+}
+
+function searchResult(query) {
+  return new Array(getRandomInt(5))
+    .join('.')
+    .split('.')
+    .map((item, idx) => ({
+      query,
+      category: `${query}${idx}`,
+      count: getRandomInt(200, 100),
+    }));
+}
+
+function renderOption(item) {
   return (
-    <span>
-      {title}
+    <Option key={item.category} text={item.category}>
+      {item.query} 在
       <a
-        style={{ float: 'right' }}
-        href="https://www.google.com/search?q=antd"
+        href={`https://s.taobao.com/search?q=${item.query}`}
         target="_blank"
         rel="noopener noreferrer">
-        更多
+        {item.category}
       </a>
-    </span>
+      区块中
+      <span className="global-search-item-count">约 {item.count} 个结果</span>
+    </Option>
   );
 }
 
-const options = dataSource
-  .map(group => (
-    <OptGroup key={group.title} label={renderTitle(group.title)}>
-      {group.children.map(opt => (
-        <Option key={opt.title} value={opt.title}>
-          {opt.title}
-          <span className="certain-search-item-count">{opt.count} 人 关注</span>
-        </Option>
-      ))}
-    </OptGroup>
-  ))
-  .concat([
-    <Option disabled key="all" className="show-all">
-      <a
-        href="https://www.google.com/search?q=antd"
-        target="_blank"
-        rel="noopener noreferrer">
-        查看所有结果
-      </a>
-    </Option>,
-  ]);
+class Search extends React.Component {
+  state = {
+    dataSource: [],
+  };
 
-let Search = () => {
-  return (
-    <div className="certain-category-search-wrapper" style={{ width: 250 }}>
-      <AutoComplete
-        className="certain-category-search"
-        dropdownClassName="certain-category-search-dropdown"
-        dropdownMatchSelectWidth={false}
-        dropdownStyle={{ width: 300 }}
-        size="large"
-        style={{ width: '100%' }}
-        dataSource={options}
-        placeholder="input here"
-        optionLabelProp="value">
-        <Input
-          suffix={<Icon type="search" className="certain-category-icon" />}
-        />
-      </AutoComplete>
-    </div>
-  );
+  handleSearch = value => {
+    // this.setState({
+    //   dataSource: value ? searchResult(value) : [],
+    // });
+    const query = {
+      field: 'name.firstName',
+      value: value,
+    };
+    this.props.dispatch(searchTenants({ query }));
+  };
+
+  render() {
+    const { dataSource } = this.state;
+    return (
+      <div className="global-search-wrapper" style={{ width: 300 }}>
+        <AutoComplete
+          className="global-search"
+          size="large"
+          style={{ width: '100%' }}
+          dataSource={dataSource.map(renderOption)}
+          onSelect={onSelect}
+          onSearch={this.handleSearch}
+          placeholder="input here"
+          optionLabelProp="text">
+          <Input
+            suffix={
+              <Button className="search-btn" size="large" type="primary">
+                <Icon type="search" />
+              </Button>
+            }
+          />
+        </AutoComplete>
+      </div>
+    );
+  }
+}
+const mapStateToProps = (state, ownProps) => {
+  const {
+    tenants,
+    isFetching,
+    lastUpdated,
+    deletedTenants,
+    pagination,
+  } = state.tenant;
+
+  return {
+    tenants: tenants,
+    isFetching: isFetching,
+    lastUpdated: lastUpdated,
+    deletedTenants: deletedTenants,
+    pagination: pagination,
+  };
 };
-export default Search;
+export default withRouter(connect(mapStateToProps)(Search));

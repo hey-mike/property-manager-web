@@ -104,11 +104,11 @@ export const fetchTenants = (location, page_size) => dispatch => {
     });
 };
 
-export const searchTenants = (pagination, sorter) => {
+export const searchTenants = options => {
   return async dispatch => {
     dispatch(sendRequest());
     try {
-      const response = await TenatService.searchTenants(pagination, sorter);
+      const response = await TenatService.searchTenants(options);
       dispatch(requestTenantsSuccess(response.data));
     } catch (err) {
       let errorMsg = `Error in sending data to server: ${err.message}`;

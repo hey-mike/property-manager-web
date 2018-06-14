@@ -57,10 +57,10 @@ class TenantTable extends Component {
     const orderMap = { descend: 'desc', ascend: 'asc' };
     sorter.order = sorter.order ? orderMap[sorter.order] : {};
 
-    this.props.dispatch(searchTenants(pagination, sorter));
+    this.props.dispatch(searchTenants({ pagination, sorter }));
   };
   componentDidMount() {
-    this.props.dispatch(searchTenants(this.props.pagination));
+    this.props.dispatch(searchTenants({ pagination: this.props.pagination }));
   }
   render() {
     const { tenants, isFetching, pagination } = this.props;
