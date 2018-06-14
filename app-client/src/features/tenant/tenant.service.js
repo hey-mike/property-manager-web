@@ -38,27 +38,19 @@ class TenantService {
   }
   static async getAllTenants() {
     try {
-      const response = await axios.get('/tenant');
-      console.log(response);
+      await axios.get('/tenant');
     } catch (error) {
       console.error(error);
       throw new Error(error);
     }
   }
-  static createTenant(employee) {
-    const headers = Object.assign(
-      {
-        'Content-Type': 'application/json',
-      },
-      this.requestHeaders()
-    );
-    const request = new Request(`/api/employee`, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(employee),
-    });
-
-    return fetch(request);
+  static async createTenant(tenant) {
+    try {
+      await axios.post('/tenant', { tenant });
+    } catch (error) {
+      console.error(error);
+      throw new Error(error);
+    }
   }
   static readTenant(id) {
     const headers = Object.assign(

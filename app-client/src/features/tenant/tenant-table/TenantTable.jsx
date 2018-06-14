@@ -15,7 +15,6 @@ const columns = [
     dataIndex: 'name',
     sorter: true,
     render: (name, record) => `${name.firstName} ${name.lastName}`,
-    width: 150,
   },
   {
     title: 'Email',
@@ -56,10 +55,8 @@ class TenantTable extends Component {
 
   handleTableChange = (pagination, filters, sorter) => {
     const orderMap = { descend: 'desc', ascend: 'asc' };
-
     sorter.order = sorter.order ? orderMap[sorter.order] : {};
 
-    console.log('sorter', sorter);
     this.props.dispatch(searchTenants(pagination, sorter));
   };
   componentDidMount() {

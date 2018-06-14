@@ -8,9 +8,6 @@ import RegisterForm from './forms/RegisterForm';
 import './UserPage.css';
 
 class UserPage extends React.Component {
-  componentDidMount() {
-    console.log('UserPage');
-  }
   render() {
     const { isFetching } = this.props;
     return (

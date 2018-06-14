@@ -59,21 +59,6 @@ class AddEmployeeForm extends React.Component {
             </Select>
           )}
         </FormItem>
-        <FormItem label="Department" {...formItemLayout}>
-          {getFieldDecorator('department', {
-            rules: [
-              {
-                required: true,
-                message: 'Please a department this employee belongs to',
-              },
-            ],
-          })(<Input />)}
-        </FormItem>
-        <FormItem label="Title" {...formItemLayout}>
-          {getFieldDecorator('title', {
-            rules: [{ required: true, message: 'Please employee title' }],
-          })(<Input />)}
-        </FormItem>
         <FormItem label="Email" {...formItemLayout}>
           {getFieldDecorator('email', {
             rules: [{ required: true, message: 'Please input your E-mail!' }],

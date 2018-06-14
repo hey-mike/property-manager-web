@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-// import { createEmployee } from '../../../actions/employeeActions';
+import { createTenant } from '../actions/tenantActions';
 import { Button, Modal } from 'antd';
 import AddTenantForm from '../tenant-forms/AddTenantForm.jsx';
 
@@ -37,14 +37,7 @@ class AddButton extends React.Component {
         return;
       }
 
-      const name = {
-        firstName: values.firstName,
-        lastName: values.lastName,
-      };
-      const newEmployee = values;
-      newEmployee.name = name;
-
-      // this.props.dispatch(createEmployee(newEmployee, this.props.history));
+      this.props.dispatch(createTenant(values, this.props.history));
     });
   }
   saveFormRef(form) {
@@ -52,7 +45,7 @@ class AddButton extends React.Component {
   }
 
   render() {
-    const { visible, confirmLoading, ModalText } = this.state;
+    const { visible } = this.state;
     return (
       <div>
         <Button type="primary" onClick={this.showModal}>
@@ -88,7 +81,7 @@ AddButton.propTypes = {
   isFetching: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   const { updatedEmployee, error, isFetching } = state.tenant;
   return {
     updatedEmployee: updatedEmployee,

@@ -40,7 +40,7 @@ class TableDeleteBtn extends Component {
   render() {
     return (
       <span>
-        <a href="#" onClick={this.showModal}>
+        <a href="javascript:;" onClick={this.showModal}>
           Delete
         </a>
       </span>

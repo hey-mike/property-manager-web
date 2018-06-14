@@ -29,13 +29,13 @@ export const readTenantSuccess = data => ({
   data,
   receivedAt: Date.now(),
 });
-export const createTenantSuccess = (employee, history) => {
-  // history.push({
-  //   pathname: `/employee/${employee._id}`
-  // })
+export const createTenantSuccess = (tenant, history) => {
+  history.push({
+    pathname: `/tenant/${tenant._id}`,
+  });
   return {
     type: types.CREATE_TENANT_SUCCESS,
-    employee,
+    tenant,
     receivedAt: Date.now(),
   };
 };
@@ -122,49 +122,21 @@ export const searchTenants = (pagination, sorter) => {
   };
 };
 
-const shouldFetchTenants = (location, state) => {
-  const employeeState = state.employeeState;
-  if (!employeeState.employees.length) {
-    return true;
-  } else if (employeeState.isFetching) {
-    return false;
-  }
-  return false;
-};
-
-export const fetchTenantsIfNeeded = (location, page_size) => (
-  dispatch,
-  getState
-) => {
-  if (shouldFetchTenants(location, getState())) {
-    return dispatch(fetchTenants(location, page_size));
-  }
-};
-
-export const createTenant = (employee, history) => {
-  return dispatch => {
+export const createTenant = (tenant, history) => {
+  return async dispatch => {
     dispatch(sendRequest());
-
-    TenatService.createTenant(employee)
-      .then(response => {
-        if (!response.ok) {
-          return response.json().then(error => {
-            dispatch(requestTenantsError(error));
-            dispatch(addErrorMessage(error));
-          });
-        }
-        response.json().then(updatedTenant => {
-          updatedTenant = convertedTenant(updatedTenant);
-          dispatch(createTenantSuccess(updatedTenant, history));
-          notification.success({
-            message: 'Create employee successfully',
-          });
-        });
-      })
-      .catch(error => {
-        const errorMsg = `Error in sending data to server: ${error.message}`;
-        dispatch(addErrorMessage(errorMsg));
-      });
+    try {
+      const response = await TenatService.createTenant(tenant, history);
+      dispatch(createTenantSuccess(response.data));
+    } catch (err) {
+      let errorMsg = `Error in sending data to server: ${err.message}`;
+      if (err.response) {
+        const { data } = err.response;
+        errorMsg = `Error in sending data to server: ${data.message}`;
+      }
+      dispatch(addErrorMessage(errorMsg));
+      dispatch(requestTenantsError(errorMsg));
+    }
   };
 };
 
