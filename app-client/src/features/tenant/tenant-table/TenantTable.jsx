@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Table, Divider } from 'antd';
@@ -55,18 +56,9 @@ class TenantTable extends Component {
   }
 
   handleTableChange = (pagination, filters, sorter) => {
-    const pager = { ...this.props.pagination };
-    pager.current = pagination.current;
-    // this.setState({
-    //   pagination: pager,
-    // });
-    // this.fetch({
-    //   results: pagination.pageSize,
-    //   page: pagination.current,
-    //   sortField: sorter.field,
-    //   sortOrder: sorter.order,
-    //   ...filters,
-    // });
+    const orderMap = { descend: 'desc', ascend: 'asc' };
+    sorter.order = sorter.order ? orderMap[sorter.order] : sorter;
+
     console.log('sorter', sorter);
     this.props.dispatch(searchTenants(pagination, sorter));
   };

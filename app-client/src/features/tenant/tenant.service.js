@@ -1,6 +1,7 @@
 import axios from '../../core/axiosClient';
 import LocalStorageService from '../../core/services/local-store.service';
 import bodybuilder from 'bodybuilder';
+import _ from 'lodash';
 
 class TenantService {
   static requestHeaders() {
@@ -9,25 +10,17 @@ class TenantService {
   }
 
   static async searchTenants(pagination, sorter) {
-    const mapSorter = sorter => {
-      const orderMap = { descend: 'desc', ascend: 'asc' };
-      return orderMap[sorter.order] ? orderMap[sorter.order] : {};
-    };
     try {
       const from = (pagination.current - 1) * pagination.pageSize;
-      const sort = {};
-      if (sorter) {
-        sort[sorter.field] = mapSorter(sorter);
-      }
       const body = bodybuilder()
         .from(from)
         .size(pagination.pageSize)
-        .sort([sort])
+        .sort([sorter])
         .build();
 
       console.log('body', body);
 
-      return await axios.post('/api/tenant/search', { body });
+      return await axios.post('/tenant/search', { body });
     } catch (error) {
       console.error(error);
       throw new Error(error);

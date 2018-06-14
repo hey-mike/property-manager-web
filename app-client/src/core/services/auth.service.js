@@ -2,22 +2,16 @@ import axios from '../axiosClient';
 import LocalStorageService from './local-store.service';
 
 export default class AuthService {
-  static requestHeaders() {
-    // return {'AUTHORIZATION': `Bearer ${sessionStorage.jwt}`}
-    return {};
-  }
   static getEndPoint() {
     return `https://${window.location.hostname}/api`;
   }
 
   static async login(newUser) {
-    const url = this.getEndPoint();
-    return await axios.post(`${url}/auth/login`, newUser);
+    return await axios.post(`/auth/login`, newUser);
   }
 
   static async register(newUser) {
-    const url = this.getEndPoint();
-    return await axios.post(`${url}/auth/register`, newUser);
+    return await axios.post(`/auth/register`, newUser);
   }
 
   static logout() {
