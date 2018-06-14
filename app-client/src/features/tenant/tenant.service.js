@@ -12,11 +12,22 @@ class TenantService {
   static async searchTenants(pagination, sorter) {
     try {
       const from = (pagination.current - 1) * pagination.pageSize;
-      const body = bodybuilder()
+
+      let body = bodybuilder()
         .from(from)
-        .size(pagination.pageSize)
-        .sort([sorter])
-        .build();
+        .size(pagination.pageSize);
+
+      if (sorter && sorter.field) {
+        const searchSort = {};
+        if (sorter.field === 'name') {
+          searchSort['name.firstName'] = sorter.order;
+        } else {
+          searchSort[sorter.field] = sorter.order;
+        }
+
+        body = body.sort([searchSort]);
+      }
+      body = body.build();
 
       console.log('body', body);
 
