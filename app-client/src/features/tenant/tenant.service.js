@@ -1,7 +1,6 @@
 import axios from '../../core/axiosClient';
 import LocalStorageService from '../../core/services/local-store.service';
 import bodybuilder from 'bodybuilder';
-import _ from 'lodash';
 
 class TenantService {
   static requestHeaders() {
