@@ -9,8 +9,7 @@ class SearchService {
 
   async connect() {
     this.client = new elasticsearch.Client({
-      host: config.get('es:uri'),
-      log: 'debug'
+      host: config.get('es:uri')
     });
     try {
       await this.createIndex();
@@ -167,19 +166,20 @@ class SearchService {
     };
   }
 
-  async search(body) {
+  async search(query) {
     try {
+      // console.log(query)
       const result = await this.client.search({
         index: ES_INDEX,
         type: 'tenant',
-        body: body
+        body:query
       });
       return {
         data: result.hits.hits.map(this.searchHitToResult),
         total: result.hits.total
       };
     } catch (error) {
-      console.trace(error);
+      console.trace('search',error);
       throw new Error(error);
     }
   }

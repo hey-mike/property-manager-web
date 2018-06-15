@@ -37,7 +37,7 @@ class TenantService {
 
       console.log('body', body);
 
-      return await axios.post('/tenant/search', { body });
+      return await axios.post('/tenant/search', body );
     } catch (error) {
       console.error(error);
       throw new Error(error);

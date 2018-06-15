@@ -6,9 +6,9 @@ exports.search = async function(req, res) {
   const { body } = req.body;
   // const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
   // let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
-  console.log();
+  console.log('body',req.body);
   try {
-    const result = await SearchService.search(body);
+    const result = await SearchService.search(req.body);
     res.json(result);
   } catch (err) {
     res.status(500).json({
