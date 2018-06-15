@@ -15,6 +15,7 @@ const index = require('./routes/index');
 const auth = require('./routes/auth');
 const user = require('./routes/user');
 const tenant = require('./routes/tenant');
+const search = require('./routes/search');
 const transaction = require('./routes/transaction');
 const mock = require('./routes/mock');
 
@@ -36,7 +37,8 @@ app.use(passport.initialize());
 app.use('/', index);
 app.use('/api/auth', auth);
 app.use('/api/user', passport.authenticate('jwt'), user);
-app.use('/api/tenant',  tenant);
+app.use('/api/tenant', tenant);
+app.use('/api/search', search);
 app.use('/api/transaction', passport.authenticate('jwt'), transaction);
 app.use('/api/mock', mock);
 

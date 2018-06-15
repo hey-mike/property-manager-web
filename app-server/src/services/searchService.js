@@ -196,8 +196,8 @@ class SearchService {
       throw new Error(error);
     }
   }
-  getSuggestions(text, size) {
-    return this.client.search({
+  async getSuggestions(text, size) {
+    return await this.client.search({
       index: ES_INDEX,
       type: 'tenant',
       body: {
