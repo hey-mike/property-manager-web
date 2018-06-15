@@ -9,41 +9,39 @@ class EmailService {
   async connect() {
     try {
       this.connection = await amqp.connect(config.get('amqp:uri'));
+      this.channel = await this.connection.createChannel();
       console.log('Connect to email service queue:', config.get('amqp:uri'));
 
-      await this.createChannel();
       await this.consume();
     } catch (err) {
       console.trace('Email service queue connect failed: ', err);
     }
   }
-  async createChannel() {
+
+  async consume() {
     try {
-      this.channel = await this.connection.createChannel();
-      await this.channel.assertQueue(config.get('amqp:queue'), {
+      const result = await this.channel.assertQueue(config.get('amqp:queue'), {
         durable: true
       });
-      // Only request 1 unacked message from queue
-      // This value indicates how many messages we want to process in parallel
-      const result = await this.channel.prefetch(1);
-      console.log('Create channel successfully', result);
+
+      //  don't dispatch a new message to a worker until it has processed and acknowledged the previous one.
+      //  Instead, it will dispatch it to the next worker that is not still busy.
+      await this.channel.prefetch(1);
+
+      if (result) {
+        this.channel.consume(config.get('amqp:queue'), data => {
+          if (data !== null) {
+            // Decode message contents
+            let message = JSON.parse(data.content.toString());
+
+            console.log(message);
+            this.channel.ack(data);
+          }
+        });
+      }
     } catch (err) {
       console.trace('Create channel failed: ', err);
     }
-  }
-
-  async consume() {
-    const test = this.channel;
-    this.channel.consume(config.get('amqp:queue'), data => {
-      if (data === null) {
-        return;
-      }
-      // Decode message contents
-      let message = JSON.parse(data.content.toString());
-
-      console.log(message);
-      test.ack('successfully');
-    });
   }
 }
 
