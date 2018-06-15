@@ -9,8 +9,7 @@ class SearchService {
 
   async connect() {
     this.client = new elasticsearch.Client({
-      host: config.get('es:uri'),
-      log: 'debug'
+      host: config.get('es:uri')
     });
     try {
       await this.healthCheck();
