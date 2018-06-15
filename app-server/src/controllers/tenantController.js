@@ -2,13 +2,31 @@ const mongoose = require('mongoose');
 const Tenant = require('../models/tenant');
 const SearchService = require('../services/searchService.js');
 
+exports.getSuggestions = async function(req, res) {
+  try {
+    const result = await SearchService.getSuggestions(req.params.text, req.params.size)
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({
+      message: `Internal Server Error: ${err}`
+    });
+  }
+};
+
 exports.search = async function(req, res) {
-  const { body } = req.body;
-  // const offset = req.query._offset ? parseInt(req.query._offset, 10) : 0;
-  // let limit = req.query._limit ? parseInt(req.query._limit, 10) : 20;
-  console.log('body',req.body);
   try {
     const result = await SearchService.search(req.body);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({
+      message: `Internal Server Error: ${err}`
+    });
+  }
+};
+exports.deleteESIndex = async function(req, res) {
+  console.log('deleteESIndex');
+  try {
+    const result = await SearchService.deleteIndex();
     res.json(result);
   } catch (err) {
     res.status(500).json({

@@ -9,14 +9,16 @@ class SearchService {
 
   async connect() {
     this.client = new elasticsearch.Client({
-      host: config.get('es:uri')
+      host: config.get('es:uri'),
+      log: 'debug'
     });
     try {
-      await this.createIndex();
       await this.healthCheck();
+      await this.createIndex();
       await this.createMapping();
     } catch (err) {
       console.trace('connect', err);
+      throw new Error(err);
     }
   }
   async healthCheck() {
@@ -29,9 +31,15 @@ class SearchService {
       console.log('-- ES Client Health --', result);
     } catch (error) {
       console.trace('elasticsearch cluster is down!');
+      throw new Error(error);
     }
   }
 
+  indexExists() {
+    return this.client.indices.exists({
+      index: ES_INDEX
+    });
+  }
   async createIndex() {
     try {
       const response = await this.client.indices.create({
@@ -59,12 +67,17 @@ class SearchService {
             name: {
               properties: {
                 firstName: {
-                  type: 'text',
-                  fielddata: true
+                  type: "completion",
+                  analyzer: "simple",
+                  search_analyzer: "simple",
                 },
                 lastName: {
-                  type: 'text',
-                  fielddata: true
+                  type: "completion",
+                  analyzer: "simple",
+                  search_analyzer: "simple",
+                },
+                suggest: {
+                  type: 'completion'
                 }
               }
             },
@@ -96,7 +109,7 @@ class SearchService {
         type: 'tenant'
       });
 
-      console.log(response);
+      console.log('getMapping', response);
 
       return response;
     } catch (err) {
@@ -172,16 +185,46 @@ class SearchService {
       const result = await this.client.search({
         index: ES_INDEX,
         type: 'tenant',
-        body:query
+        body: query
       });
       return {
         data: result.hits.hits.map(this.searchHitToResult),
         total: result.hits.total
       };
     } catch (error) {
-      console.trace('search',error);
+      console.trace('search', error);
       throw new Error(error);
     }
+  }
+  getSuggestions(text, size) {
+    return this.client.search({
+      index: ES_INDEX,
+      type: 'tenant',
+      body: {
+        suggest: {
+          firstNameSuggester: {
+            prefix: text,
+            completion: {
+              field: 'name.firstName',
+              size: size,
+              fuzzy: {
+                fuzziness: 'auto'
+              }
+            }
+          },
+          lastNameSuggester: {
+            prefix: text,
+            completion: {
+              field: 'name.lastName',
+              size: size,
+              fuzzy: {
+                fuzziness: 'auto'
+              }
+            }
+          }
+        }
+      }
+    });
   }
   async count() {
     try {
@@ -195,11 +238,13 @@ class SearchService {
       return err;
     }
   }
+ 
 
   async deleteIndex() {
     try {
       const result = await this.client.indices.delete({ index: ES_INDEX });
       console.log('Index deleted', result);
+      return result;
     } catch (err) {
       console.trace(err.message);
     }
