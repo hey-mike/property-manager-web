@@ -1,19 +1,15 @@
-const elasticsearch = require('elasticsearch');
-const config = require('../config/config.js');
+const config = require('../../config/config.js');
 const _ = require('lodash');
-const BaseSearchSerice = require('./search-strategy/baseSearchSerice');
+const BaseSearchSerice = require('./baseSearchSerice');
 
 // https://www.elastic.co/blog/setting-up-elasticsearch-for-a-blog
 const ES_INDEX = 'property_manager';
-class SearchService extends BaseSearchSerice {
+class TenantSearchStrategy extends BaseSearchSerice {
   constructor() {
     super();
   }
 
   async connect() {
-    this.client = new elasticsearch.Client({
-      host: config.get('es:uri')
-    });
     try {
       await this.healthCheck();
       await this.createIndex();
@@ -29,7 +25,6 @@ class SearchService extends BaseSearchSerice {
       const result = await this.client.ping({
         requestTimeout: 3000
       });
-      console.log('Connect to elasticsearch:', config.get('es:uri'));
       console.log('-- ES Client Health --', result);
     } catch (error) {
       console.trace('elasticsearch cluster is down!');
@@ -265,4 +260,4 @@ class SearchService extends BaseSearchSerice {
   }
 }
 
-module.exports = new SearchService();
+module.exports = TenantSearchStrategy;

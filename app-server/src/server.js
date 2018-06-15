@@ -14,7 +14,7 @@ const EmailService = require('./services/emailService.js');
 // connect to mongodb
 mongoose.connect();
 // connect to elasticsearch
-SearchService.connect();
+// SearchService.connect();
 // connect to email service
 EmailService.connect();
 

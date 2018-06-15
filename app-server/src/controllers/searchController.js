@@ -1,9 +1,11 @@
-const SearchService = require('../services/searchService.js');
+// const seartchStrategyFactory = require('../services/seartchStrategyFactory.js');
+const seartchStrategyFactory = require('../services/seartchStrategyFactory');
+
 
 exports.getSuggestions = async function(req, res) {
   try {
     const { text, size } = req.body;
-    const result = await SearchService.getSuggestions(text, size);
+    const result = await seartchStrategyFactory.getSuggestions(text, size);
     res.json(result);
   } catch (err) {
     res.status(500).json({
@@ -14,7 +16,7 @@ exports.getSuggestions = async function(req, res) {
 
 exports.search = async function(req, res) {
   try {
-    const result = await SearchService.search(req.body);
+    const result = await seartchStrategyFactory.search(req.body);
     res.json(result);
   } catch (err) {
     res.status(500).json({
@@ -24,7 +26,7 @@ exports.search = async function(req, res) {
 };
 exports.deleteESIndex = async function(req, res) {
   try {
-    const result = await SearchService.deleteIndex();
+    const result = await seartchStrategyFactory.deleteIndex();
     res.json(result);
   } catch (err) {
     res.status(500).json({
@@ -34,7 +36,7 @@ exports.deleteESIndex = async function(req, res) {
 };
 exports.createMapping = async function(req, res) {
   try {
-    const result = await SearchService.createMapping();
+    const result = await seartchStrategyFactory.createMapping();
     console.log(result);
     res.json(result);
   } catch (err) {
@@ -45,7 +47,7 @@ exports.createMapping = async function(req, res) {
 };
 exports.getMapping = async function(req, res) {
   try {
-    const result = await SearchService.getMapping();
+    const result = await seartchStrategyFactory.getMapping();
     res.json(result);
   } catch (err) {
     res.status(500).json({
