@@ -7,16 +7,14 @@ const app = require('./app');
 const errorHandler = require('errorhandler');
 const config = require('./config/config.js');
 const mongoose = require('./config/mongoose.js');
-const SearchService = require('./services/searchService.js');
 const EmailService = require('./services/emailService.js');
-
 
 // connect to mongodb
 mongoose.connect();
 // connect to elasticsearch
 // SearchService.connect();
 // connect to email service
-EmailService.connect();
+// EmailService.connect();
 
 const port = process.env.PORT || config.get('server:port');
 app.set('port', port);
@@ -31,9 +29,9 @@ app.listen(app.get('port'), () => {
   );
   console.log('Press CTRL-C to stop\n');
 });
-process.on('uncaughtException', (err) => {
-  console.error('Unhandled Exception', err)
-})
-process.on('uncaughtRejection', (err) => {
-  console.error('Unhandled Rejection', err)
-})
+process.on('uncaughtException', err => {
+  console.error('Unhandled Exception', err);
+});
+process.on('uncaughtRejection', err => {
+  console.error('Unhandled Rejection', err);
+});

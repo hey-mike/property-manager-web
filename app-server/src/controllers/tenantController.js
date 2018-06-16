@@ -67,39 +67,46 @@ exports.delete = async function(req, res) {
 exports.read = async function(req, res) {
   let documentId;
   try {
-    documentId = mongoose.Types.ObjectId(req.params.id);
+    documentId = new mongoose.Types.ObjectId(req.params.id);
   } catch (error) {
     return res.status(422).json({
       message: `Invalid issue ID format: ${error}`
     });
   }
   console.log('documentId', documentId);
-  try {
-    const tenant = await Tenant.findOne({
-      _id: documentId
-    });
-    console.log('tenant', tenant);
 
+  Tenant.findOne({ _id: documentId }, function(err, tenant) {
     if (tenant) {
-      return res.status(404).json({
-        message: `No such tenant: ${documentId}`
-      });
-    } else {
       return res.json(tenant);
     }
-  } catch (error) {
-    console.log(error);
-    return res.status(500).json({
-      message: `Internal Server Error: ${error}`
+    return res.status(404).json({
+      message: `No such tenant: ${documentId}`
     });
-  }
+  });
+  // try {
+  //   const tenant = await Tenant.findOne({
+  //     _id: documentId
+  //   });
+
+  //   if (tenant) {
+  //     return res.json(tenant);
+  //   }
+  //   return res.status(404).json({
+  //     message: `No such tenant: ${documentId}`
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  //   return res.status(500).json({
+  //     message: `Internal Server Error: ${error}`
+  //   });
+  // }
 };
 
 // update tenant
 exports.update = function(req, res) {
   let _id;
   try {
-    _id = mongoose.Types.ObjectId(req.params.id);
+    _id = new mongoose.Types.ObjectId(req.params.id);
   } catch (error) {
     return res.status(422).json({
       message: `Invalid issue ID format: ${error}`
