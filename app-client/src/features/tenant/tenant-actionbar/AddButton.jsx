@@ -56,6 +56,7 @@ class AddButton extends React.Component {
           title="Add a new tenant"
           wrapClassName="vertical-center-modal"
           okText="Add"
+          width={800}
           onCancel={this.handleCancel}
           confirmLoading={this.props.isFetching}
           onOk={this.handleCreate}

@@ -1,6 +1,13 @@
 import React from 'react';
-import { Form, Input, Select, AutoComplete, DatePicker } from 'antd';
-const { RangePicker } = DatePicker;
+import {
+  Form,
+  Input,
+  Select,
+  AutoComplete,
+  DatePicker,
+  Upload,
+  Icon,
+} from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -103,6 +110,26 @@ class AddEmployeeForm extends React.Component {
               onOk={this.onOk}
             />
           )}
+        </FormItem>
+        <FormItem {...formItemLayout} label="Dragger">
+          <div className="dropbox">
+            {getFieldDecorator('dragger', {
+              valuePropName: 'fileList',
+              getValueFromEvent: this.normFile,
+            })(
+              <Upload.Dragger name="files" action="/upload.do">
+                <p className="ant-upload-drag-icon">
+                  <Icon type="inbox" />
+                </p>
+                <p className="ant-upload-text">
+                  Click or drag file to this area to upload
+                </p>
+                <p className="ant-upload-hint">
+                  Support for a single or bulk upload.
+                </p>
+              </Upload.Dragger>
+            )}
+          </div>
         </FormItem>
       </Form>
     );
