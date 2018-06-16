@@ -73,11 +73,13 @@ exports.read = async function(req, res) {
       message: `Invalid issue ID format: ${error}`
     });
   }
-
+  console.log('documentId', documentId);
   try {
     const tenant = await Tenant.findOne({
       _id: documentId
     });
+    console.log('tenant', tenant);
+
     if (tenant) {
       return res.status(404).json({
         message: `No such tenant: ${documentId}`
