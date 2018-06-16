@@ -64,9 +64,6 @@ tenantSchema.post('remove', function(doc) {
   console.log('%s has been removed', doc._id);
 });
 
-tenantSchema.index({
-  email: 'text'
-});
 // Configure the 'tenantSchema' to use getters and virtuals when transforming to JSON
 tenantSchema.set('toJSON', {
   getters: true,

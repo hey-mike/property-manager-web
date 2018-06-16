@@ -4,9 +4,9 @@ const tenantController = require('../controllers/tenantController');
 
 /* GET tenantController listing. */
 
-router.get('/:tenantId', tenantController.read);
-router.put('/:tenantId', tenantController.update);
-router.delete('/:tenantId', tenantController.delete);
+router.get('/:id', tenantController.read);
+router.put('/:id', tenantController.update);
+router.delete('/:id', tenantController.delete);
 
 router.get('/', tenantController.list);
 router.post('/', tenantController.create);

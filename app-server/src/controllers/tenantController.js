@@ -66,6 +66,7 @@ exports.delete = async function(req, res) {
 // Get tenant detail
 exports.read = async function(req, res) {
   let documentId;
+  console.log('req.params.id', req.params.id);
   try {
     documentId = new mongoose.Types.ObjectId(req.params.id);
   } catch (error) {
