@@ -74,37 +74,28 @@ exports.read = async function(req, res) {
       message: `Invalid issue ID format: ${error}`
     });
   }
-  console.log('documentId', documentId);
 
-  Tenant.findOne({ _id: documentId }, function(err, tenant) {
+  try {
+    const tenant = await Tenant.findOne({
+      _id: documentId
+    });
+
     if (tenant) {
       return res.json(tenant);
     }
     return res.status(404).json({
       message: `No such tenant: ${documentId}`
     });
-  });
-  // try {
-  //   const tenant = await Tenant.findOne({
-  //     _id: documentId
-  //   });
-
-  //   if (tenant) {
-  //     return res.json(tenant);
-  //   }
-  //   return res.status(404).json({
-  //     message: `No such tenant: ${documentId}`
-  //   });
-  // } catch (error) {
-  //   console.log(error);
-  //   return res.status(500).json({
-  //     message: `Internal Server Error: ${error}`
-  //   });
-  // }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: `Internal Server Error: ${error}`
+    });
+  }
 };
 
 // update tenant
-exports.update = function(req, res) {
+exports.update = async function(req, res) {
   let _id;
   try {
     _id = new mongoose.Types.ObjectId(req.params.id);
@@ -118,7 +109,7 @@ exports.update = function(req, res) {
   tenant.updatedAt = new Date();
 
   try {
-    const tenant = Tenant.findOneAndUpdate(
+    const tenant = await Tenant.findOneAndUpdate(
       {
         _id: _id
       },
@@ -135,26 +126,10 @@ exports.update = function(req, res) {
       message: `Internal Server Error: ${error}`
     });
   }
-
-  // Tenant.findOneAndUpdate(
-  //   {
-  //     _id: _id
-  //   },
-  //   {
-  //     $set: tenant
-  //   },
-  //   {
-  //     new: true
-  //   },
-  //   function(err, updatedTenant) {
-  //     if (err) return handleError(err, res);
-  //     res.json(updatedTenant);
-  //   }
-  // );
 };
 
 // delete tenant
-exports.delete = function(req, res) {
+exports.delete = async function(req, res) {
   let docId;
   try {
     docId = mongoose.Types.ObjectId(req.params.id);
@@ -163,23 +138,16 @@ exports.delete = function(req, res) {
       message: `Invalid issue ID format: ${error}`
     });
   }
-  Tenant.deleteOne({
-    _id: docId
-  })
-    .then(deleteResult => {
-      if (deleteResult.result.n === 1)
-        res.json({
-          status: 'OK'
-        });
-      else
-        res.json({
-          status: 'Warning: object not found'
-        });
-    })
-    .catch(error => {
-      console.log(error);
-      res.status(500).json({
-        message: `Internal Server Error: ${error}`
-      });
+
+  try {
+    const result = await Tenant.deleteOne({
+      _id: docId
     });
+    res.json(result);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: `Internal Server Error: ${err}`
+    });
+  }
 };
