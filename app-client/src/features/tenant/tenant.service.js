@@ -37,7 +37,7 @@ class TenantService {
 
       console.log('body', body);
 
-      return await axios.post('/tenant/search', body);
+      return await axios.post('/search', body);
     } catch (error) {
       console.error(error);
       throw new Error(error);
@@ -53,7 +53,7 @@ class TenantService {
   }
   static async createTenant(tenant) {
     try {
-      await axios.post('/tenant', { tenant });
+      await axios.post('/tenant', tenant);
     } catch (error) {
       console.error(error);
       throw new Error(error);

@@ -1,7 +1,7 @@
 const TenantSearchStrategy = require('./search-strategy/tenantSearchStrategy');
 
 const tenantSearchStrategy = new TenantSearchStrategy();
-class BaseSearchService {
+class seartchStrategyFactory {
   getStrategy(type) {
     switch (type) {
       default:
@@ -10,4 +10,4 @@ class BaseSearchService {
   }
 }
 
-module.exports = new BaseSearchService();
+module.exports = new seartchStrategyFactory();

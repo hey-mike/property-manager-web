@@ -1,51 +1,60 @@
-const mongoose = require("mongoose");
-const ElasticSearch = require('../services/searchService'); 
+const mongoose = require('mongoose');
+const ElasticSearch = require('../services/searchService');
 const Schema = mongoose.Schema;
 
-const tenantSchema = new Schema({
-  id: Number,
-  name: {
-    type: Object,
-    required: true,
-    trim: true
+const tenantSchema = new Schema(
+  {
+    id: Number,
+    firstName: {
+      type: Object,
+      required: true,
+      trim: true
+    },
+    lastName: {
+      type: Object,
+      required: true,
+      trim: true
+    },
+    gender: String,
+    age: Number,
+    title: String,
+    email: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    phone: String,
+    address: String
   },
-  gender: String,
-  age: Number,
-  title: String,
-  email: {
-    type: String,
-    required: true,
-    trim: true
-  } ,
-  phone: String,
-  address: String,
-}, {
-  timestamps: true
-});
+  {
+    timestamps: true
+  }
+);
 
-
-tenantSchema.virtual('fullName').get(function () {
-  return this.name.firstName + ' ' + this.name.lastName;
-}).set(function (v) {
-  this.name.firstName = v.substr(0, v.indexOf(' '));
-  this.name.lastName = v.substr(v.indexOf(' ') + 1);
-});
-tenantSchema.pre('save', async function () {
+tenantSchema
+  .virtual('fullName')
+  .get(function() {
+    return this.firstName + ' ' + this.lastName;
+  })
+  .set(function(v) {
+    this.firstName = v.substr(0, v.indexOf(' '));
+    this.lastName = v.substr(v.indexOf(' ') + 1);
+  });
+tenantSchema.pre('save', async function() {
   this.updatedAt = Date.now();
 });
-tenantSchema.post('save', async function (doc) {
-  try{
-    await ElasticSearch.update(doc)
-  } catch(err) {
-    throw new Error('something went wrong:' ,err);
+tenantSchema.post('save', async function(doc) {
+  try {
+    await ElasticSearch.update(doc);
+  } catch (err) {
+    throw new Error('something went wrong:', err);
   }
-
 });
-tenantSchema.post('insertMany', async function (docs) {
-  try{
-    await ElasticSearch.bulk(docs)
-  } catch(err) {
-    throw new Error('something went wrong:' ,err);
+tenantSchema.post('insertMany', async function(docs) {
+  try {
+    await ElasticSearch.bulk(docs);
+  } catch (err) {
+    throw new Error('something went wrong:', err);
   }
 });
 tenantSchema.post('update', function(doc) {
@@ -56,7 +65,7 @@ tenantSchema.post('remove', function(doc) {
 });
 
 tenantSchema.index({
-  email:'text'
+  email: 'text'
 });
 // Configure the 'tenantSchema' to use getters and virtuals when transforming to JSON
 tenantSchema.set('toJSON', {
@@ -64,7 +73,6 @@ tenantSchema.set('toJSON', {
   virtuals: true
 });
 
-
-const tenant = mongoose.model("Tenant", tenantSchema);
+const tenant = mongoose.model('Tenant', tenantSchema);
 
 module.exports = tenant;

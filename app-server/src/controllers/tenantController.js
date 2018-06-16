@@ -1,60 +1,6 @@
 const mongoose = require('mongoose');
 const Tenant = require('../models/tenant');
-const SearchService = require('../services/searchService.js');
 
-exports.getSuggestions = async function(req, res) {
-  try {
-    const result = await SearchService.getSuggestions(req.params.text, req.params.size)
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({
-      message: `Internal Server Error: ${err}`
-    });
-  }
-};
-
-exports.search = async function(req, res) {
-  try {
-    const result = await SearchService.search(req.body);
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({
-      message: `Internal Server Error: ${err}`
-    });
-  }
-};
-exports.deleteESIndex = async function(req, res) {
-  console.log('deleteESIndex');
-  try {
-    const result = await SearchService.deleteIndex();
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({
-      message: `Internal Server Error: ${err}`
-    });
-  }
-};
-exports.createMapping = async function(req, res) {
-  try {
-    const result = await SearchService.createMapping();
-    console.log(result);
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({
-      message: `Internal Server Error: ${err}`
-    });
-  }
-};
-exports.getMapping = async function(req, res) {
-  try {
-    const result = await SearchService.getMapping();
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({
-      message: `Internal Server Error: ${err}`
-    });
-  }
-};
 exports.list = async function(req, res) {
   try {
     const Tenants = await Tenant.find({});
@@ -73,10 +19,10 @@ exports.create = async function(req, res) {
     req_tenant.status = 'New';
   }
   try {
-    const newTenant = new Tenant(newTenant);
-    const Tenant = await newTenant.save();
-    res.json(Tenant);
-    return Tenant;
+    const newTenant = new Tenant(req_tenant);
+    const tenant = await newTenant.save();
+    console.log('Tenant', tenant);
+    res.json(tenant);
   } catch (err) {
     res.status(500).json({
       message: `Internal Server Error: ${err}`

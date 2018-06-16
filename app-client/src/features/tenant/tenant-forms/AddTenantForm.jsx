@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Input, Select, AutoComplete } from 'antd';
+import { Form, Input, Select, AutoComplete, DatePicker } from 'antd';
+const { RangePicker } = DatePicker;
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -11,7 +12,14 @@ class AddEmployeeForm extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
   }
+  onChange(value, dateString) {
+    console.log('Selected Time: ', value);
+    console.log('Formatted Selected Time: ', dateString);
+  }
 
+  onOk(value) {
+    console.log('onOk: ', value);
+  }
   handleChange(value) {
     this.setState({
       dataSource:
@@ -67,6 +75,32 @@ class AddEmployeeForm extends React.Component {
               dataSource={this.state.dataSource}
               onChange={this.handleChange}
               placeholder="Email"
+            />
+          )}
+        </FormItem>
+        <FormItem label="Check In" {...formItemLayout}>
+          {getFieldDecorator('checkin-date', {
+            rules: [{ required: true, message: 'Please Pick a date!' }],
+          })(
+            <DatePicker
+              showTime
+              format="YYYY-MM-DD HH:mm:ss"
+              placeholder="Select Time"
+              onChange={this.onChange}
+              onOk={this.onOk}
+            />
+          )}
+        </FormItem>
+        <FormItem label="Check Out" {...formItemLayout}>
+          {getFieldDecorator('checkout-date', {
+            rules: [{ required: true, message: 'Please Pick a date!' }],
+          })(
+            <DatePicker
+              showTime
+              format="YYYY-MM-DD HH:mm:ss"
+              placeholder="Select Time"
+              onChange={this.onChange}
+              onOk={this.onOk}
             />
           )}
         </FormItem>

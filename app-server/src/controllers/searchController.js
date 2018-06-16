@@ -1,11 +1,12 @@
 // const seartchStrategyFactory = require('../services/seartchStrategyFactory.js');
 const seartchStrategyFactory = require('../services/seartchStrategyFactory');
 
-
 exports.getSuggestions = async function(req, res) {
   try {
     const { text, size } = req.body;
-    const result = await seartchStrategyFactory.getSuggestions(text, size);
+    const result = await seartchStrategyFactory
+      .getStrategy()
+      .getSuggestions(text, size);
     res.json(result);
   } catch (err) {
     res.status(500).json({
@@ -16,7 +17,8 @@ exports.getSuggestions = async function(req, res) {
 
 exports.search = async function(req, res) {
   try {
-    const result = await seartchStrategyFactory.search(req.body);
+    console.log('seartchStrategyFactory', seartchStrategyFactory);
+    const result = await seartchStrategyFactory.getStrategy().search(req.body);
     res.json(result);
   } catch (err) {
     res.status(500).json({
@@ -26,7 +28,7 @@ exports.search = async function(req, res) {
 };
 exports.deleteESIndex = async function(req, res) {
   try {
-    const result = await seartchStrategyFactory.deleteIndex();
+    const result = await seartchStrategyFactory.getStrategy().deleteIndex();
     res.json(result);
   } catch (err) {
     res.status(500).json({

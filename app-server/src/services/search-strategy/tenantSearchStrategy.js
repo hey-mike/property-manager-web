@@ -61,22 +61,15 @@ class TenantSearchStrategy extends BaseSearchSerice {
         body: {
           properties: {
             createdAt: { type: 'date' },
-            name: {
-              properties: {
-                firstName: {
-                  type: 'completion',
-                  analyzer: 'simple',
-                  search_analyzer: 'simple'
-                },
-                lastName: {
-                  type: 'completion',
-                  analyzer: 'simple',
-                  search_analyzer: 'simple'
-                },
-                suggest: {
-                  type: 'completion'
-                }
-              }
+            firstName: {
+              type: 'completion',
+              analyzer: 'simple',
+              search_analyzer: 'simple'
+            },
+            lastName: {
+              type: 'completion',
+              analyzer: 'simple',
+              search_analyzer: 'simple'
             },
             gender: { type: 'text' },
             age: { type: 'text' },

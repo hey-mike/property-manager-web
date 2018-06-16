@@ -14,10 +14,8 @@ exports.generate_tenants = async function(req, res) {
     var randomDate = faker.date.recent();
 
     var tenant = {
-      name: {
-        firstName,
-        lastName
-      },
+      firstName: firstName,
+      lastName: lastName,
       gender: randomGender,
       email: randomEmail,
       title: title,
