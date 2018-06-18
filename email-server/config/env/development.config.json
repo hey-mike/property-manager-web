@@ -1,4 +1,7 @@
 {
+  "server": {
+    "port": 3000
+  },
   "amqp": {
     "uri":"amqp://localhost" ,
     "queue": "nodemailer-amqp",

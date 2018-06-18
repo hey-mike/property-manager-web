@@ -1,57 +1,30 @@
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+/**
+ * Module dependencies.
+ */
 
-var app = express();
+const app = require('./app');
+// const mongoose = require('mongoose');
+const errorHandler = require('errorhandler');
+const config = require('./config/config.js');
 
-//Sending email here
-var mail = require('./nodeMailerWithTemp');
-mail.sendPasswordReset('olyjoshone@gmail.com', 'Ogirima','Joshua Aroke','http://yourdomain.com/some-password-links');
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+const port = process.env.PORT || config.get('server:port');
+app.set('port', port);
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.use(errorHandler());
+
+app.listen(app.get('port'), () => {
+  console.log(
+    'App is running at http://localhost:%d in %s mode',
+    app.get('port'),
+    app.get('env')
+  );
+  console.log('Press CTRL-C to stop\n');
 });
-
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.render('error', {
-    message: err.message,
-    error: {}
-  });
+process.on('uncaughtException', err => {
+  console.error('Unhandled Exception', err);
 });
-
-
-module.exports = app;
+process.on('uncaughtRejection', err => {
+  console.error('Unhandled Rejection', err);
+});
