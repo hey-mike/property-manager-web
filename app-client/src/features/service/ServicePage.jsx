@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Row, Col } from 'antd';
+import { List } from 'antd';
 import ServiceCard from './service-card/ServiceCard';
 
 const data = [
