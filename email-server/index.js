@@ -1,38 +1,57 @@
-'use strict';
-const emailService =  require('./emailService');
+var express = require('express');
+var path = require('path');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
 
-emailService.connect();
+var app = express();
 
-var sender = 'smtps://youremailAddress%40gmail.com'   // The emailto use in sending the email
-//(Change the @ symbol to %40 or do a url encoding )
-var password = 'yourEmailPassword'  // password of the email to use
+//Sending email here
+var mail = require('./nodeMailerWithTemp');
+mail.sendPasswordReset('olyjoshone@gmail.com', 'Ogirima','Joshua Aroke','http://yourdomain.com/some-password-links');
 
-var nodeMailer = require("nodemailer");
-var EmailTemplate = require('email-templates').EmailTemplate;
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-var transporter = nodeMailer.createTransport(sender + ':' + password + '@smtp.gmail.com');
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-// create template based sender function
-// assumes text.{ext} and html.{ext} in template/directory
-var sendResetPasswordLink = transporter.templateSender(
-  new EmailTemplate('./templates/resetPassword'), {
-    	from: 'hello@yourdomain.com',
-  });
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
-exports.sendPasswordReset = function (email, username, name, tokenUrl) {
-    // transporter.template
-    sendResetPasswordLink({
-        to: email,
-        subject: 'Password Reset - YourDomain.com'
-    }, {
-        name: name,
-        username: username,
-        token: tokenUrl
-    }, function (err, info) {
-        if (err) {
-            console.log(err)
-        } else {
-            console.log('Link sent\n'+ JSON.stringify(info));
-        }
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
     });
-};
+  });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
+
+
+module.exports = app;

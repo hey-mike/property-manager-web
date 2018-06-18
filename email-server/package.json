@@ -11,12 +11,15 @@
   "license": "ISC",
   "dependencies": {
     "amqplib": "^0.5.2",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.6.1",
     "email-templates": "^4.0.1",
     "express": "^4.16.3",
     "koa": "^2.5.1",
+    "morgan": "^1.9.0",
     "nconf": "^0.10.0",
-    "nodemailer": "^4.6.5",
-    "pug": "^2.0.3"
+    "nodemailer": "^4.6.5"
   },
   "devDependencies": {
     "nodemon": "^1.17.5"
