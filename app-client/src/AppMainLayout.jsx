@@ -10,6 +10,7 @@ import NavDrawer from './core/components/NavDrawer';
 import DashboardPage from './features/dashboard/DashboardPage';
 import TenantPage from './features/tenant/TenantPage';
 import LeaseCalendar from './features/calendar/LeaseCalendar';
+import ServicePage from './features/service/ServicePage';
 import './AppMainLayout.css';
 
 const { Content, Footer } = Layout;
@@ -59,6 +60,7 @@ class MainContainer extends React.Component {
                 <Route path="/dashboard" component={DashboardPage} />
                 <Route path="/tenant" component={TenantPage} />
                 <Route path="/calendar" component={LeaseCalendar} />
+                <Route path="/service" component={ServicePage} />
               </Switch>
             </Content>
             <Footer style={{ textAlign: 'center' }}>
