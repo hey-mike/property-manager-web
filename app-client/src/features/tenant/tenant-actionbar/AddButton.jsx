@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { createTenant } from '../actions/tenantActions';
 import { Button, Modal } from 'antd';
 import AddTenantForm from '../tenant-forms/AddTenantForm.jsx';
+import AddStepForm from '../tenant-forms/AddStepForm.jsx';
 
 class AddButton extends React.Component {
   constructor(props) {
@@ -62,7 +63,14 @@ class AddButton extends React.Component {
           onOk={this.handleCreate}
           closable={false}
           maskClosable={false}>
-          <AddTenantForm
+          {/* <AddTenantForm
+            ref={this.saveFormRef}
+            confirmLoading={this.props.isFetching}
+            visible={this.state.visible}
+            onCancel={this.handleCancel}
+            onCreate={this.handleCreate}
+          /> */}
+          <AddStepForm
             ref={this.saveFormRef}
             confirmLoading={this.props.isFetching}
             visible={this.state.visible}
