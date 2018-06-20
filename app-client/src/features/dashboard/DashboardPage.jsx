@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Row, Col } from 'antd';
 import { withRouter } from 'react-router-dom';
+import EventContainer from './event/EventContainer';
 import BudgetSectionContainer from './budgetSection/BudgetSectionContainer';
 import './DashboardPage.css';
 
@@ -28,6 +29,12 @@ class DashboardPage extends React.Component {
             <Card title="Total vancies">Card content</Card>
           </Col>
         </Row>
+
+        <section className="dashboard-section">
+          <Card title="Notices">
+            <EventContainer />
+          </Card>
+        </section>
 
         <BudgetSectionContainer />
       </div>

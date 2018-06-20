@@ -1,6 +1,5 @@
 import React from 'react';
-import { Tabs } from 'antd';
-import { Card } from 'antd';
+import { Tabs, Card } from 'antd';
 import IncomeGraph from './IncomeGraph';
 import ExpenseGraph from './ExpenseGraph';
 import UserActionContainer from './UserActionContainer';
@@ -22,7 +21,7 @@ class BudgetSectionContainer extends React.Component {
 
   render() {
     return (
-      <section className="budget-section">
+      <section className="dashboard-section">
         <Card loading={this.state.loading} title="Budget">
           <Tabs tabBarExtraContent={<UserActionContainer />}>
             <TabPane tab="Overview" key="1" />

@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Timeline, Icon } from 'antd';
+import { Timeline, Icon, Button } from 'antd';
 
-function EventTracker(props) {
+const EventTracker = props => {
   return (
     <div>
-      <h2>Recent Updates</h2>
-      <Timeline pending={<a href="#">See more</a>}>
+      <Timeline>
         <Timeline.Item key="demo1" color="green">
           Create a services site 2015-09-01
         </Timeline.Item>
@@ -27,9 +26,12 @@ function EventTracker(props) {
           <p>Technical testing 3 2015-09-01</p>
         </Timeline.Item>
       </Timeline>
+      <Button type="primary" onClick={this.handleClick}>
+        Read More
+      </Button>
     </div>
   );
-}
+};
 
 EventTracker.propTypes = {
   classes: PropTypes.object,
