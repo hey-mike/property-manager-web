@@ -24,7 +24,10 @@ const tenantSchema = new Schema(
       trim: true
     },
     phone: String,
-    address: String
+    address: String,
+    startDate: Date,
+    endDate: Date,
+    passportImg: { data: Buffer, contentType: String }
   },
   {
     timestamps: true
