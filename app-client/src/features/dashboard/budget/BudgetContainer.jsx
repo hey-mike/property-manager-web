@@ -3,7 +3,7 @@ import { Tabs, Card } from 'antd';
 import IncomeGraph from './IncomeGraph';
 import ExpenseGraph from './ExpenseGraph';
 import DateRangePicker from './DateRangePicker';
-import './BudgetSectionContainer.css';
+import './BudgetContainer.css';
 const TabPane = Tabs.TabPane;
 
 class BudgetSectionContainer extends React.Component {
@@ -29,22 +29,18 @@ class BudgetSectionContainer extends React.Component {
   }
   render() {
     return (
-      <section className="dashboard-section">
-        <Card loading={this.state.loading} title="Budget">
-          <Tabs
-            tabBarExtraContent={
-              <DateRangePicker selectDate={this.selectDate} />
-            }>
-            <TabPane tab="Overview" key="1" />
-            <TabPane tab="Income" key="2">
-              <IncomeGraph chartId="income-chart" />
-            </TabPane>
-            <TabPane tab="Expense" key="3">
-              <ExpenseGraph chartId="expense-chart" />
-            </TabPane>
-          </Tabs>
-        </Card>
-      </section>
+      <Card loading={this.state.loading} title="Budget">
+        <Tabs
+          tabBarExtraContent={<DateRangePicker selectDate={this.selectDate} />}>
+          <TabPane tab="Overview" key="1" />
+          <TabPane tab="Income" key="2">
+            <IncomeGraph chartId="income-chart" />
+          </TabPane>
+          <TabPane tab="Expense" key="3">
+            <ExpenseGraph chartId="expense-chart" />
+          </TabPane>
+        </Tabs>
+      </Card>
     );
   }
 }
