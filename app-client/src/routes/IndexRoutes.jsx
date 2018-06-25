@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect, Link, Route, Switch } from 'react-router-dom';
+import { Redirect,  Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Particles from 'react-particles-js';

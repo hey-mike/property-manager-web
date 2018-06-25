@@ -20,7 +20,7 @@ import SchedulePage from '../components/schedule/SchedulePage.jsx';
 
 
 const NoMatch = () => <p>Page Not Found</p>;
-const AppRoutes = (props) => (
+const AppRoutes = () => (
   <Switch>
     <Redirect exact from="/" to="/dashboard" />
     <Route exact path="/dashboard" component={DashboardPage} />
