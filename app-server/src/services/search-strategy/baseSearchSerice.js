@@ -3,10 +3,16 @@ const config = require('../../config/config.js');
 
 class BaseSearchService {
   constructor() {
-    this.client = new elasticsearch.Client({
-      host: config.get('es:uri')
-    });
-    console.log('BaseSearchService Connect to elasticsearch:', config.get('es:uri'));
+    console.log(this.client);
+    if (!this.client) {
+      this.client = new elasticsearch.Client({
+        host: config.get('es:uri')
+      });
+      console.log(
+        'BaseSearchService Connect to elasticsearch:',
+        config.get('es:uri')
+      );
+    }
   }
 
   connect() {}
@@ -14,9 +20,7 @@ class BaseSearchService {
   indexExists() {}
   createMapping() {}
   update() {}
-  getMapping() {
-
-  }
+  getMapping() {}
 }
 
 module.exports = BaseSearchService;

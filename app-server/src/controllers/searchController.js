@@ -38,7 +38,7 @@ exports.deleteESIndex = async function(req, res) {
 };
 exports.createMapping = async function(req, res) {
   try {
-    const result = await seartchStrategyFactory.createMapping();
+    const result = await seartchStrategyFactory.getStrategy().createMapping();
     console.log(result);
     res.json(result);
   } catch (err) {
@@ -49,7 +49,7 @@ exports.createMapping = async function(req, res) {
 };
 exports.getMapping = async function(req, res) {
   try {
-    const result = await seartchStrategyFactory.getMapping();
+    const result = await seartchStrategyFactory.getStrategy().getMapping();
     res.json(result);
   } catch (err) {
     res.status(500).json({

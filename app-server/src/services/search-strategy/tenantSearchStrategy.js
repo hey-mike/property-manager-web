@@ -1,4 +1,3 @@
-const config = require('../../config/config.js');
 const _ = require('lodash');
 const BaseSearchSerice = require('./baseSearchSerice');
 
@@ -61,16 +60,8 @@ class TenantSearchStrategy extends BaseSearchSerice {
         body: {
           properties: {
             createdAt: { type: 'date' },
-            firstName: {
-              type: 'completion',
-              analyzer: 'simple',
-              search_analyzer: 'simple'
-            },
-            lastName: {
-              type: 'completion',
-              analyzer: 'simple',
-              search_analyzer: 'simple'
-            },
+            firstName: { type: 'text' },
+            lastName: { type: 'text' },
             gender: { type: 'text' },
             age: { type: 'text' },
             title: { type: 'text' },
