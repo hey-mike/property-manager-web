@@ -31,7 +31,7 @@ const DateRangePicker = props => (
         Today: [moment(), moment()],
         'This Month': [moment(), moment().endOf('month')],
       }}
-      onChange={this.props.selectDate}
+      onChange={props.selectDate}
     />
   </div>
 );

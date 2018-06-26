@@ -12,9 +12,12 @@ import { searchTenants } from '../actions/tenantActions';
 const columns = [
   {
     title: 'Name',
-    dataIndex: 'name',
+    dataIndex: 'firstName',
     sorter: true,
-    render: (name, record) => `${name.firstName} ${name.lastName}`,
+    render: (firstName, record) => {
+      console.log('firstName', firstName);
+      return firstName;
+    },
   },
   {
     title: 'Email',
