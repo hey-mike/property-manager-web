@@ -30,25 +30,14 @@ const data = {
   ],
 };
 const options = {
-  scales: {
-    yAxes: [
-      {
-        ticks: {
-          beginAtZero: true,
-        },
-      },
-    ],
+  legend: {
+    display: false,
   },
 };
+
 class ExpenseRatioChart extends React.Component {
   render() {
-    return (
-      <Pie
-        className="expense-ratio-container"
-        data={data}
-        options={{ maintainAspectRatio: false }}
-      />
-    );
+    return <Pie data={data} options={options} />;
   }
 }
 ExpenseRatioChart.prototypes = {

@@ -18,7 +18,7 @@ const data = [
   },
 ];
 
-class ExpenseRatioChartLegend extends React.Component {
+class ExpenseRatioChartLegendItem extends React.Component {
   render() {
     return (
       <div>
@@ -40,8 +40,8 @@ class ExpenseRatioChartLegend extends React.Component {
     );
   }
 }
-ExpenseRatioChartLegend.prototypes = {
+ExpenseRatioChartLegendItem.prototypes = {
   history: PropTypes.object,
 };
 
-export default withRouter(ExpenseRatioChartLegend);
+export default withRouter(ExpenseRatioChartLegendItem);
