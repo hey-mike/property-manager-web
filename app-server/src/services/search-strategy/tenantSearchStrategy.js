@@ -162,7 +162,7 @@ class TenantSearchStrategy extends BaseSearchSerice {
 
   async search(query) {
     try {
-      // console.log(query)
+      console.log('query', query);
       const result = await this.client.search({
         index: ES_INDEX,
         type: 'tenant',
