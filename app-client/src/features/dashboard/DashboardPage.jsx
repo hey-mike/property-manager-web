@@ -33,12 +33,12 @@ class DashboardPage extends React.Component {
 
         <section className="info-section">
           <Row gutter={16}>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+            <Col xs={24} sm={24} md={24} lg={12} xl={6}>
               <Card title="Notices">
                 <EventContainer />
               </Card>
             </Col>
-            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+            <Col xs={24} sm={24} md={24} lg={12} xl={18}>
               <Card title="Expense Breakdown">
                 <ExpenseRatioContainer />
               </Card>

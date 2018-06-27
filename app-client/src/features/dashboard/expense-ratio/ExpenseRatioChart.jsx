@@ -37,7 +37,11 @@ const options = {
 
 class ExpenseRatioChart extends React.Component {
   render() {
-    return <Pie data={data} options={options} />;
+    return (
+      <div className="chart-container">
+        <Pie data={data} options={options} />
+      </div>
+    );
   }
 }
 ExpenseRatioChart.prototypes = {

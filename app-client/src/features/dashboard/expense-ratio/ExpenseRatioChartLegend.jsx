@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { List, Avatar } from 'antd';
+import ExpenseRatioChartLegendItem from './ExpenseRatioChartLegendItem';
 
 const data = [
   {
@@ -22,20 +23,7 @@ class ExpenseRatioChartLegend extends React.Component {
   render() {
     return (
       <div>
-        <List
-          itemLayout="horizontal"
-          dataSource={data}
-          renderItem={item => (
-            <List.Item>
-              <List.Item.Meta
-                avatar={
-                  <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-                }
-                title={<a href="https://ant.design">{item.title}</a>}
-              />
-            </List.Item>
-          )}
-        />
+        <ExpenseRatioChartLegendItem />
       </div>
     );
   }
