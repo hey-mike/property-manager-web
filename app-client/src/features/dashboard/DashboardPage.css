@@ -1,3 +1,7 @@
-.dashboard-section {
-  padding: 15px 0;
+.dashboard-page section {
+    padding: 15px 0;
+}
+
+.dashboard-page .info-section .ant-card {
+    min-height: 500px;
 }
