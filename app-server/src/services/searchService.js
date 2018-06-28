@@ -1,13 +1,14 @@
 const elasticsearch = require('elasticsearch');
 const config = require('../config/config.js');
 const _ = require('lodash');
-const BaseSearchSerice = require('./search-strategy/baseSearchSerice');
+const BaseSearchService = require('./search-strategy/BaseSearchService');
 
 // https://www.elastic.co/blog/setting-up-elasticsearch-for-a-blog
 const ES_INDEX = 'property_manager';
-class SearchService extends BaseSearchSerice {
+class SearchService extends BaseSearchService {
   constructor() {
     super();
+    console.log('SearchService')
   }
 
   async connect() {
