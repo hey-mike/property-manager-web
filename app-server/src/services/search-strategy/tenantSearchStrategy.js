@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const BaseSearchSerice = require('./baseSearchSerice');
+const BaseSearchService = require('./BaseSearchService');
 
 // https://www.elastic.co/blog/setting-up-elasticsearch-for-a-blog
 const ES_INDEX = 'property_manager';
@@ -15,13 +15,15 @@ class TenantSearchStrategy {
     }
   }
 
-  indexExists() {
-    return this.client.indices.exists({
+  async indexExists() {
+    return await this.client.indices.exists({
       index: ES_INDEX
     });
   }
   async createIndex() {
     try {
+      const isExisted = await this.indexExists();
+
       const response = await this.client.indices.create({
         index: ES_INDEX
       });

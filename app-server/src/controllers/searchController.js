@@ -1,10 +1,10 @@
-// const seartchStrategyFactory = require('../services/seartchStrategyFactory.js');
-const seartchStrategyFactory = require('../services/seartchStrategyFactory');
+// const searchStrategyFactory = require('../services/searchStrategyFactory.js');
+const searchStrategyFactory = require('../services/searchStrategyFactory');
 
 exports.getSuggestions = async function(req, res) {
   try {
     const { text, size } = req.body;
-    const result = await seartchStrategyFactory
+    const result = await searchStrategyFactory
       .getStrategy()
       .getSuggestions(text, size);
     res.json(result);
@@ -17,8 +17,8 @@ exports.getSuggestions = async function(req, res) {
 
 exports.search = async function(req, res) {
   try {
-    console.log('seartchStrategyFactory', seartchStrategyFactory);
-    const result = await seartchStrategyFactory.getStrategy().search(req.body);
+    console.log('searchStrategyFactory', searchStrategyFactory);
+    const result = await searchStrategyFactory.getStrategy().search(req.body);
     res.json(result);
   } catch (err) {
     res.status(500).json({
@@ -28,7 +28,7 @@ exports.search = async function(req, res) {
 };
 exports.deleteESIndex = async function(req, res) {
   try {
-    const result = await seartchStrategyFactory.getStrategy().deleteIndex();
+    const result = await searchStrategyFactory.getStrategy().deleteIndex();
     res.json(result);
   } catch (err) {
     res.status(500).json({
@@ -38,7 +38,7 @@ exports.deleteESIndex = async function(req, res) {
 };
 exports.createMapping = async function(req, res) {
   try {
-    const result = await seartchStrategyFactory.getStrategy().createMapping();
+    const result = await searchStrategyFactory.getStrategy().createMapping();
     console.log(result);
     res.json(result);
   } catch (err) {
@@ -49,7 +49,7 @@ exports.createMapping = async function(req, res) {
 };
 exports.getMapping = async function(req, res) {
   try {
-    const result = await seartchStrategyFactory.getStrategy().getMapping();
+    const result = await searchStrategyFactory.getStrategy().getMapping();
     res.json(result);
   } catch (err) {
     res.status(500).json({
