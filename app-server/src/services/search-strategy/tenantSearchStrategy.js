@@ -3,11 +3,7 @@ const BaseSearchSerice = require('./baseSearchSerice');
 
 // https://www.elastic.co/blog/setting-up-elasticsearch-for-a-blog
 const ES_INDEX = 'property_manager';
-class TenantSearchStrategy extends BaseSearchSerice {
-  constructor() {
-    super();
-  }
-
+class TenantSearchStrategy {
   async connect() {
     try {
       await this.healthCheck();
@@ -16,18 +12,6 @@ class TenantSearchStrategy extends BaseSearchSerice {
     } catch (err) {
       console.trace('connect', err);
       throw new Error(err);
-    }
-  }
-  async healthCheck() {
-    try {
-      // ping usually has a 3000ms timeout
-      const result = await this.client.ping({
-        requestTimeout: 3000
-      });
-      console.log('-- ES Client Health --', result);
-    } catch (error) {
-      console.trace('elasticsearch cluster is down!');
-      throw new Error(error);
     }
   }
 
