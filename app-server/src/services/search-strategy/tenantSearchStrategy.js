@@ -6,7 +6,6 @@ const ES_INDEX = 'property_manager';
 class TenantSearchStrategy {
   async connect() {
     try {
-      await this.healthCheck();
       await this.createIndex();
       await this.createMapping();
     } catch (err) {
@@ -24,12 +23,16 @@ class TenantSearchStrategy {
     try {
       const isExisted = await this.indexExists();
 
-      const response = await this.client.indices.create({
-        index: ES_INDEX
-      });
+      if (isExisted) {
+        const response = await this.client.indices.create({
+          index: ES_INDEX
+        });
 
-      if (response.acknowledged) {
-        console.log(`Create index ${response.index} successfully`);
+        if (response.acknowledged) {
+          console.log(`Create index ${response.index} successfully`);
+        }
+      } else {
+        console.log(`Index ${ES_INDEX} already exist`);
       }
     } catch (error) {
       //if the error is not index error
