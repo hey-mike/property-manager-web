@@ -9,6 +9,7 @@ class seartchStrategyFactory {
     this.client = new elasticsearch.Client({
       host: config.get('es:uri')
     });
+    this.healthCheck();
   }
   async healthCheck() {
     try {

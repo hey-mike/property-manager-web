@@ -1,5 +1,4 @@
 const _ = require('lodash');
-const BaseSearchService = require('./BaseSearchService');
 
 // https://www.elastic.co/blog/setting-up-elasticsearch-for-a-blog
 const ES_INDEX = 'property_manager';
