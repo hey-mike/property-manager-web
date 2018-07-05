@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Modal, Tabs, Avatar } from 'antd';
 import EditTenantForm from '../tenant-forms/EditTenantForm.jsx';
-import { readTenant } from '../actions/tenantActions';
+import { readTenant } from '../actions';
 const TabPane = Tabs.TabPane;
 
 const TabNames = {

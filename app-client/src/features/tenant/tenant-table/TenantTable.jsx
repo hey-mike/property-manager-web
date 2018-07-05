@@ -7,7 +7,7 @@ import { Table, Divider } from 'antd';
 import TableEditBtn from './TableEditBtn.jsx';
 import TableDeleteBtn from './TableDeleteBtn.jsx';
 
-import { searchTenants } from '../actions/tenantActions';
+import { searchTenants } from '../actions';
 
 const columns = [
   {

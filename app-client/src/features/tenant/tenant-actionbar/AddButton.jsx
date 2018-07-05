@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { createTenant } from '../actions/tenantActions';
+import { createTenant } from '../actions';
 import { Button, Modal } from 'antd';
 import AddTenantForm from '../tenant-forms/AddTenantForm.jsx';
 import AddStepForm from '../tenant-forms/AddStepForm.jsx';

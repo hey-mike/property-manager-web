@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { deleteTenant } from '../actions/tenantActions';
+import { deleteTenant } from '../actions';
 
 import { Modal } from 'antd';
 

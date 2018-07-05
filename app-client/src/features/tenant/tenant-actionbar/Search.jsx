@@ -3,7 +3,7 @@ import './Search.css';
 import { Icon, Button, Input, AutoComplete } from 'antd';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { searchTenants } from '../actions/tenantActions';
+import { searchTenants } from '../actions';
 const Option = AutoComplete.Option;
 
 function onSelect(value) {
