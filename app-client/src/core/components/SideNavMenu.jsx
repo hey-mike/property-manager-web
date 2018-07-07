@@ -31,7 +31,10 @@ class SideNavMenu extends Component {
           <Icon type="appstore-o" />
           <span>{Constants.MENU_ITEMS_DASHBOARD}</span>
         </Menu.Item>
-
+        <Menu.Item key="/finance">
+          <Icon type="solution" />
+          <span>{Constants.MENU_ITEMS_FINANCE}</span>
+        </Menu.Item>
         <Menu.Item key="/tenant">
           <Icon type="team" />
           <span>{Constants.MENU_ITEMS_TENANT}</span>

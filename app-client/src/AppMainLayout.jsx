@@ -12,6 +12,7 @@ import TenantPage from './features/tenant/TenantPage';
 import LeaseCalendarPage from './features/calendar/LeaseCalendarPage';
 import ServicePage from './features/service/ServicePage';
 import './AppMainLayout.css';
+import FinancePage from './features/finance/FinancePage';
 
 const { Content, Footer } = Layout;
 class MainContainer extends React.Component {
@@ -58,6 +59,7 @@ class MainContainer extends React.Component {
               <Switch>
                 <Redirect exact from="/" to="/dashboard" />
                 <Route path="/dashboard" component={DashboardPage} />
+                <Route path="/finance" component={FinancePage} />
                 <Route path="/tenant" component={TenantPage} />
                 <Route path="/calendar" component={LeaseCalendarPage} />
                 <Route path="/service" component={ServicePage} />
