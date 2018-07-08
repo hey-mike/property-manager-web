@@ -12,7 +12,7 @@ class ServiceCard extends React.Component {
   }
 
   render() {
-    const { title, description, email, phone } = this.props;
+    const { title, description } = this.props;
     return (
       <Card actions={[<Icon type="mail" />, <Icon type="phone" />]}>
         <Meta
