@@ -54,6 +54,9 @@ class Toolbar extends React.Component {
       case `/${Constants.MENU_ITEMS_TENANT.toLowerCase()}`:
         title = Constants.MENU_ITEMS_TENANT;
         break;
+      case `/${Constants.MENU_ITEMS_FINANCE.toLowerCase()}`:
+        title = Constants.MENU_ITEMS_FINANCE;
+        break;
       case `/${Constants.MENU_ITEMS_CALENDAR.toLowerCase()}`:
         title = Constants.MENU_ITEMS_CALENDAR;
         break;
