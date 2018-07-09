@@ -7,7 +7,6 @@ const app = require('./app');
 const errorHandler = require('errorhandler');
 const config = require('./config/config.js');
 const mongoose = require('./config/mongoose.js');
-const EmailService = require('./services/emailService.js');
 
 // connect to mongodb
 mongoose.connect();

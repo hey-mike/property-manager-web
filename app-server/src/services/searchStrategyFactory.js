@@ -3,8 +3,7 @@ const config = require('../config/config.js');
 
 const TenantSearchStrategy = require('./search-strategy/tenantSearchStrategy');
 
-const tenantSearchStrategy = new TenantSearchStrategy();
-class seartchStrategyFactory {
+class searchStrategyFactory {
   constructor() {
     this.client = new elasticsearch.Client({
       host: config.get('es:uri')
@@ -17,6 +16,10 @@ class seartchStrategyFactory {
       const result = await this.client.ping({
         requestTimeout: 3000
       });
+
+      if (result) {
+        this.tenantSearchStrategy = new TenantSearchStrategy(this.client);
+      }
       console.log('-- ES Client Health --', result);
     } catch (error) {
       console.trace('elasticsearch cluster is down!');
@@ -26,9 +29,9 @@ class seartchStrategyFactory {
   getStrategy(type) {
     switch (type) {
       default:
-        return tenantSearchStrategy;
+        return this.tenantSearchStrategy;
     }
   }
 }
 
-module.exports = new seartchStrategyFactory();
+module.exports = new searchStrategyFactory();

@@ -8,11 +8,6 @@ import ExpenseRatioContainer from './expense-ratio/ExpenseRatioContainer';
 import './DashboardPage.css';
 
 class DashboardPage extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log('LoginPage', props);
-  }
-
   render() {
     return (
       <div className="dashboard-page">

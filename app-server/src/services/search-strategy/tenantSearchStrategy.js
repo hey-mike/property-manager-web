@@ -3,7 +3,11 @@ const _ = require('lodash');
 // https://www.elastic.co/blog/setting-up-elasticsearch-for-a-blog
 const ES_INDEX = 'property_manager';
 class TenantSearchStrategy {
-  async connect() {
+  constructor(client) {
+    this.client = client;
+    this.init();
+  }
+  async init() {
     try {
       await this.createIndex();
       await this.createMapping();
@@ -36,7 +40,7 @@ class TenantSearchStrategy {
     } catch (error) {
       //if the error is not index error
       if (error.status !== 400) {
-        console.trace('createIndex err', error.status);
+        console.trace('createIndex err', error);
       }
     }
   }

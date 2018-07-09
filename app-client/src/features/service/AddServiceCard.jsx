@@ -7,7 +7,8 @@ class AddServiceCard extends React.Component {
   render() {
     return (
       <Card>
-        <div>Add new service</div>
+        <Icon type="plus" />
+        <span>Add new service</span>
       </Card>
     );
   }
