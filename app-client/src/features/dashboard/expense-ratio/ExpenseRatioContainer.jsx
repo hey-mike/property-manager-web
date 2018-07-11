@@ -6,17 +6,7 @@ import ExpenseRatioChart from './ExpenseRatioChart';
 import ExpenseRatioChartLegend from './ExpenseRatioChartLegend';
 import './ExpenseRatioContainer.css';
 
-var divStyle = {
-  position: 'relative',
-  height: '40vh',
-  width: '100%', // note the capital 'W' here
-};
 class ExpenseRatioContainer extends React.Component {
-  constructor(props) {
-    super(props);
-    console.log('LoginPage', props);
-  }
-
   render() {
     return (
       <div className="expense-ratio-container">

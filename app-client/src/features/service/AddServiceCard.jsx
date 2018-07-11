@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Card, Icon } from 'antd';
 import { withRouter } from 'react-router-dom';
 

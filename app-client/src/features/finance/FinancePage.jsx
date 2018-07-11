@@ -1,28 +1,27 @@
 import React from 'react';
-import { Card } from 'antd';
-import { Tabs } from 'antd';
+import { Card, Row, Col } from 'antd';
+import EditIncomeTable from './EditIncomeTable';
+import EditExpenseTable from './EditExpenseTable';
 
-const TabPane = Tabs.TabPane;
-
+const EditableContext = React.createContext();
 class FinancePage extends React.Component {
   callback(key) {
     console.log(key);
   }
   render() {
     return (
-      <Card>
-        <Tabs defaultActiveKey="1" onChange={this.callback}>
-          <TabPane tab="Mortgage" key="mortgage">
-            Content of Tab Pane 1
-          </TabPane>
-          <TabPane tab="Income" key="2">
-            Content of Tab Pane 2
-          </TabPane>
-          <TabPane tab="Expense" key="3">
-            Content of Tab Pane 3
-          </TabPane>
-        </Tabs>
-      </Card>
+      <Row gutter={16}>
+        <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+          <Card title="Income">
+            <EditIncomeTable context={EditableContext} />
+          </Card>
+        </Col>
+        <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+          <Card title="Expense">
+            <EditExpenseTable context={EditableContext} />
+          </Card>
+        </Col>
+      </Row>
     );
   }
 }
