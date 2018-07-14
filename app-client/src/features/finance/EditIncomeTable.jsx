@@ -8,9 +8,8 @@ const data = [];
 for (let i = 0; i < 10; i++) {
   data.push({
     key: i.toString(),
-    name: `Edrward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
+    item: `Rental income ${i}`,
+    amount: 32,
   });
 }
 
@@ -20,26 +19,21 @@ class EditIncomeTable extends React.Component {
     this.state = { data, editingKey: '' };
     this.columns = [
       {
-        title: 'Rental income',
-        dataIndex: 'name',
+        title: 'Rental items',
+        dataIndex: 'item',
         width: '25%',
         editable: true,
       },
       {
-        title: 'age',
-        dataIndex: 'age',
-        width: '15%',
-        editable: true,
-      },
-      {
-        title: 'address',
-        dataIndex: 'address',
-        width: '40%',
+        title: 'Other rental related income',
+        dataIndex: 'amount',
+        width: '25%',
         editable: true,
       },
       {
         title: 'operation',
         dataIndex: 'operation',
+        width: '15%',
         render: (text, record) => {
           const editable = this.isEditing(record);
           return (
