@@ -3,17 +3,9 @@ import { List, Avatar, Button, Spin } from 'antd';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
-const fake_summary = [
-  { item: 'Gross rent', value: 1000 },
-  { item: 'Total expenses', value: 800 },
-  {
-    item: 'Net rental income or loss(Gross rent less total expenses)',
-    value: 1000,
-  },
-];
 const fakeDataUrl =
   'https://randomuser.me/api/?results=5&inc=name,gender,email,nat&noinfo';
-class FinanceSummary extends React.Component {
+class ExpenseList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -85,17 +77,18 @@ class FinanceSummary extends React.Component {
         className="demo-loadmore-list"
         loading={loading}
         itemLayout="horizontal"
-        dataSource={fake_summary}
+        loadMore={loadMore}
+        dataSource={data}
         renderItem={item => (
-          <List.Item>
+          <List.Item actions={[<a>edit</a>]}>
             <List.Item.Meta
-              title={<a href="https://ant.design">{item.item}</a>}
+              title={<a href="https://ant.design">{item.name.last}</a>}
             />
-            <div>{item.value}</div>
+            <div>content</div>
           </List.Item>
         )}
       />
     );
   }
 }
-export default withRouter(FinanceSummary);
+export default withRouter(ExpenseList);
