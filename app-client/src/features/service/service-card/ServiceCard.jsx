@@ -14,7 +14,7 @@ class ServiceCard extends React.Component {
   render() {
     const { title, description } = this.props;
     return (
-      <Card actions={[<Icon type="mail" />, <Icon type="phone" />]}>
+      <Card hoverable actions={[<Icon type="mail" />, <Icon type="phone" />]}>
         <Meta
           avatar={
             <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
