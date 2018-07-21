@@ -1,0 +1,11 @@
+{
+    "verbose": true,
+    "watch": [
+      "./src"
+    ],
+    "legacyWatch": false,
+    "ignore": [
+      ".git",
+      "test"
+    ]
+}

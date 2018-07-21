@@ -2,7 +2,7 @@
 'use strict';
 
 // Load the module dependencies
-const User = require('../models/user');
+const User = require('../models/user.model');
 const passport = require('passport');
 const tokenManager = require('../utils/tokenManager');
 const validationResult = require('../utils/validationResult');
@@ -107,10 +107,10 @@ exports.create = async function(req, res) {
   newUser.provider = 'local';
 
   // Try saving the new user document
-  try{
+  try {
     const user = await newUser.save();
-    return res.status(200).json( user );
-  }catch(err) {
+    return res.status(200).json(user);
+  } catch (err) {
     // Use the error handling method to get the error message
     const message = getErrorMessage(err);
 

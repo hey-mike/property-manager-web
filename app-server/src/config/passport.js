@@ -7,7 +7,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const tokenManager = require('../utils/tokenManager');
-const User = require('../models/user');
+const User = require('../models/user.model');
 
 // JWT strategy
 const opts = {};
