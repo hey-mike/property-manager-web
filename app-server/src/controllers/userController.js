@@ -2,7 +2,7 @@
 'use strict';
 
 // Load the module dependencies
-const User = require('../models/user.model');
+const User = require('../models/user');
 const passport = require('passport');
 const tokenManager = require('../utils/tokenManager');
 const validationResult = require('../utils/validationResult');
