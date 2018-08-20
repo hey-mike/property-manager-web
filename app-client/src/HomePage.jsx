@@ -6,9 +6,9 @@ import { Layout } from 'antd';
 import Toolbar from './core/components/Toolbar';
 import Sidebar from './core/components/Sidebar';
 import NavDrawer from './core/components/NavDrawer';
-import AppMainRoutes from './AppMainRoutes';
+import HomePageRoutes from './HomePageRoutes';
 
-import './AppMainLayout.css';
+import './HomePage.css';
 
 const { Content, Footer } = Layout;
 class MainContainer extends React.Component {
@@ -52,7 +52,7 @@ class MainContainer extends React.Component {
               showBurger={this.state.collapsed}
             />
             <Content style={{ margin: '24px 16px 0' }}>
-              <AppMainRoutes />
+              <HomePageRoutes />
             </Content>
             <Footer style={{ textAlign: 'center' }}>
               Ant Design ©2016 Created by Ant UED
