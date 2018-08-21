@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Avatar, Button, Spin } from 'antd';
+import { List, Button, Spin } from 'antd';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 

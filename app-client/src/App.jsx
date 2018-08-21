@@ -5,7 +5,6 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from './rootReducer';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 
 import PrivateRoute from './core/components/PrivateRoute';
 import GlobalNotification from './core/components/GlobalNotification';

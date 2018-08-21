@@ -21,9 +21,9 @@ class FinancePage extends React.Component {
             title="Income"
             extra={
               <span>
-                <a href="#">Add</a>
+                <a href={null}>Add</a>
                 <Divider type="vertical" />
-                <a href="javascript:;">Edit</a>
+                <a href={null}>Edit</a>
               </span>
             }>
             <IncomeList />
@@ -34,9 +34,9 @@ class FinancePage extends React.Component {
             title="Expense"
             extra={
               <span>
-                <a href="#">Add</a>
+                <a href={null}>Add</a>
                 <Divider type="vertical" />
-                <a href="javascript:;">Edit</a>
+                <a href={null}>Edit</a>
               </span>
             }>
             <ExpenseList />

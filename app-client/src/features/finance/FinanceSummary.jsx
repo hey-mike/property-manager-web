@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Avatar, Button, Spin } from 'antd';
+import { List} from 'antd';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 
@@ -65,21 +65,7 @@ class FinanceSummary extends React.Component {
     });
   };
   render() {
-    const { loading, loadingMore, showLoadingMore, data } = this.state;
-    const loadMore = showLoadingMore ? (
-      <div
-        style={{
-          textAlign: 'center',
-          marginTop: 12,
-          height: 32,
-          lineHeight: '32px',
-        }}>
-        {loadingMore && <Spin />}
-        {!loadingMore && (
-          <Button onClick={this.onLoadMore}>loading more</Button>
-        )}
-      </div>
-    ) : null;
+    const { loading } = this.state;
     return (
       <List
         className="demo-loadmore-list"
