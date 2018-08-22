@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
-
-import App from './App';
+import UserPage from './UserPage';
 
 // mock local storage
 const localStorageMock = {
@@ -13,17 +11,17 @@ const localStorageMock = {
 };
 global.localStorage = localStorageMock;
 
-describe('App', () => {
+describe('UserPage', () => {
   // tree rendering
   it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<App />, div);
+    ReactDOM.render(<UserPage />, div);
     ReactDOM.unmountComponentAtNode(div);
   });
 
-  // use shallow rendering
-  it('full dom render without crashing', () => {
-    const wrapper = mount(<App />);
-    expect(wrapper.find(App)).to.have.lengthOf(1);
+  // Full DOM  rendering
+  it('full dom without crashing', () => {
+    const wrapper = mount(<UserPage />);
+    expect(wrapper.find(UserPage)).to.have.lengthOf(1);
   });
 });

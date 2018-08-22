@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { register } from '../actions/authActions';
 import { Form, Input, Tooltip, Icon, Card, Button } from 'antd';
@@ -129,8 +129,7 @@ class RegisterFrom extends React.Component {
                   </Tooltip>
                 </span>
               }
-              hasFeedback
-            >
+              hasFeedback>
               {getFieldDecorator('nickname', {
                 rules: [
                   {
@@ -145,8 +144,7 @@ class RegisterFrom extends React.Component {
               <Button
                 type="primary"
                 htmlType="submit"
-                className="login-form-button"
-              >
+                className="login-form-button">
                 Register
               </Button>
             </FormItem>
@@ -170,4 +168,4 @@ const mapStateToProps = (state, ownProps) => {
 };
 const RegisterFormContainer = Form.create()(RegisterFrom);
 
-export default connect(mapStateToProps)(RegisterFormContainer);
+export default withRouter(connect(mapStateToProps)(RegisterFormContainer));

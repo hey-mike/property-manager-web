@@ -36,4 +36,4 @@ UserPage.propTypes = {
   history: PropTypes.object.isRequired,
 };
 
-export default withRouter(UserPage);
+export default UserPage;
