@@ -1,17 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { expect } from 'chai';
 import { mount } from 'enzyme';
 
 import App from './App';
-
-// mock local storage
-const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  clear: jest.fn(),
-};
-global.localStorage = localStorageMock;
 
 describe('App', () => {
   // tree rendering

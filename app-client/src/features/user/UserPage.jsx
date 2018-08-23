@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { Switch, Route, withRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import LoginForm from './forms/LoginForm.jsx';
 import RegisterForm from './forms/RegisterForm';
 
@@ -30,10 +29,4 @@ class UserPage extends React.Component {
     );
   }
 }
-UserPage.propTypes = {
-  match: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
-};
-
 export default UserPage;

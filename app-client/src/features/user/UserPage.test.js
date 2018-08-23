@@ -1,15 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { mount } from 'enzyme';
-import UserPage from './UserPage';
 
-// mock local storage
-const localStorageMock = {
-  getItem: jest.fn(),
-  setItem: jest.fn(),
-  clear: jest.fn(),
-};
-global.localStorage = localStorageMock;
+import { shallow } from 'enzyme';
+import UserPage from './UserPage';
 
 describe('UserPage', () => {
   // tree rendering
@@ -21,7 +14,7 @@ describe('UserPage', () => {
 
   // Full DOM  rendering
   it('full dom without crashing', () => {
-    const wrapper = mount(<UserPage />);
+    const wrapper = shallow(<UserPage />);
     expect(wrapper.find(UserPage)).to.have.lengthOf(1);
   });
 });
