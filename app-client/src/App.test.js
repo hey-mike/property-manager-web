@@ -15,6 +15,6 @@ describe('App', () => {
   // use shallow rendering
   it('full dom render without crashing', () => {
     const wrapper = mount(<App />);
-    expect(wrapper.find(App)).to.have.lengthOf(1);
+    expect(wrapper.find('App')).to.have.lengthOf(1);
   });
 });

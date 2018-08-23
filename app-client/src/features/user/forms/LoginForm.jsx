@@ -6,7 +6,7 @@ import { login } from '../actions/authActions';
 import { Form, Icon, Input, Button, Checkbox, Card } from 'antd';
 const FormItem = Form.Item;
 
-class LoginForm extends React.Component {
+class LoginForm extends React.PureComponent {
   handleSubmit(e) {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
