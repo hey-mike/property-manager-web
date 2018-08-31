@@ -1,20 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { mount } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import App from './App';
+import HomePage from './HomePage';
+import GlobalMessage from './core/components/GlobalMessage';
 
-describe('App', () => {
-  // tree rendering
-  it('renders without crashing', () => {
-    const div = document.createElement('div');
-    ReactDOM.render(<App />, div);
-    ReactDOM.unmountComponentAtNode(div);
-  });
-
+describe('App --- Shallow Render REACT COMPONENTS', () => {
   // use shallow rendering
-  it('full dom render without crashing', () => {
-    const wrapper = mount(<App />);
-    expect(wrapper.find('App')).to.have.lengthOf(1);
+  it('shadow render without crashing', () => {
+    shallow(<App />);
+  });
+  it('renders an `GlobalMessage`', () => {
+    const wrapper = shallow(<App />);
+    expect(wrapper.find(GlobalMessage)).to.have.lengthOf(1);
   });
 });

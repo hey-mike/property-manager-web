@@ -8,11 +8,13 @@ import LoginForm from './forms/LoginForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('UserPage', () => {
+describe('UserPage -- Shallow Render REACT COMPONENTS', () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = shallow(<UserPage />);
+  });
   // Full DOM  rendering
   it('full dom without crashing', () => {
-    const wrapper = shallow(<UserPage />, { context: mockStore });
-    expect(wrapper).to.be.a('object');
-    // expect(wrapper.find(LoginForm)).to.have.lengthOf(1);
+    shallow(<UserPage />);
   });
 });

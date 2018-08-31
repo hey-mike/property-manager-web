@@ -32,7 +32,7 @@ class App extends React.Component {
               <Route path="/user" component={UserPage} />
               <PrivateRoute path="/" component={HomePage} />
               <Route component={NoMatch} />
-            </Switch>Î
+            </Switch>
           </div>
         </Router>
       </Provider>
