@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { shallow } from 'enzyme';
+import { shallow, mount } from 'enzyme';
+import { MemoryRouter } from 'react-router';
 
 import App from './App';
 import HomePage from './HomePage';
@@ -14,5 +15,32 @@ describe('App --- Shallow Render REACT COMPONENTS', () => {
   it('renders an `GlobalMessage`', () => {
     const wrapper = shallow(<App />);
     expect(wrapper.find(GlobalMessage)).to.have.lengthOf(1);
+  });
+  // it('renders an `Home Page`', () => {
+  //   const wrapper = shallow(<App />);
+  //   expect(wrapper.find(HomePage)).to.have.lengthOf(1);
+  // });
+});
+describe('App routes test', () => {
+  test('invalid path should redirect to 404', () => {
+    const wrapper = mount(
+      <MemoryRouter initialEntries={['/random']}>
+        <App />
+      </MemoryRouter>
+    );
+    expect(wrapper.find(HomePage)).to.have.lengthOf(0);
+    const NoMatch = () => <div>Can't find any route</div>;
+    expect(wrapper.find(NoMatch)).to.have.lengthOf(1);
+  });
+
+  test('valid path should not redirect to 404', () => {
+    const wrapper = mount(
+      <MemoryRouter initialEntries={['/']}>
+        <App />
+      </MemoryRouter>
+    );
+    const NoMatch = () => <div>Can't find any route</div>;
+    expect(wrapper.find(HomePage)).to.have.lengthOf(1);
+    expect(wrapper.find(NoMatch)).to.have.lengthOf(1);
   });
 });
