@@ -28,10 +28,8 @@ describe('App routes test', () => {
         <App />
       </MemoryRouter>
     );
-    expect(wrapper.find(UserPage)).to.have.lengthOf(0);
+    expect(wrapper.find(UserPage)).to.have.lengthOf(1);
     expect(wrapper.find(HomePage)).to.have.lengthOf(0);
-    const NoMatch = () => <div>Can't find any route</div>;
-    expect(wrapper.find(NoMatch)).to.have.lengthOf(1);
   });
 
   test('valid path should not redirect to 404', () => {
@@ -40,8 +38,7 @@ describe('App routes test', () => {
         <App />
       </MemoryRouter>
     );
-    const NoMatch = () => <div>Can't find any route</div>;
-    expect(wrapper.find(HomePage)).to.have.lengthOf(1);
-    expect(wrapper.find(NoMatch)).to.have.lengthOf(0);
+    expect(wrapper.find(UserPage)).to.have.lengthOf(1);
+    expect(wrapper.find(HomePage)).to.have.lengthOf(0);
   });
 });
