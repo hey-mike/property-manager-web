@@ -1,10 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { shallow, mount } from 'enzyme';
 import { MemoryRouter } from 'react-router';
 
 import App from './App';
 import HomePage from './HomePage';
+import UserPage from './features/user/UserPage';
 import GlobalMessage from './core/components/GlobalMessage';
 
 describe('App --- Shallow Render REACT COMPONENTS', () => {
@@ -28,6 +28,7 @@ describe('App routes test', () => {
         <App />
       </MemoryRouter>
     );
+    expect(wrapper.find(UserPage)).to.have.lengthOf(0);
     expect(wrapper.find(HomePage)).to.have.lengthOf(0);
     const NoMatch = () => <div>Can't find any route</div>;
     expect(wrapper.find(NoMatch)).to.have.lengthOf(1);
@@ -41,6 +42,6 @@ describe('App routes test', () => {
     );
     const NoMatch = () => <div>Can't find any route</div>;
     expect(wrapper.find(HomePage)).to.have.lengthOf(1);
-    expect(wrapper.find(NoMatch)).to.have.lengthOf(1);
+    expect(wrapper.find(NoMatch)).to.have.lengthOf(0);
   });
 });
