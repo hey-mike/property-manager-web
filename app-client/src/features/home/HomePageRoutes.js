@@ -1,30 +1,29 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
-
 import Loadable from 'react-loadable';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 const Loading = () => <div>Loading...</div>;
 
 const DashboardPage = Loadable({
-  loader: () => import('./features/dashboard/DashboardPage'),
+  loader: () => import('../dashboard/DashboardPage'),
   loading: Loading,
 });
 const TenantPage = Loadable({
-  loader: () => import('./features/tenant/TenantPage'),
+  loader: () => import('../tenant/TenantPage'),
   loading: Loading,
 });
 const LeaseCalendarPage = Loadable({
-  loader: () => import('./features/calendar/LeaseCalendarPage'),
+  loader: () => import('../calendar/LeaseCalendarPage'),
   loading: Loading,
 });
 
 const ServicePage = Loadable({
-  loader: () => import('./features/service/ServicePage'),
+  loader: () => import('../service/ServicePage'),
   loading: Loading,
 });
 
 const FinancePage = Loadable({
-  loader: () => import('./features/finance/FinancePage'),
+  loader: () => import('../finance/FinancePage'),
   loading: Loading,
 });
 

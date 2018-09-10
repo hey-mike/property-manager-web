@@ -1,18 +1,18 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { applyMiddleware, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import rootReducer from './rootReducer';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-import PrivateRoute from './core/components/PrivateRoute';
-import GlobalNotification from './core/components/GlobalNotification';
-import GlobalMessage from './core/components/GlobalMessage';
+import thunk from 'redux-thunk';
 import './App.css';
-
-import HomePage from './HomePage';
+import GlobalMessage from './core/components/GlobalMessage';
+import GlobalNotification from './core/components/GlobalNotification';
+import PrivateRoute from './core/components/PrivateRoute';
+import HomePage from './features/home/HomePage';
 import UserPage from './features/user/UserPage';
+import rootReducer from './rootReducer';
+
+
 
 const NoMatch = () => <div>Can't find any route</div>;
 

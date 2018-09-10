@@ -1,14 +1,14 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Layout } from 'antd';
-
-import Toolbar from './core/components/Toolbar';
-import Sidebar from './core/components/Sidebar';
-import NavDrawer from './core/components/NavDrawer';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { connect } from 'react-redux';
+import NavDrawer from '../../core/components/NavDrawer';
+import Sidebar from '../../core/components/Sidebar';
+import Toolbar from '../../core/components/Toolbar';
+import './HomePage.css';
 import HomePageRoutes from './HomePageRoutes';
 
-import './HomePage.css';
+
 
 const { Content, Footer } = Layout;
 class MainContainer extends React.Component {
