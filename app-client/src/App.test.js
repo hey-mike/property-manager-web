@@ -7,6 +7,8 @@ import GlobalNotification from './core/components/GlobalNotification';
 import HomePage from './features/home/HomePage';
 import UserPage from './features/user/UserPage';
 
+const NoMatch = () => <div>Can't find any route</div>;
+
 describe('App --- Shallow Render REACT COMPONENTS', () => {
   // use shallow rendering
   it('shadow render without crashing', () => {
@@ -26,6 +28,7 @@ describe('App routes test', () => {
       </MemoryRouter>
     );
     expect(wrapper.find(UserPage)).to.have.lengthOf(0);
+    expect(wrapper.find(NoMatch)).to.have.lengthOf(1);
     expect(wrapper.find(HomePage)).to.have.lengthOf(1);
   });
 
