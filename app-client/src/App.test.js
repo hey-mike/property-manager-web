@@ -19,14 +19,14 @@ describe('App --- Shallow Render REACT COMPONENTS', () => {
   });
 });
 describe('App routes test', () => {
-  test('invalid path should redirect to 404', () => {
+  test('invalid path should redirect to Home page', () => {
     const wrapper = shallow(
       <MemoryRouter initialEntries={['/random']}>
         <App />
       </MemoryRouter>
     );
-    expect(wrapper.find(UserPage)).to.have.lengthOf(1);
-    expect(wrapper.find(HomePage)).to.have.lengthOf(0);
+    expect(wrapper.find(UserPage)).to.have.lengthOf(0);
+    expect(wrapper.find(HomePage)).to.have.lengthOf(1);
   });
 
   test('valid path should not redirect to 404', () => {
