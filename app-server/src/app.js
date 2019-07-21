@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const passport = require('passport');
 const compression = require('compression');
-const expressValidator = require('express-validator');
 
 require('./config/passport');
 
@@ -30,7 +29,6 @@ app.use(
     extended: true
   })
 );
-app.use(expressValidator());
 app.use(passport.initialize());
 
 // add routes
