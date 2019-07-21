@@ -1,37 +1,37 @@
 .ant-layout-header .header-item {
-    line-height: 64px;
-    padding: 0 16px;
-    cursor: pointer;
-    transition: color 0.3s;
+  line-height: 64px;
+  padding: 0 16px;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
 .ant-layout-header .header-title {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .ant-layout-header .anticon {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 .ant-layout-header .trigger {
-    font-size: 18px;
-    line-height: 64px;
-    padding: 0 16px;
-    cursor: pointer;
-    transition: color 0.3s;
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 16px;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
 .ant-layout-header .trigger:hover {
-    color: #108ee9;
+  color: #108ee9;
 }
 
 .ant-layout-header .ant-menu-root {
-    float: right;
+  float: right;
 }
 
 .ant-layout-header .toolbar-title {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 /*
@@ -46,8 +46,8 @@
 Smartphones (landscape) ----------- */
 
 @media only screen and (min-width: 992px) {
-    /* Styles */
-    .ant-layout-header .toolbar-title {
-        padding-left: 18px;
-    }
+  /* Styles */
+  .ant-layout-header .toolbar-title {
+    padding-left: 18px;
+  }
 }

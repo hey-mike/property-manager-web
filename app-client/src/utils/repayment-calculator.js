@@ -19,7 +19,7 @@ export default class RepaymentCalculator {
 
     // Now compute the monthly payment figure, using esoteric math.
     var x = Math.pow(1 + this.interest, this.payments);
-    this.monthly = this.principal * x * this.interest / (x - 1);
+    this.monthly = (this.principal * x * this.interest) / (x - 1);
 
     // Check that the result is a finite number. If so, display the results.
     if (

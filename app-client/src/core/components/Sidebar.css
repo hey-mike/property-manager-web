@@ -1,37 +1,37 @@
 .ant-layout-sider .logo {
-    height: 32px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: 16px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
 }
 
 .ant-layout-sider .logo img {
-    /* background-image: url("/images/michael_icon.png"); */
-    max-width: 100%;
-    max-height: 100%;
+  /* background-image: url("/images/michael_icon.png"); */
+  max-width: 100%;
+  max-height: 100%;
 }
 
 .ant-layout-sider .logo span {
-    font-size: 16px;
-    padding: 8px;
-    color: white;
-    float: right;
+  font-size: 16px;
+  padding: 8px;
+  color: white;
+  float: right;
 }
 
 .sider {
-    min-height: 100vh;
-    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-    position: relative;
-    z-index: 10;
+  min-height: 100vh;
+  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+  position: relative;
+  z-index: 10;
 }
 
 .sider.ligth {
-    background-color: white;
+  background-color: white;
 }
 
 .sider.ligth .logo {
-    background: white;
+  background: white;
 }
 
 .sider.ligth .logo h1 {
-    color: #002140;
+  color: #002140;
 }

@@ -8,8 +8,6 @@ import Toolbar from '../../core/components/Toolbar';
 import './HomePage.css';
 import HomePageRoutes from './HomePageRoutes';
 
-
-
 const { Content, Footer } = Layout;
 class MainContainer extends React.Component {
   constructor(props) {

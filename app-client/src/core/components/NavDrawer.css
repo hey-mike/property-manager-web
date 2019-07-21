@@ -1,13 +1,13 @@
 .drawer-content-wrapper .logo {
-    height: 32px;
-    background: rgba(255, 255, 255, 0.2);
-    margin: 16px;
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
 }
 
 .drawer-content-wrapper .drawer-content {
-    background: #001529;
+  background: #001529;
 }
 
 .drawer-content-wrapper .ant-menu {
-    width: 240px;
+  width: 240px;
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { List} from 'antd';
+import { List } from 'antd';
 import { withRouter } from 'react-router-dom';
 import axios from 'axios';
 

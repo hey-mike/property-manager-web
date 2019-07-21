@@ -12,8 +12,6 @@ import HomePage from './features/home/HomePage';
 import UserPage from './features/user/UserPage';
 import rootReducer from './rootReducer';
 
-
-
 const NoMatch = () => <div>Can't find any route</div>;
 
 const store = createStore(
