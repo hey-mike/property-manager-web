@@ -16,14 +16,14 @@
     "ejs": "^2.6.1",
     "email-templates": "^4.0.1",
     "errorhandler": "^1.5.0",
-    "express": "^4.16.3",
-    "koa": "^2.5.1",
+    "express": "^4.17.1",
+    "koa": "^2.7.0",
     "morgan": "^1.9.0",
     "nconf": "^0.10.0",
-    "nodemailer": "^4.6.5",
+    "nodemailer": "^4.7.0",
     "pug": "^2.0.3"
   },
   "devDependencies": {
-    "nodemon": "^1.17.5"
+    "nodemon": "^1.19.1"
   }
 }
