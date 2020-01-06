@@ -1,8 +1,9 @@
 import axios from 'axios';
+
 import LocalStorageService from './services/local-store.service';
 
 const axiosClient = axios.create({
-  baseURL: 'http://localhost:8080/api',
+  baseURL: `https://${window.location.hostname}/api`,
   /* other custom settings */
 });
 axiosClient.interceptors.request.use(
