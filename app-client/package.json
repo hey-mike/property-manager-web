@@ -9,7 +9,7 @@
     "chart.js": "^2.9.3",
     "husky": "^3.1.0",
     "lint-staged": "^9.5.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "prop-types": "^15.7.2",
     "query-string": "^6.9.0",
     "rc-drawer": "^3.1.1",
